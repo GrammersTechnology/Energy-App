@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:demo/const/themes/colors.dart';
 import 'package:demo/controller/home_controller.dart';
+import 'package:demo/routes/messenger.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -71,10 +72,15 @@ class AuthController extends ChangeNotifier {
     }
   }
 
-  signout() async {
-    await fb.signOut();
-    emailController.clear();
-    passwordController.clear();
+  signout(context) async {
+    try {
+      await fb.signOut();
+      emailController.clear();
+      passwordController.clear();
+      clearLocalData();
+    } catch (e) {
+      Messenger.pop(msg: e.toString(), context: context);
+    }
   }
 
   saveAuthLocal() async {
@@ -115,11 +121,7 @@ class AuthController extends ChangeNotifier {
       print("user password$userPassword");
       Routes.pushreplace(screen: const LoginScreen());
     } else {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
-      );
-      // Routes.pushreplace(screen: HomeScreen());
+      Routes.pushreplace(screen: HomeScreen());
       print("email founded");
       final homeController =
           Provider.of<HomeController>(context, listen: false);
@@ -127,12 +129,50 @@ class AuthController extends ChangeNotifier {
     }
   }
 
-  login() async {
-    await fb.signInWithEmailAndPassword(
-        email: emailController.text, password: passwordController.text);
-    notifyListeners();
-    Routes.pushreplace(screen: const HomeScreen());
-    saveAuthLocal();
+  login(context) async {
+    try {
+      await fb.signInWithEmailAndPassword(
+          email: emailController.text, password: passwordController.text);
+      notifyListeners();
+      // saveAuthLocal();
+      final email = fb.currentUser?.email;
+      final password = passwordController.text;
+      final pref = await SharedPreferences.getInstance();
+      await pref.setString('email', email.toString());
+      await pref.setString('password', password.toString());
+      fetchZoneIdFromFirestore(context);
+      Routes.pushreplace(screen: const HomeScreen());
+    } catch (e) {
+      Messenger.pop(msg: e.toString(), context: context);
+    }
+  }
+
+  fetchZoneIdFromFirestore(context) async {
+    // Get the current user ID from Firebase Authentication
+    String? userId = FirebaseAuth.instance.currentUser?.uid;
+    final pref = await SharedPreferences.getInstance();
+    try {
+      FirebaseFirestore.instance
+          .collection('user')
+          .doc(userId)
+          .get()
+          .then((DocumentSnapshot documentSnapshot) {
+        if (documentSnapshot.exists) {
+          Map<String, dynamic> data =
+              documentSnapshot.data() as Map<String, dynamic>;
+
+          // Access the zone ID field
+          String zoneId = data['zone'];
+          pref.setString('zone', zoneId.toString());
+        } else {
+          print('User document not found.');
+        }
+      }).catchError((error) {
+        print('Error retrieving data: $error');
+      });
+    } catch (e) {
+      Messenger.pop(msg: e.toString(), context: context);
+    }
   }
 }
 
