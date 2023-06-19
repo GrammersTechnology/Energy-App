@@ -21,7 +21,7 @@ class HomeScreen extends StatelessWidget {
       );
     });
     return Scaffold(
-        drawer: const SizedBox(),
+        drawer: GestureDetector(),
         appBar: AppBar(
           actions: [
             GestureDetector(
