@@ -1,14 +1,34 @@
-import 'package:demo/auth/screen/loginscreen.dart';
-import 'package:demo/const/space_helper.dart';
-import 'package:demo/controller/auth_controller.dart';
-import 'package:demo/controller/home_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+import '../auth/screen/loginscreen.dart';
+import '../const/space_helper.dart';
+import '../const/themes/colors.dart';
+import '../controller/auth_controller.dart';
+import '../controller/home_controller.dart';
 import '../routes/routes.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void didChangeDependencies() {
+    final controller = Provider.of<HomeController>(context, listen: false);
+
+    Future.delayed(const Duration(seconds: 3)).then((value) {
+      controller.fecthData(
+        context,
+      );
+    });
+
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +43,22 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
         drawer: GestureDetector(),
         appBar: AppBar(
+          toolbarHeight: 80,
+          backgroundColor: AppColors.primaryColor,
+          automaticallyImplyLeading: false,
+          centerTitle: true,
+          title: GestureDetector(
+            onTap: () {
+              Controller.fecthData(
+                context,
+              );
+            },
+            child: Text(
+              'Strompris',
+              style: GoogleFonts.montserrat(
+                  fontSize: 25, fontWeight: FontWeight.w500),
+            ),
+          ),
           actions: [
             GestureDetector(
               child: const Padding(
@@ -36,8 +72,6 @@ class HomeScreen extends StatelessWidget {
               },
             )
           ],
-          centerTitle: true,
-          title: const Text("Reports"),
         ),
         body: Consumer<HomeController>(
             builder: (context, homeController, widget) {
@@ -47,9 +81,16 @@ class HomeScreen extends StatelessWidget {
             },
             child: SingleChildScrollView(
                 child: homeController.result.isEmpty
-                    ? const Padding(
-                        padding: EdgeInsets.only(top: 300),
-                        child: Center(child: CircularProgressIndicator()),
+                    ? Padding(
+                        padding: const EdgeInsets.only(top: 300),
+                        child: Center(
+                            child: GestureDetector(
+                                onTap: () {
+                                  Controller.fecthData(
+                                    context,
+                                  );
+                                },
+                                child: const CircularProgressIndicator())),
                       )
                     : Column(
                         children: [
@@ -63,64 +104,186 @@ class HomeScreen extends StatelessWidget {
                                 return Container(
                                   padding: const EdgeInsets.all(10),
                                   child: Column(children: [
-                                    Container(
-                                      padding: const EdgeInsets.all(8),
-                                      decoration: const BoxDecoration(
-                                          color: Colors.grey),
-                                      // color: Colors.amber,
-                                      // height: 60,
-                                      width: size.width / 1.2,
+                                    Card(
+                                      elevation: 5,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
                                       child: Column(
                                         children: [
-                                          vSpaceMin,
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Column(
-                                                children: [
-                                                  vSpaceMin,
-                                                  Text(
-                                                    "\$ ${homeController.result[index]['NOK_per_kWh']}",
-                                                    style: const TextStyle(
-                                                        fontSize: 20,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                  vSpaceMin,
-                                                  const Text("NOK_per_kWh"),
-                                                ],
+                                          Container(
+                                            height: 30,
+                                            width: double.infinity,
+                                            decoration: const BoxDecoration(
+                                                borderRadius: BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(15),
+                                                    topRight:
+                                                        Radius.circular(15)),
+                                                color: Color.fromARGB(
+                                                    255, 236, 236, 236)),
+                                            child: Center(
+                                                child: Text(
+                                              "EXR :${homeController.result[index]['EXR'].toString()} ",
+                                              style: GoogleFonts.montserrat(
+                                                color: Colors.black,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w500,
                                               ),
-                                              Column(
-                                                children: [
-                                                  vSpaceMin,
-                                                  Text(
-                                                    "\$ ${homeController.result[index]['EUR_per_kWh']}",
-                                                    style: const TextStyle(
-                                                        fontSize: 20,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                  vSpaceMin,
-                                                  const Text("EUR_per_kWh"),
-                                                ],
-                                              ),
-                                            ],
+                                            )),
                                           ),
-                                          vSpaceMin,
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                  "time_start : ${homeController.result[index]['time_start'].toString()}"),
-                                              Text(
-                                                  "time_end : ${homeController.result[index]['time_end'].toString()}")
-                                            ],
+                                          Container(
+                                            height: 100,
+                                            width: double.infinity,
+                                            decoration: const BoxDecoration(
+                                                color: AppColors.primaryColor),
+                                            child: Row(
+                                              children: [
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    const SizedBox(
+                                                      height: 10,
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: Row(
+                                                        children: [
+                                                          Text(
+                                                            "NOK_Per_kWh :",
+                                                            style: GoogleFonts
+                                                                .nunitoSans(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 18,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w900,
+                                                            ),
+                                                          ),
+                                                          const SizedBox(
+                                                            width: 10,
+                                                          ),
+                                                          Text(
+                                                            "\$ ${homeController.result[index]['NOK_per_kWh']}",
+                                                            style: GoogleFonts
+                                                                .archivo(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                        20,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w800),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 8),
+                                                      child: Text(
+                                                        "Time Starts : ${homeController.result[index]['time_start'].toString()}",
+                                                        style: GoogleFonts.archivo(
+                                                            color: const Color
+                                                                    .fromARGB(
+                                                                255,
+                                                                199,
+                                                                197,
+                                                                197),
+                                                            fontSize: 20,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w700),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                )
+                                              ],
+                                            ),
                                           ),
-                                          vSpaceMin,
-                                          Text(
-                                              "EXR :${homeController.result[index]['EXR'].toString()} ")
+                                          Container(
+                                            height: 100,
+                                            width: double.infinity,
+                                            decoration: const BoxDecoration(
+                                                borderRadius: BorderRadius.only(
+                                                    bottomLeft:
+                                                        Radius.circular(15),
+                                                    bottomRight:
+                                                        Radius.circular(15)),
+                                                color: Color.fromARGB(
+                                                    255, 243, 243, 243)),
+                                            child: Row(
+                                              children: [
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    const SizedBox(
+                                                      height: 10,
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: Row(
+                                                        children: [
+                                                          Text(
+                                                            "EUR_Per_kWh :",
+                                                            style: GoogleFonts
+                                                                .nunitoSans(
+                                                              color: AppColors
+                                                                  .primaryColor,
+                                                              fontSize: 18,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w900,
+                                                            ),
+                                                          ),
+                                                          const SizedBox(
+                                                            width: 10,
+                                                          ),
+                                                          Text(
+                                                            "\$ ${homeController.result[index]['EUR_per_kWh']}",
+                                                            style: GoogleFonts.archivo(
+                                                                color: AppColors
+                                                                    .primaryColor,
+                                                                fontSize: 20,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w800),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 8),
+                                                      child: Text(
+                                                        "Time Ends : ${homeController.result[index]['time_end'].toString()}",
+                                                        style: GoogleFonts.archivo(
+                                                            color: const Color
+                                                                    .fromARGB(
+                                                                255,
+                                                                115,
+                                                                113,
+                                                                113),
+                                                            fontSize: 20,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w700),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     ),
