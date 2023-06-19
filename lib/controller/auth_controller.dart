@@ -35,7 +35,11 @@ class AuthController extends ChangeNotifier {
       await fb.createUserWithEmailAndPassword(
           email: emailController.text, password: passwordController.text);
       final data = UserModel(zone: dropdowmValue, email: fb.currentUser?.email);
-      await db.collection("user").add(data.toJson());
+      await db
+          .collection("user")
+          .doc(fb.currentUser?.uid)
+          // .collection('auth')
+          .set(data.toJson());
       await saveAuthLocal();
       Routes.pushreplace(screen: const HomeScreen());
       loader = false;
@@ -140,7 +144,7 @@ class AuthController extends ChangeNotifier {
       final pref = await SharedPreferences.getInstance();
       await pref.setString('email', email.toString());
       await pref.setString('password', password.toString());
-      fetchZoneIdFromFirestore(context);
+      await fetchZoneIdFromFirestore(context);
       Routes.pushreplace(screen: const HomeScreen());
     } catch (e) {
       Messenger.pop(msg: e.toString(), context: context);
@@ -149,24 +153,23 @@ class AuthController extends ChangeNotifier {
 
   fetchZoneIdFromFirestore(context) async {
     // Get the current user ID from Firebase Authentication
-    String? userId = FirebaseAuth.instance.currentUser?.uid;
     final pref = await SharedPreferences.getInstance();
     try {
-      FirebaseFirestore.instance
+      db
           .collection('user')
-          .doc(userId)
+          .doc(fb.currentUser?.uid)
+          // .collection("auth")
           .get()
-          .then((DocumentSnapshot documentSnapshot) {
-        if (documentSnapshot.exists) {
-          Map<String, dynamic> data =
-              documentSnapshot.data() as Map<String, dynamic>;
-
-          // Access the zone ID field
-          String zoneId = data['zone'];
-          pref.setString('zone', zoneId.toString());
-        } else {
-          print('User document not found.');
-        }
+          .then((value) {
+        // if () {
+        final data = UserModel.fromJson(value.data()!);
+        log(data.zone.toString());
+        // Access the zone ID field
+        String zoneId = data.zone.toString();
+        pref.setString('zone', zoneId.toString());
+        // } else {
+        //   print('User document not found.');
+        // }
       }).catchError((error) {
         print('Error retrieving data: $error');
       });
@@ -182,4 +185,8 @@ class UserModel {
   UserModel({this.password, required this.zone, required this.email});
   Map<String, dynamic> toJson() =>
       {"password": password, "email": email, "zone": zone};
+  factory UserModel.fromJson(Map<String, dynamic> Json) {
+    return UserModel(
+        zone: Json["zone"], email: Json["email"], password: Json["password"]);
+  }
 }

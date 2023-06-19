@@ -1,5 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,7 +12,8 @@ class HomeController extends ChangeNotifier {
     final perf = await SharedPreferences.getInstance();
 
     final zone = perf.getString("zone");
-    await HomeScreenServicesScreen().dataDetailsApi(context, 'NO2');
+    log(zone.toString());
+    await HomeScreenServicesScreen().dataDetailsApi(context, zone);
     // if (data?.data != null) {
     //   print(data.toString());
     // }
