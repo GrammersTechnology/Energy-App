@@ -55,7 +55,7 @@ class LoginScreen extends StatelessWidget {
                       LoginButtonWidget(
                         title: "LOGIN",
                         onTap: () {
-                          controller.login();
+                          controller.login(context);
                         },
                       ),
                       vSpaceMin,
