@@ -13,14 +13,6 @@ class ProfileScreen extends StatelessWidget {
         backgroundColor: AppColors.whiteColor,
         elevation: 0,
         centerTitle: true,
-        leading: IconButton(
-          onPressed: () => Navigator.of(context).pop(),
-          icon: const Icon(
-            Icons.arrow_back_ios_new_rounded,
-            size: 24,
-            color: AppColors.blackColor,
-          ),
-        ),
         title: Text(
           'Jenny Wilson',
           style: AppText.blackTextStyle.copyWith(
@@ -162,7 +154,7 @@ class ProfileScreen extends StatelessWidget {
         ElevatedButton(
           onPressed: () {},
           style: ElevatedButton.styleFrom(
-            primary: AppColors.greenColor,
+            backgroundColor: AppColors.greenColor,
             minimumSize: const Size(120, 45),
             elevation: 8,
             shadowColor: AppColors.primaryColor.withOpacity(0.3),
@@ -253,7 +245,7 @@ class ProfileScreen extends StatelessWidget {
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(24),
-                    image: DecorationImage(
+                    image: const DecorationImage(
                       image: NetworkImage(
                         " gallery.imageggggggg",
                       ),

@@ -9,11 +9,12 @@ class ReoprtScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Provider.of<HomeController>(context, listen: false);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
-            children: [StepperGraphWidget(), ColumnGraphWidget()],
+            children: const [StepperGraphWidget(), ColumnGraphWidget()],
           ),
         ),
       ),
@@ -42,9 +43,10 @@ class ColumnGraphWidget extends StatelessWidget {
                         dataSource: controller.columnGraphData,
                         xValueMapper: (GraphData data, _) => data.x.toString(),
                         yValueMapper: (GraphData data, _) => data.y,
-                        dataLabelSettings: DataLabelSettings(isVisible: true))
+                        dataLabelSettings:
+                            const DataLabelSettings(isVisible: true))
                   ]))
-          : Center(
+          : const Center(
               child: CircularProgressIndicator(),
             );
     });
@@ -59,14 +61,13 @@ class StepperGraphWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<HomeController>(builder: (context, controller, widget) {
-      print("sssssssssss" +
-          controller.stepLineGraph.first.y.runtimeType.toString());
+      print("sssssssssss${controller.stepLineGraph.first.y.runtimeType}");
       return StreamBuilder<List<GraphData>>(
         stream: controller.graphDataStream,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final List<GraphData> graphDataList = snapshot.data!;
-            return Container(
+            return SizedBox(
               width: double.infinity,
               height: 250,
               child: SfCartesianChart(
@@ -86,9 +87,9 @@ class StepperGraphWidget extends StatelessWidget {
               child: Text('Error: ${snapshot.error}'),
             );
           } else if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }

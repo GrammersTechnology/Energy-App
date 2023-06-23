@@ -19,43 +19,43 @@ class BottumNavigationScreen extends StatelessWidget {
         body: PersistentTabView(
       context,
       controller: _controller,
-      screens: [
+      screens: const [
         HomeScreen(),
         SearchScreen(),
         // SearchScreen(),
         ReoprtScreen(),
-        Container(),
+        // Container(),
         ProfileScreen()
       ],
       items: [
         PersistentBottomNavBarItem(
           icon: const Icon(CupertinoIcons.home),
           title: ("Home"),
-          activeColorPrimary: CupertinoColors.systemOrange,
+          activeColorPrimary: CupertinoColors.white,
           inactiveColorPrimary: CupertinoColors.systemGrey,
         ),
         PersistentBottomNavBarItem(
           icon: const Icon(CupertinoIcons.search),
           title: ("Search"),
-          activeColorPrimary: CupertinoColors.systemOrange,
+          activeColorPrimary: CupertinoColors.white,
           inactiveColorPrimary: CupertinoColors.systemGrey,
         ),
         PersistentBottomNavBarItem(
           icon: const Icon(CupertinoIcons.graph_circle_fill),
           title: ("Report"),
-          activeColorPrimary: CupertinoColors.systemOrange,
+          activeColorPrimary: CupertinoColors.white,
           inactiveColorPrimary: CupertinoColors.systemGrey,
         ),
-        PersistentBottomNavBarItem(
-          icon: const Icon(CupertinoIcons.video_camera_solid),
-          title: ("Reels"),
-          activeColorPrimary: CupertinoColors.systemOrange,
-          inactiveColorPrimary: CupertinoColors.systemGrey,
-        ),
+        // PersistentBottomNavBarItem(
+        //   icon: const Icon(CupertinoIcons.video_camera_solid),
+        //   title: ("Reels"),
+        //   activeColorPrimary: CupertinoColors.white,
+        //   inactiveColorPrimary: CupertinoColors.systemGrey,
+        // ),
         PersistentBottomNavBarItem(
           icon: const Icon(CupertinoIcons.profile_circled),
           title: ("Profile"),
-          activeColorPrimary: CupertinoColors.systemOrange,
+          activeColorPrimary: CupertinoColors.white,
           inactiveColorPrimary: CupertinoColors.systemGrey,
         ),
       ],
@@ -65,8 +65,9 @@ class BottumNavigationScreen extends StatelessWidget {
       resizeToAvoidBottomInset: true,
       stateManagement: true,
       hideNavigationBarWhenKeyboardShows: true,
-      decoration: NavBarDecoration(
-        borderRadius: BorderRadius.circular(10.0),
+      decoration: const NavBarDecoration(
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(10), topRight: Radius.circular(10)),
         colorBehindNavBar: Colors.blue,
       ),
       popAllScreensOnTapOfSelectedTab: true,
