@@ -40,7 +40,7 @@ class ProfileScreen extends StatelessWidget {
                 _buildImageProfile(),
                 const SizedBox(height: 16),
                 Text(
-                  "@Toa_Heftiba",
+                  "User",
                   style: AppText.blackTextStyle.copyWith(
                     fontWeight: AppText.bold,
                     fontSize: 22,
@@ -72,7 +72,7 @@ class ProfileScreen extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(60),
         child: Image.network(
-          'https://cdn.pixabay.com/photo/2019/03/15/09/49/girl-4056684_960_720.jpg',
+          'https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png',
           fit: BoxFit.cover,
         ),
       ),

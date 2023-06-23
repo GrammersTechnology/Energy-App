@@ -12,7 +12,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../auth/screen/loginscreen.dart';
 import '../routes/routes.dart';
 import '../screen/bottom_screen/bottum_navigation_screen.dart';
-import '../screen/bottom_screen/home/home_screen.dart';
 
 class AuthController extends ChangeNotifier {
   FirebaseAuth fb = FirebaseAuth.instance;

@@ -21,9 +21,9 @@ class BottumNavigationScreen extends StatelessWidget {
       controller: _controller,
       screens: const [
         HomeScreen(),
-        SearchScreen(),
-        // SearchScreen(),
+
         ReoprtScreen(),
+        SearchScreen(),
         // Container(),
         ProfileScreen()
       ],
@@ -34,15 +34,16 @@ class BottumNavigationScreen extends StatelessWidget {
           activeColorPrimary: CupertinoColors.white,
           inactiveColorPrimary: CupertinoColors.systemGrey,
         ),
+
         PersistentBottomNavBarItem(
-          icon: const Icon(CupertinoIcons.search),
-          title: ("Search"),
+          icon: const Icon(CupertinoIcons.graph_circle_fill),
+          title: ("Report"),
           activeColorPrimary: CupertinoColors.white,
           inactiveColorPrimary: CupertinoColors.systemGrey,
         ),
         PersistentBottomNavBarItem(
-          icon: const Icon(CupertinoIcons.graph_circle_fill),
-          title: ("Report"),
+          icon: const Icon(CupertinoIcons.search),
+          title: ("Search"),
           activeColorPrimary: CupertinoColors.white,
           inactiveColorPrimary: CupertinoColors.systemGrey,
         ),
