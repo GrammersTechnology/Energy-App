@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_interpolation_to_compose_strings
 
-import 'dart:developer';
 import 'package:demo/controller/home_controller.dart';
 import 'package:dio/dio.dart';
 import 'package:provider/provider.dart';

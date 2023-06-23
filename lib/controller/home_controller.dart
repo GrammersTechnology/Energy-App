@@ -10,7 +10,6 @@ class HomeController extends ChangeNotifier {
   Stream<List<GraphData>> get graphDataStream => _graphDataController.stream;
   final _graphDataController = StreamController<List<GraphData>>();
   List result = [];
-  List columnGraphResult = [];
 
   List<GraphData> stepLineGraph = [];
   bool loader = false;
@@ -41,8 +40,8 @@ class HomeController extends ChangeNotifier {
             x: dateTimeStart.hour + dateTimeStart.minute + dateTimeStart.second,
             y: result[i]['NOK_per_kWh']);
         stepLineGraph.add(temp);
-        log(stepLineGraph[i].x.toString());
-        log(stepLineGraph[i].x.runtimeType.toString());
+        // log(stepLineGraph[i].x.toString());
+        // log(stepLineGraph[i].x.runtimeType.toString());
         notifyListeners();
       }
       if (stepLineGraph.isNotEmpty) {
@@ -79,28 +78,28 @@ class HomeController extends ChangeNotifier {
 
   List<GraphData> columnGraphData = [];
   feacthColumnGraphData(context) async {
+    loader = true;
     final perf = await SharedPreferences.getInstance();
 
     final zone = perf.getString("zone");
     final result =
         (await HomeScreenServicesScreen().columnGraphDataApi(context, zone))!;
+    log(result.toString());
     if (result.isNotEmpty) {
       columnGraphData.clear();
       for (var element in result) {
         final x = element['date'];
-
+        print(x.toString());
         final y = element['day_average_price'];
-        // print(y);
+        print(y.toString());
         // log(y.runtimeType.toString());
         GraphData columnGraphDataelement = GraphData(x: x.toString(), y: y);
         columnGraphData.add(columnGraphDataelement);
-        print(columnGraphDataelement.x.runtimeType);
-        print(columnGraphDataelement.y.runtimeType);
 
         notifyListeners();
       }
-      // log(columnGraphData.toString());
     }
+    loader = false;
   }
 }
 

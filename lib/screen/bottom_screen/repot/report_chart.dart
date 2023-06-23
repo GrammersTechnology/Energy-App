@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -33,19 +31,22 @@ class ColumnGraphWidget extends StatelessWidget {
       controller.feacthColumnGraphData(context);
     });
     return Consumer<HomeController>(builder: (context, controller, widget) {
-      return SizedBox(
-          width: double.infinity,
-          height: 250,
-          child: SfCartesianChart(
-              primaryXAxis: CategoryAxis(title: AxisTitle(text: "")),
-              series: <ChartSeries>[
-                ColumnSeries<GraphData, String>(
-                  dataSource: controller.columnGraphData,
-                  xValueMapper: (GraphData data, _) => data.x.toString(),
-                  yValueMapper: (GraphData data, _) => data.y,
-                  // dataLabelSettings: DataLabelSettings(isVisible: true)
-                )
-              ]));
+      return controller.columnGraphData.isNotEmpty
+          ? SizedBox(
+              width: double.infinity,
+              height: 250,
+              child: SfCartesianChart(
+                  primaryXAxis: CategoryAxis(title: AxisTitle(text: "")),
+                  series: <ChartSeries>[
+                    ColumnSeries<GraphData, String>(
+                        dataSource: controller.columnGraphData,
+                        xValueMapper: (GraphData data, _) => data.x.toString(),
+                        yValueMapper: (GraphData data, _) => data.y,
+                        dataLabelSettings: DataLabelSettings(isVisible: true))
+                  ]))
+          : Center(
+              child: CircularProgressIndicator(),
+            );
     });
   }
 }
