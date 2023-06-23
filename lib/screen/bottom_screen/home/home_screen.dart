@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import '../auth/screen/loginscreen.dart';
-import '../const/space_helper.dart';
-import '../const/themes/colors.dart';
-import '../controller/auth_controller.dart';
-import '../controller/home_controller.dart';
-import '../routes/routes.dart';
+import '../../../auth/screen/loginscreen.dart';
+import '../../../const/space_helper.dart';
+import '../../../const/themes/colors.dart';
+import '../../../controller/auth_controller.dart';
+import '../../../controller/home_controller.dart';
+import '../../../routes/routes.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

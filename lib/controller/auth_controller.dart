@@ -11,7 +11,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../auth/screen/loginscreen.dart';
 import '../routes/routes.dart';
-import '../screen.dart/home_screen.dart';
+import '../screen/bottom_screen/bottum_navigation_screen.dart';
+import '../screen/bottom_screen/home/home_screen.dart';
 
 class AuthController extends ChangeNotifier {
   FirebaseAuth fb = FirebaseAuth.instance;
@@ -41,7 +42,7 @@ class AuthController extends ChangeNotifier {
           // .collection('auth')
           .set(data.toJson());
       await saveAuthLocal();
-      Routes.pushreplace(screen: const HomeScreen());
+      Routes.pushreplace(screen: BottumNavigationScreen());
       loader = false;
       notifyListeners();
     } catch (e) {
@@ -125,7 +126,7 @@ class AuthController extends ChangeNotifier {
       print("user password$userPassword");
       Routes.pushreplace(screen: const LoginScreen());
     } else {
-      Routes.pushreplace(screen: HomeScreen());
+      Routes.pushreplace(screen: BottumNavigationScreen());
       print("email founded");
       final homeController =
           Provider.of<HomeController>(context, listen: false);
@@ -145,7 +146,7 @@ class AuthController extends ChangeNotifier {
       await pref.setString('email', email.toString());
       await pref.setString('password', password.toString());
       await fetchZoneIdFromFirestore(context);
-      Routes.pushreplace(screen: const HomeScreen());
+      Routes.pushreplace(screen: BottumNavigationScreen());
     } catch (e) {
       Messenger.pop(msg: e.toString(), context: context);
     }
