@@ -1,6 +1,6 @@
+import 'package:demo/screen/bottom_screen/chart/chart_screen.dart';
 import 'package:demo/screen/bottom_screen/profile/profil_screen.dart';
 import 'package:demo/screen/bottom_screen/repot/report_chart.dart';
-import 'package:demo/screen/bottom_screen/search/search_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
@@ -23,7 +23,7 @@ class BottumNavigationScreen extends StatelessWidget {
         HomeScreen(),
 
         ReoprtScreen(),
-        SearchScreen(),
+        ChartScreen(),
         // Container(),
         ProfileScreen()
       ],

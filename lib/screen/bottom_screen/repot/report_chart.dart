@@ -47,9 +47,7 @@ class _ReoprtScreenState extends State<ReoprtScreen> {
   @override
   Widget build(BuildContext context) {
     final controller = Provider.of<HomeController>(context, listen: false);
-    final authController = Provider.of<AuthController>(context, listen: false);
-    String zone;
-    FirebaseAuth fb = FirebaseAuth.instance;
+    // final authController = Provider.of<AuthController>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 80,
