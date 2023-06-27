@@ -180,22 +180,27 @@ class ColumnGraphWidget extends StatelessWidget {
       controller.feacthColumnGraphData(context);
     });
     return Consumer<HomeController>(builder: (context, controller, widget) {
-      return controller.columnGraphData.isNotEmpty
-          ? SizedBox(
-              height: 250,
-              child: SfCartesianChart(
-                  primaryXAxis: CategoryAxis(title: AxisTitle(text: "")),
-                  series: <ChartSeries>[
-                    ColumnSeries<GraphData, String>(
-                        dataSource: controller.columnGraphData,
-                        xValueMapper: (GraphData data, _) => data.x.toString(),
-                        yValueMapper: (GraphData data, _) => data.y,
-                        dataLabelSettings:
-                            const DataLabelSettings(isVisible: true))
-                  ]))
-          : const Center(
+      return controller.loader == true
+          ? Center(
               child: CircularProgressIndicator(),
-            );
+            )
+          : controller.columnGraphData.isNotEmpty
+              ? SizedBox(
+                  height: 250,
+                  child: SfCartesianChart(
+                      primaryXAxis: CategoryAxis(title: AxisTitle(text: "")),
+                      series: <ChartSeries>[
+                        ColumnSeries<GraphData, String>(
+                            dataSource: controller.columnGraphData,
+                            xValueMapper: (GraphData data, _) =>
+                                data.x.toString(),
+                            yValueMapper: (GraphData data, _) => data.y,
+                            dataLabelSettings:
+                                const DataLabelSettings(isVisible: true))
+                      ]))
+              : const Center(
+                  child: Text("Data Not Available"),
+                );
     });
   }
 }

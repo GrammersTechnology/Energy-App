@@ -19,6 +19,7 @@ class HomeController extends ChangeNotifier {
 
     final zone = perf.getString("zone");
     log(zone.toString());
+
     result = (await HomeScreenServicesScreen().dataDetailsApi(context, zone))!;
 
     if (result.isNotEmpty) {

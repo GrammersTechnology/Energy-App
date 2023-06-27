@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'controller/auth_controller.dart';
+import 'controller/chartcontroller.dart';
 import 'controller/home_controller.dart';
 
 Future<void> main() async {
@@ -25,6 +26,8 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<AuthController>(create: (_) => AuthController()),
         ChangeNotifierProvider<HomeController>(create: (_) => HomeController()),
+        ChangeNotifierProvider<ChartController>(
+            create: (_) => ChartController()),
       ],
       child: MaterialApp(
         navigatorKey: Routes.navigatorKey,

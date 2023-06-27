@@ -34,11 +34,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final authController = Provider.of<AuthController>(context, listen: false);
     final Controller = Provider.of<HomeController>(context, listen: false);
-    final size = MediaQuery.of(context).size;
+    // final size = MediaQuery.of(context).size;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Controller.fecthData(
-        context,
-      );
+      Controller.fecthData(context);
     });
     return Scaffold(
         drawer: GestureDetector(),
