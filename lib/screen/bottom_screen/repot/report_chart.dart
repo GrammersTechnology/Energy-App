@@ -47,7 +47,6 @@ class _ReoprtScreenState extends State<ReoprtScreen> {
   @override
   Widget build(BuildContext context) {
     final controller = Provider.of<HomeController>(context, listen: false);
-    // final authController = Provider.of<AuthController>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 80,
@@ -180,27 +179,22 @@ class ColumnGraphWidget extends StatelessWidget {
       controller.feacthColumnGraphData(context);
     });
     return Consumer<HomeController>(builder: (context, controller, widget) {
-      return controller.loader == true
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
-          : controller.columnGraphData.isNotEmpty
-              ? SizedBox(
-                  height: 250,
-                  child: SfCartesianChart(
-                      primaryXAxis: CategoryAxis(title: AxisTitle(text: "")),
-                      series: <ChartSeries>[
-                        ColumnSeries<GraphData, String>(
-                            dataSource: controller.columnGraphData,
-                            xValueMapper: (GraphData data, _) =>
-                                data.x.toString(),
-                            yValueMapper: (GraphData data, _) => data.y,
-                            dataLabelSettings:
-                                const DataLabelSettings(isVisible: true))
-                      ]))
-              : const Center(
-                  child: Text("Data Not Available"),
-                );
+      return controller.columnGraphData.isNotEmpty
+          ? SizedBox(
+              height: 250,
+              child: SfCartesianChart(
+                  primaryXAxis: CategoryAxis(title: AxisTitle(text: "")),
+                  series: <ChartSeries>[
+                    ColumnSeries<GraphData, String>(
+                        dataSource: controller.columnGraphData,
+                        xValueMapper: (GraphData data, _) => data.x.toString(),
+                        yValueMapper: (GraphData data, _) => data.y,
+                        dataLabelSettings:
+                            const DataLabelSettings(isVisible: true))
+                  ]))
+          : const Center(
+              child: Text('Data Not Available'),
+            );
     });
   }
 }
@@ -242,7 +236,7 @@ class StepperGraphWidget extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           } else {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: Text('Data Not Available'),
             );
           }
         },
