@@ -1,4 +1,4 @@
-import 'package:demo/controller/home_controller.dart';
+import 'package:demo/const/themes/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,13 +20,21 @@ class ChartScreen extends StatelessWidget {
       return Scaffold(
         body: SafeArea(
           child: controller.loader == true
-              ? Center(
+              ? const Center(
                   child: CircularProgressIndicator(),
                 )
               : SingleChildScrollView(
                   child: controller.data == null
-                      ? Center(
-                          child: Text("Data Not Avaibale"),
+                      ? Padding(
+                          padding: const EdgeInsets.only(top: 150),
+                          child: Center(
+                            child: Column(
+                              children: const [
+                                CircularProgressIndicator(),
+                                Text("Finding Data.."),
+                              ],
+                            ),
+                          ),
                         )
                       : Column(
                           children: [
@@ -40,7 +48,7 @@ class ChartScreen extends StatelessWidget {
                                     width: size.width / 2,
                                     height: 40,
                                     decoration: const BoxDecoration(
-                                      color: Colors.grey,
+                                      color: AppColors.primaryColor,
                                       borderRadius:
                                           BorderRadius.all(Radius.circular(5)),
                                       // border: Border.all(color: Colors.grey)
@@ -48,8 +56,14 @@ class ChartScreen extends StatelessWidget {
                                     child: Padding(
                                       padding: const EdgeInsets.all(5.0),
                                       child: DropdownButton(
+                                        iconEnabledColor: AppColors.whiteColor,
+                                        focusColor: Colors.white,
+                                        borderRadius: BorderRadius.circular(10),
                                         hint: Text(
-                                            controller.dropdowmValue ?? " NO1"),
+                                          controller.dropdowmValue ?? " NO1",
+                                          style: const TextStyle(
+                                              color: AppColors.whiteColor),
+                                        ),
                                         underline: const SizedBox(),
                                         isExpanded: true,
                                         items: controller.dropdwonList
@@ -64,9 +78,17 @@ class ChartScreen extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                      "Ar:${controller.data!.isoAar.toString()}"),
+                                    "Ar: ${controller.data!.isoAar.toString()}",
+                                    style: const TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.w600),
+                                  ),
                                   Text(
-                                      "Uke:${controller.data!.isoUke.toString()}"),
+                                    "Uke:${controller.data!.isoUke.toString()}",
+                                    style: const TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.w600),
+                                  ),
                                 ],
                               ),
                             ),
@@ -84,7 +106,7 @@ class ChartScreen extends StatelessWidget {
                                 ),
                                 Row(
                                   children: [
-                                    Spacer(),
+                                    const Spacer(),
                                     Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
@@ -93,12 +115,28 @@ class ChartScreen extends StatelessWidget {
                                         children: [
                                           Row(
                                             children: [
-                                              Icon(Icons.water_drop),
+                                              const Icon(
+                                                Icons.water_drop,
+                                                size: 30,
+                                              ),
                                               Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 children: [
-                                                  Text("Vann i magasinet"),
+                                                  const Text(
+                                                    "Vann i magasinet  ",
+                                                    style: TextStyle(
+                                                        fontSize: 17,
+                                                        fontWeight:
+                                                            FontWeight.w600),
+                                                  ),
                                                   Text(
-                                                      "${controller.data!.fyllingsgrad.toString()}"),
+                                                    "  ${controller.data!.fyllingsgrad}",
+                                                    style: const TextStyle(
+                                                        fontSize: 17,
+                                                        fontWeight:
+                                                            FontWeight.w600),
+                                                  ),
                                                 ],
                                               ),
                                             ],
@@ -106,12 +144,25 @@ class ChartScreen extends StatelessWidget {
                                           vSpaceSmall,
                                           Row(
                                             children: [
-                                              Icon(Icons.battery_charging_full),
+                                              const Icon(
+                                                Icons.battery_charging_full,
+                                                size: 30,
+                                              ),
                                               Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 children: [
-                                                  Text("Kapasitet"),
+                                                  const Text("Kapasitet",
+                                                      style: TextStyle(
+                                                          fontSize: 17,
+                                                          fontWeight:
+                                                              FontWeight.w600)),
                                                   Text(
-                                                      "${controller.data!.kapasitetTWh.toString()}"),
+                                                      "  ${controller.data!.kapasitetTWh}",
+                                                      style: const TextStyle(
+                                                          fontSize: 17,
+                                                          fontWeight:
+                                                              FontWeight.w600)),
                                                 ],
                                               ),
                                             ],
@@ -119,12 +170,25 @@ class ChartScreen extends StatelessWidget {
                                           vSpaceSmall,
                                           Row(
                                             children: [
-                                              Icon(Icons.more_horiz),
+                                              const Icon(
+                                                Icons.more_horiz,
+                                                size: 30,
+                                              ),
                                               Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 children: [
-                                                  Text("Normalt niva "),
+                                                  const Text("Normalt niva ",
+                                                      style: TextStyle(
+                                                          fontSize: 17,
+                                                          fontWeight:
+                                                              FontWeight.w600)),
                                                   Text(
-                                                      "${controller.data!.fyllingTWh.toString()}"),
+                                                      " ${controller.data!.fyllingTWh}",
+                                                      style: const TextStyle(
+                                                          fontSize: 17,
+                                                          fontWeight:
+                                                              FontWeight.w600)),
                                                 ],
                                               ),
                                             ],
@@ -138,35 +202,82 @@ class ChartScreen extends StatelessWidget {
                                     // hSpaceRegular,
                                     Container(
                                       width: size.width,
-                                      height: 50,
+                                      height: 70,
                                       decoration: const BoxDecoration(
-                                        color: Colors.grey,
+                                        color:
+                                            Color.fromARGB(255, 224, 222, 222),
                                       ),
                                       child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
+                                        padding: const EdgeInsets.only(
+                                            left: 18, right: 18, top: 18),
                                         child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
                                                 children: [
-                                                  Text("Fylling"),
+                                                  const Text("Fylling",
+                                                      style: TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.w500)),
+                                                  const SizedBox(
+                                                    height: 5,
+                                                  ),
                                                   Text(
-                                                      "${controller.data!.fyllingTWh.toString()}"),
+                                                      "${controller.data!.fyllingTWh.toString().substring(0, 5)} TWh",
+                                                      style: const TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.w500)),
+                                                ],
+                                              ),
+                                              const SizedBox(
+                                                width: 0,
+                                              ),
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  const Text("Forrige uke",
+                                                      style: TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.w500)),
+                                                  const SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                  Text(
+                                                      "${controller.data!.fyllingsgradForrigeUke.toString().substring(0, 5)} %",
+                                                      style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      )),
                                                 ],
                                               ),
                                               Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
                                                 children: [
-                                                  Text("Forrige uke"),
+                                                  const Text(
+                                                      "Ending fyllingsgrad",
+                                                      style: TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.w500)),
+                                                  const SizedBox(
+                                                    height: 5,
+                                                  ),
                                                   Text(
-                                                      "${controller.data!.fyllingsgradForrigeUke.toString()}"),
-                                                ],
-                                              ),
-                                              Column(
-                                                children: [
-                                                  Text("Ending fyllingsgrad"),
-                                                  Text(
-                                                      "${controller.data!.endringFyllingsgrad.toString()}"),
+                                                      "${controller.data!.endringFyllingsgrad.toString().substring(0, 5)} %",
+                                                      style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      )),
                                                 ],
                                               ),
                                             ]),
