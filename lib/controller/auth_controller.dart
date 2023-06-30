@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:demo/const/themes/colors.dart';
 import 'package:demo/controller/home_controller.dart';
+import 'package:demo/model/model.dart';
 import 'package:demo/routes/messenger.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +41,7 @@ class AuthController extends ChangeNotifier {
           .doc(fb.currentUser?.uid)
           // .collection('auth')
           .set(data.toJson());
+      await addUserProfileDetails(context);
       await saveAuthLocal();
       Routes.pushreplace(screen: BottumNavigationScreen());
       loader = false;
@@ -173,6 +175,37 @@ class AuthController extends ChangeNotifier {
       }).catchError((error) {
         print('Error retrieving data: $error');
       });
+    } catch (e) {
+      Messenger.pop(msg: e.toString(), context: context);
+    }
+  }
+
+  addUserProfileDetails(context) async {
+    ProfileModel data = ProfileModel(
+        email: fb.currentUser!.email.toString(),
+        name: '',
+        powerCompany: "",
+        pricezone: dropdowmValue.toString(),
+        yearlyCosumption: 0,
+        numberOfPepole: 0,
+        powerCoins: 0,
+        powerPoint: 0,
+        hasSensor: false,
+        hasElCar: false,
+        hasEatPump: false,
+        hasSolarPanel: false,
+        wantPushWarning1: false,
+        wantPushWarning2: false);
+
+    try {
+      await db
+          .collection('user')
+          .doc(fb.currentUser!.uid)
+          .collection('profile')
+          .add(data.toJson());
+      // .set(data.toJson());
+      notifyListeners();
+      // saveAuthLocal();
     } catch (e) {
       Messenger.pop(msg: e.toString(), context: context);
     }
