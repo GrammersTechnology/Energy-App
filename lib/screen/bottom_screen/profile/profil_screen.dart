@@ -1,3 +1,9 @@
+import 'package:csv/csv.dart';
+import 'package:demo/controller/auth_controller.dart';
+import 'package:demo/routes/routes.dart';
+import 'package:demo/screen/bottom_screen/profile/widget/profile_edit_screen.dart';
+import 'package:dio/dio.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../const/themes/colors.dart';
@@ -20,11 +26,17 @@ class ProfileScreen extends StatelessWidget {
             fontWeight: AppText.bold,
           ),
         ),
-        actions: const [
-          Icon(
-            Icons.more_horiz_rounded,
-            size: 24,
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.edit,
+              size: 24,
+            ),
             color: AppColors.blackColor,
+            onPressed: () {
+              AuthController().addUserProfileDetails(context);
+              // Routes.push(screen: ProfileEditScreen());
+            },
           ),
           SizedBox(width: 24),
         ],
@@ -39,15 +51,43 @@ class ProfileScreen extends StatelessWidget {
               children: [
                 _buildImageProfile(),
                 const SizedBox(height: 16),
-                Text(
-                  "User",
-                  style: AppText.blackTextStyle.copyWith(
-                    fontWeight: AppText.bold,
-                    fontSize: 22,
-                  ),
+                const SizedBox(height: 24),
+                _buildDescription(
+                  "2",
+                  "Power Company",
+                  " 5",
+                  "Price zone",
+                  "5",
+                  "Yearly cosumption",
                 ),
                 const SizedBox(height: 24),
-                _buildDescription(),
+                _buildDescription(
+                  "2",
+                  "Has sensor",
+                  " 5",
+                  "Has el car",
+                  "5",
+                  "Has eat pump",
+                ),
+                const SizedBox(height: 24),
+                _buildDescription(
+                  "2",
+                  "Has solar panel",
+                  " 5",
+                  "Number of pepole",
+                  "5",
+                  "Want PushWarning1",
+                ),
+                const SizedBox(height: 24),
+                _buildDescription(
+                  "5",
+                  "Want PushWarning2",
+                  "2",
+                  "PowerPoint",
+                  " 5",
+                  "PowerCoins",
+                ),
+                const SizedBox(height: 24),
                 const SizedBox(height: 24),
               ],
             ),
@@ -79,199 +119,92 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Row _buildDescription() {
+  Row _buildDescription(
+    rowOneContent,
+    rowOneHead,
+    rowTwoContent,
+    rowTwoHead,
+    rowThreeContent,
+    rowThreeHead,
+  ) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              "29",
-              style: AppText.blackTextStyle.copyWith(
-                fontWeight: AppText.bold,
-                fontSize: 16,
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                rowOneContent,
+                style: AppText.blackTextStyle.copyWith(
+                  fontWeight: AppText.bold,
+                  fontSize: 16,
+                ),
               ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              "Following",
-              style: AppText.blackTextStyle.copyWith(
-                fontWeight: AppText.regular,
-                color: AppColors.greyColor,
+              const SizedBox(height: 8),
+              FittedBox(
+                child: Text(
+                  rowOneHead,
+                  style: AppText.blackTextStyle.copyWith(
+                    fontWeight: AppText.regular,
+                    color: AppColors.greyColor,
+                  ),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              "121.9k",
-              style: AppText.blackTextStyle.copyWith(
-                fontWeight: AppText.bold,
-                fontSize: 16,
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                rowTwoContent,
+                style: AppText.blackTextStyle.copyWith(
+                  fontWeight: AppText.bold,
+                  fontSize: 16,
+                ),
               ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              "Followers",
-              style: AppText.blackTextStyle.copyWith(
-                fontWeight: AppText.regular,
-                color: AppColors.greyColor,
+              const SizedBox(height: 8),
+              FittedBox(
+                child: Text(
+                  rowTwoHead,
+                  style: AppText.blackTextStyle.copyWith(
+                    fontWeight: AppText.regular,
+                    color: AppColors.greyColor,
+                  ),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              "7.5M",
-              style: AppText.blackTextStyle.copyWith(
-                fontWeight: AppText.bold,
-                fontSize: 16,
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                rowThreeContent,
+                style: AppText.blackTextStyle.copyWith(
+                  fontWeight: AppText.bold,
+                  fontSize: 16,
+                ),
               ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              "Likes",
-              style: AppText.blackTextStyle.copyWith(
-                fontWeight: AppText.regular,
-                color: AppColors.greyColor,
+              const SizedBox(height: 8),
+              FittedBox(
+                child: Text(
+                  rowThreeHead,
+                  style: AppText.blackTextStyle.copyWith(
+                    fontWeight: AppText.regular,
+                    color: AppColors.greyColor,
+                  ),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ],
     );
   }
 
-  Row _buildButtonAction() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        ElevatedButton(
-          onPressed: () {},
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.greenColor,
-            minimumSize: const Size(120, 45),
-            elevation: 8,
-            shadowColor: AppColors.primaryColor.withOpacity(0.3),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-          ),
-          child: Text('Follow',
-              style: AppText.whiteTextStyle
-                  .copyWith(fontWeight: AppText.semiBold)),
-        ),
-        const SizedBox(width: 12),
-        Container(
-          width: 45,
-          height: 45,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: AppColors.greyColor.withOpacity(0.17),
-            image: const DecorationImage(
-              scale: 2.3,
-              image: AssetImage("assets/images/ic_inbox.png"),
-            ),
-          ),
-        )
-      ],
-    );
-  }
-
-  Row _buildTabBar() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Text(
-          "Photos",
-          style: AppText.blackTextStyle.copyWith(
-            fontWeight: AppText.bold,
-            fontSize: 18,
-          ),
-        ),
-        const SizedBox(width: 24),
-        Text(
-          "Video",
-          style: AppText.blackTextStyle.copyWith(
-            fontWeight: AppText.bold,
-            fontSize: 18,
-            color: AppColors.greyColor,
-          ),
-        ),
-        const SizedBox(width: 24),
-        Text(
-          "Tagged",
-          style: AppText.blackTextStyle.copyWith(
-            fontWeight: AppText.bold,
-            fontSize: 18,
-            color: AppColors.greyColor,
-          ),
-        ),
-        const SizedBox(width: 24),
-        // const Spacer(),
-        Text(
-          "All",
-          style: AppText.blackTextStyle.copyWith(
-            fontWeight: AppText.bold,
-            fontSize: 18,
-            color: AppColors.greyColor,
-          ),
-        ),
-        // Image.asset("assets/images/ic_dots_2.png", width: 32),
-      ],
-    );
-  }
   // physics: const BouncingScrollPhysics(),
-
-  _buildGridList(BuildContext context) {
-    return SizedBox(
-      height: 400,
-      width: double.infinity,
-      child: GridView.count(
-          crossAxisCount: 3,
-          crossAxisSpacing: 6,
-          mainAxisSpacing: 6,
-          childAspectRatio: 0.62,
-          physics: const BouncingScrollPhysics(),
-          children: [
-            Stack(
-              alignment: Alignment.bottomCenter,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(24),
-                    image: const DecorationImage(
-                      image: NetworkImage(
-                        " gallery.imageggggggg",
-                      ),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 6,
-                    horizontal: 10,
-                  ),
-                  margin: const EdgeInsets.only(bottom: 12),
-                  decoration: BoxDecoration(
-                    color: AppColors.whiteColor,
-                    borderRadius: BorderRadius.circular(24),
-                  ),
-                  child: Text(
-                    "gallery.like",
-                    style: AppText.blackTextStyle
-                        .copyWith(fontWeight: AppText.bold, fontSize: 10),
-                  ),
-                ),
-              ],
-            )
-          ]),
-    );
-  }
 }
