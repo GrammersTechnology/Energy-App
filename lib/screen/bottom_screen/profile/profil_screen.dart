@@ -1,100 +1,114 @@
-import 'package:csv/csv.dart';
-import 'package:demo/controller/auth_controller.dart';
+import 'package:demo/controller/profile_controller.dart';
 import 'package:demo/routes/routes.dart';
-import 'package:demo/screen/bottom_screen/profile/widget/profile_edit_screen.dart';
-import 'package:dio/dio.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../const/themes/colors.dart';
 import '../../../../const/themes/text.dart';
+import 'widget/profile_edit_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.whiteColor,
-        elevation: 0,
-        centerTitle: true,
-        title: Text(
-          'Jenny Wilson',
-          style: AppText.blackTextStyle.copyWith(
-            fontSize: 18,
-            fontWeight: AppText.bold,
-          ),
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(
-              Icons.edit,
-              size: 24,
-            ),
-            color: AppColors.blackColor,
-            onPressed: () {
-              AuthController().addUserProfileDetails(context);
-              // Routes.push(screen: ProfileEditScreen());
-            },
-          ),
-          SizedBox(width: 24),
-        ],
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.only(right: 24, left: 24, top: 30),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _buildImageProfile(),
-                const SizedBox(height: 16),
-                const SizedBox(height: 24),
-                _buildDescription(
-                  "2",
-                  "Power Company",
-                  " 5",
-                  "Price zone",
-                  "5",
-                  "Yearly cosumption",
-                ),
-                const SizedBox(height: 24),
-                _buildDescription(
-                  "2",
-                  "Has sensor",
-                  " 5",
-                  "Has el car",
-                  "5",
-                  "Has eat pump",
-                ),
-                const SizedBox(height: 24),
-                _buildDescription(
-                  "2",
-                  "Has solar panel",
-                  " 5",
-                  "Number of pepole",
-                  "5",
-                  "Want PushWarning1",
-                ),
-                const SizedBox(height: 24),
-                _buildDescription(
-                  "5",
-                  "Want PushWarning2",
-                  "2",
-                  "PowerPoint",
-                  " 5",
-                  "PowerCoins",
-                ),
-                const SizedBox(height: 24),
-                const SizedBox(height: 24),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
+    final Controller = Provider.of<ProfileController>(context, listen: false);
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Controller.getUserProfileDetails(context);
+    });
+
+    return Consumer<ProfileController>(builder: (context, controller, _) {
+      return controller.loader
+          ? CircularProgressIndicator()
+          : userProfile != null
+              ? Scaffold(
+                  appBar: AppBar(
+                    backgroundColor: AppColors.whiteColor,
+                    elevation: 0,
+                    centerTitle: true,
+                    title: Text(
+                      userProfile?.name ?? "Unknow Name",
+                      style: AppText.blackTextStyle.copyWith(
+                        fontSize: 18,
+                        fontWeight: AppText.bold,
+                      ),
+                    ),
+                    actions: [
+                      IconButton(
+                        icon: Icon(
+                          Icons.edit,
+                          size: 24,
+                        ),
+                        color: AppColors.blackColor,
+                        onPressed: () {
+                          // ProfileController()
+                          //     .addUserProfileDetails(true, true, true, true, true, true);
+                          Routes.push(screen: ProfileEditScreen());
+                        },
+                      ),
+                      SizedBox(width: 24),
+                    ],
+                  ),
+                  body: SafeArea(
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding:
+                            const EdgeInsets.only(right: 24, left: 24, top: 30),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            _buildImageProfile(),
+                            const SizedBox(height: 16),
+                            const SizedBox(height: 24),
+                            _buildDescription(
+                              userProfile!.powerCompany.toString(),
+                              "Power Company",
+                              userProfile!.pricezone.toString(),
+                              "Price zone",
+                              userProfile!.yearlyCosumption.toString(),
+                              "Yearly cosumption",
+                            ),
+                            const SizedBox(height: 24),
+                            _buildDescription(
+                              userProfile!.hasSensor.toString(),
+                              "Has sensor",
+                              userProfile!.hasElCar.toString(),
+                              "Has el car",
+                              userProfile!.hasEatPump.toString(),
+                              "Has eat pump",
+                            ),
+                            const SizedBox(height: 24),
+                            _buildDescription(
+                              userProfile!.hasSolarPanel.toString(),
+                              "Has solar panel",
+                              userProfile!.numberOfPepole.toString(),
+                              "Number of pepole",
+                              userProfile!.wantPushWarning1.toString(),
+                              "Want PushWarning1",
+                            ),
+                            const SizedBox(height: 24),
+                            _buildDescription(
+                              userProfile!.wantPushWarning2.toString(),
+                              "Want PushWarning2",
+                              userProfile!.powerPoint.toString(),
+                              "PowerPoint",
+                              userProfile!.powerCoins.toString(),
+                              "PowerCoins",
+                            ),
+                            const SizedBox(height: 24),
+                            const SizedBox(height: 24),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              : Container(
+                  child: Center(child: Text("Data Not Available")),
+                );
+    });
   }
 
   Container _buildImageProfile() {
@@ -121,11 +135,11 @@ class ProfileScreen extends StatelessWidget {
 
   Row _buildDescription(
     rowOneContent,
-    rowOneHead,
+    String rowOneHead,
     rowTwoContent,
-    rowTwoHead,
+    String rowTwoHead,
     rowThreeContent,
-    rowThreeHead,
+    String rowThreeHead,
   ) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
