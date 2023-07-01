@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 
 import '../../../../const/themes/colors.dart';
 import '../../../../const/widgets/custom_button.dart';
-import '../../../../const/widgets/text_filed_widgets.dart';
 
 class ProfileEditScreen extends StatelessWidget {
   const ProfileEditScreen({super.key});
@@ -45,7 +44,7 @@ class ProfileEditScreen extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(20))),
                   child: DropdownButton(
                     iconEnabledColor: const Color.fromARGB(255, 27, 25, 25),
@@ -71,7 +70,9 @@ class ProfileEditScreen extends StatelessWidget {
                 TextFormField(
                   controller: controller.nameController,
                   decoration: InputDecoration(
-                    hintText: userProfile?.name ?? "Name",
+                    hintText: userProfile!.name.toString().isEmpty
+                        ? "Name"
+                        : userProfile?.name,
                     border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(30)),
                     ),
@@ -90,9 +91,9 @@ class ProfileEditScreen extends StatelessWidget {
                 vSpaceRegular,
                 TextFormField(
                   controller: controller.yearlyCosumptionController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: "Yearly Consumption ",
-                    border: const OutlineInputBorder(
+                    border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(30)),
                     ),
                   ),
@@ -100,9 +101,9 @@ class ProfileEditScreen extends StatelessWidget {
                 vSpaceRegular,
                 TextFormField(
                   controller: controller.numberOfPepoleControler,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: "Number Of Pepole",
-                    border: const OutlineInputBorder(
+                    border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(30)),
                     ),
                   ),
@@ -110,9 +111,9 @@ class ProfileEditScreen extends StatelessWidget {
                 vSpaceRegular,
                 TextFormField(
                   controller: controller.powerCoinsController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: "Power Coins",
-                    border: const OutlineInputBorder(
+                    border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(30)),
                     ),
                   ),
@@ -120,9 +121,9 @@ class ProfileEditScreen extends StatelessWidget {
                 vSpaceRegular,
                 TextFormField(
                   controller: controller.powerPointController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: "Power Point",
-                    border: const OutlineInputBorder(
+                    border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(30)),
                     ),
                   ),
@@ -138,7 +139,7 @@ class ProfileEditScreen extends StatelessWidget {
                               controller.hasElCarValueChange(value);
                             },
                           ),
-                          Text("Has El Car")
+                          const Text("Has El Car")
                         ],
                       ),
                     ),
@@ -151,7 +152,7 @@ class ProfileEditScreen extends StatelessWidget {
                               controller.wantPushWarning2ValueChange(value);
                             },
                           ),
-                          Text("Want Push Warning2")
+                          const Text("Want Push Warning2")
                         ],
                       ),
                     )
@@ -168,7 +169,7 @@ class ProfileEditScreen extends StatelessWidget {
                               controller.hasSensorValueChange(value);
                             },
                           ),
-                          Text("hasSensor")
+                          const Text("hasSensor")
                         ],
                       ),
                     ),
@@ -181,7 +182,7 @@ class ProfileEditScreen extends StatelessWidget {
                               controller.wantPushWarning1ValueChange(value);
                             },
                           ),
-                          Text("wantPushWarning1")
+                          const Text("wantPushWarning1")
                         ],
                       ),
                     ),
@@ -198,7 +199,7 @@ class ProfileEditScreen extends StatelessWidget {
                               controller.hasEatPumpValueChange(value);
                             },
                           ),
-                          Text("hasEatPump")
+                          const Text("hasEatPump")
                         ],
                       ),
                     ),
@@ -211,7 +212,7 @@ class ProfileEditScreen extends StatelessWidget {
                               controller.hasSolarPanelValueChange(value);
                             },
                           ),
-                          Text("hasSolarPanel")
+                          const Text("hasSolarPanel")
                         ],
                       ),
                     ),
