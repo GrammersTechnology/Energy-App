@@ -186,10 +186,10 @@ class AuthController extends ChangeNotifier {
         name: '',
         powerCompany: "",
         pricezone: dropdowmValue.toString(),
-        yearlyCosumption: 0,
-        numberOfPepole: 0,
-        powerCoins: 0,
-        powerPoint: 0,
+        yearlyCosumption: "0",
+        numberOfPepole: "0",
+        powerCoins: "0",
+        powerPoint: "0",
         hasSensor: false,
         hasElCar: false,
         hasEatPump: false,
@@ -202,7 +202,8 @@ class AuthController extends ChangeNotifier {
           .collection('user')
           .doc(fb.currentUser!.uid)
           .collection('profile')
-          .add(data.toJson());
+          .doc(fb.currentUser!.uid)
+          .set(data.toJson());
       // .set(data.toJson());
       notifyListeners();
       // saveAuthLocal();

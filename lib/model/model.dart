@@ -36,7 +36,7 @@ class ProfileModel {
   String name;
   String email;
   String powerCompany, pricezone;
-  int yearlyCosumption, numberOfPepole, powerPoint, powerCoins;
+  String yearlyCosumption, numberOfPepole, powerPoint, powerCoins;
   bool hasSensor,
       hasElCar,
       hasEatPump,
