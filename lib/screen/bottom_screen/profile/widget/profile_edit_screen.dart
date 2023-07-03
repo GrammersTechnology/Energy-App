@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:demo/const/space_helper.dart';
 import 'package:demo/controller/profile_controller.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +7,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../const/themes/colors.dart';
 import '../../../../const/widgets/custom_button.dart';
+import '../../../../const/widgets/text_filed_widgets.dart';
 
 class ProfileEditScreen extends StatelessWidget {
   const ProfileEditScreen({super.key});
@@ -44,14 +47,16 @@ class ProfileEditScreen extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(20))),
                   child: DropdownButton(
                     iconEnabledColor: const Color.fromARGB(255, 27, 25, 25),
                     focusColor: const Color.fromARGB(255, 209, 204, 204),
                     borderRadius: BorderRadius.circular(10),
                     hint: Text(
-                      controller.dropDownValue ?? " Select From List",
+                      userProfile?.powerCompany ??
+                          controller.dropDownValue ??
+                          " Select From List",
                       style: const TextStyle(
                           color: Color.fromARGB(255, 36, 34, 34)),
                     ),
@@ -70,9 +75,7 @@ class ProfileEditScreen extends StatelessWidget {
                 TextFormField(
                   controller: controller.nameController,
                   decoration: InputDecoration(
-                    hintText: userProfile!.name.toString().isEmpty
-                        ? "Name"
-                        : userProfile?.name,
+                    hintText: userProfile?.name ?? "Name",
                     border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(30)),
                     ),
@@ -90,133 +93,147 @@ class ProfileEditScreen extends StatelessWidget {
                 ),
                 vSpaceRegular,
                 TextFormField(
+                  keyboardType: TextInputType.number,
                   controller: controller.yearlyCosumptionController,
-                  decoration: const InputDecoration(
-                    hintText: "Yearly Consumption ",
-                    border: OutlineInputBorder(
+                  decoration: InputDecoration(
+                    hintText:
+                        userProfile?.yearlyCosumption ?? "Yearly Consumption ",
+                    border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(30)),
                     ),
                   ),
                 ),
                 vSpaceRegular,
                 TextFormField(
+                  keyboardType: TextInputType.number,
                   controller: controller.numberOfPepoleControler,
-                  decoration: const InputDecoration(
-                    hintText: "Number Of Pepole",
-                    border: OutlineInputBorder(
+                  decoration: InputDecoration(
+                    hintText: userProfile?.numberOfPepole ?? "Number Of Pepole",
+                    border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(30)),
                     ),
                   ),
                 ),
                 vSpaceRegular,
                 TextFormField(
+                  keyboardType: TextInputType.number,
                   controller: controller.powerCoinsController,
-                  decoration: const InputDecoration(
-                    hintText: "Power Coins",
-                    border: OutlineInputBorder(
+                  decoration: InputDecoration(
+                    hintText: userProfile?.powerCoins ?? "Power Coins",
+                    border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(30)),
                     ),
                   ),
                 ),
                 vSpaceRegular,
                 TextFormField(
+                  keyboardType: TextInputType.number,
                   controller: controller.powerPointController,
-                  decoration: const InputDecoration(
-                    hintText: "Power Point",
-                    border: OutlineInputBorder(
+                  decoration: InputDecoration(
+                    hintText: userProfile?.powerPoint ?? "Power Point",
+                    border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(30)),
                     ),
                   ),
                 ),
-                Row(
-                  children: [
-                    SizedBox(
-                      child: Row(
-                        children: [
-                          Checkbox(
-                            value: controller.hasElCarBool,
-                            onChanged: (value) {
-                              controller.hasElCarValueChange(value);
-                            },
+                SizedBox(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          child: Row(
+                            children: [
+                              Text("Has El Car"),
+                              Spacer(),
+                              Switch(
+                                value: controller.hasElCarBool,
+                                onChanged: (value) {
+                                  controller.hasElCarValueChange(value);
+                                },
+                              ),
+                              hSpaceMedium
+                            ],
                           ),
-                          const Text("Has El Car")
-                        ],
-                      ),
+                        ),
+                        SizedBox(
+                          child: Row(
+                            children: [
+                              Text("Want Push Warning2"),
+                              Spacer(),
+                              Switch(
+                                value: controller.wantPushWarning2Bool,
+                                onChanged: (value) {
+                                  controller.wantPushWarning2ValueChange(value);
+                                },
+                              ),
+                              hSpaceMedium
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          child: Row(
+                            children: [
+                              Text("hasSensor"),
+                              Spacer(),
+                              Switch(
+                                value: controller.hasSensorBool,
+                                onChanged: (value) {
+                                  controller.hasSensorValueChange(value);
+                                },
+                              ),
+                              hSpaceMedium
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          child: Row(
+                            children: [
+                              Text("wantPushWarning1"),
+                              Spacer(),
+                              Switch(
+                                value: controller.wantPushWarning1Bool,
+                                onChanged: (value) {
+                                  controller.wantPushWarning1ValueChange(value);
+                                },
+                              ),
+                              hSpaceMedium
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          child: Row(
+                            children: [
+                              Text("hasEatPump"),
+                              Spacer(),
+                              Switch(
+                                value: controller.hasEatPumpBool,
+                                onChanged: (value) {
+                                  controller.hasEatPumpValueChange(value);
+                                },
+                              ),
+                              hSpaceMedium
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          child: Row(
+                            children: [
+                              Text("hasSolarPanel"),
+                              Spacer(),
+                              Switch(
+                                value: controller.hasSolarPanelBool,
+                                onChanged: (value) {
+                                  controller.hasSolarPanelValueChange(value);
+                                },
+                              ),
+                              hSpaceMedium
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                    SizedBox(
-                      child: Row(
-                        children: [
-                          Checkbox(
-                            value: controller.wantPushWarning2Bool,
-                            onChanged: (value) {
-                              controller.wantPushWarning2ValueChange(value);
-                            },
-                          ),
-                          const Text("Want Push Warning2")
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-                Row(
-                  children: [
-                    SizedBox(
-                      child: Row(
-                        children: [
-                          Checkbox(
-                            value: controller.hasSensorBool,
-                            onChanged: (value) {
-                              controller.hasSensorValueChange(value);
-                            },
-                          ),
-                          const Text("hasSensor")
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      child: Row(
-                        children: [
-                          Checkbox(
-                            value: controller.wantPushWarning1Bool,
-                            onChanged: (value) {
-                              controller.wantPushWarning1ValueChange(value);
-                            },
-                          ),
-                          const Text("wantPushWarning1")
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    SizedBox(
-                      child: Row(
-                        children: [
-                          Checkbox(
-                            value: controller.hasEatPumpBool,
-                            onChanged: (value) {
-                              controller.hasEatPumpValueChange(value);
-                            },
-                          ),
-                          const Text("hasEatPump")
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      child: Row(
-                        children: [
-                          Checkbox(
-                            value: controller.hasSolarPanelBool,
-                            onChanged: (value) {
-                              controller.hasSolarPanelValueChange(value);
-                            },
-                          ),
-                          const Text("hasSolarPanel")
-                        ],
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
                 LoginButtonWidget(
                   onTap: () {

@@ -1,9 +1,11 @@
+import 'package:demo/controller/profile_controller.dart';
 import 'package:demo/screen/bottom_screen/chart/chart_screen.dart';
 import 'package:demo/screen/bottom_screen/profile/profil_screen.dart';
 import 'package:demo/screen/bottom_screen/repot/report_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:provider/provider.dart';
 
 import 'home/home_screen.dart';
 
@@ -15,6 +17,11 @@ class BottumNavigationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Provider.of<ProfileController>(context, listen: false);
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      controller.getUserProfileDetails(context);
+    });
     return Scaffold(
         body: PersistentTabView(
       context,

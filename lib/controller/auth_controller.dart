@@ -160,14 +160,15 @@ class AuthController extends ChangeNotifier {
       db
           .collection('user')
           .doc(fb.currentUser?.uid)
-          // .collection("auth")
+          .collection("profile")
+          .doc(fb.currentUser?.uid)
           .get()
           .then((value) {
         // if () {
-        final data = UserModel.fromJson(value.data()!);
-        log(data.zone.toString());
+        final data = ProfileModel.fromJson(value.data()!);
+
         // Access the zone ID field
-        String zoneId = data.zone.toString();
+        String zoneId = data.pricezone.toString();
         pref.setString('zone', zoneId.toString());
         // } else {
         //   print('User document not found.');

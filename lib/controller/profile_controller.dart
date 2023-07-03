@@ -101,19 +101,61 @@ class ProfileController extends ChangeNotifier {
       bool wantPushWarning2,
       context) async {
     loader = true;
-    final perf = await SharedPreferences.getInstance();
+    String name;
+    String yearlyConsmtn;
+    String numberOfPepole;
+    String powerCoins;
+    String powerPoint;
 
-    final zone = perf.getString("zone");
+    String zone;
 
+    if (nameController.text.isEmpty) {
+      name = userProfile!.name;
+    } else {
+      name = nameController.text;
+    }
+    if (zoneController.text.isEmpty) {
+      zone = userProfile!.pricezone;
+    } else {
+      zone = nameController.text;
+    }
+    if (yearlyCosumptionController.text.isEmpty) {
+      yearlyConsmtn = userProfile!.yearlyCosumption;
+    } else {
+      yearlyConsmtn = yearlyCosumptionController.text;
+    }
+    if (numberOfPepoleControler.text.isEmpty) {
+      numberOfPepole = userProfile!.numberOfPepole;
+    } else {
+      numberOfPepole = numberOfPepoleControler.text;
+    }
+    if (powerCoinsController.text.isEmpty) {
+      powerCoins = userProfile!.powerCoins;
+    } else {
+      powerCoins = powerCoinsController.text;
+    }
+    if (powerPointController.text.isEmpty) {
+      powerPoint = userProfile!.powerPoint;
+    } else {
+      powerPoint = powerPointController.text;
+    }
+
+    log(name.toString());
+    log(zone);
+    log(yearlyConsmtn.toString());
+    log(numberOfPepole);
+    log(powerCoins);
+    log(powerPoint);
+    print("object$name");
     ProfileModel data = ProfileModel(
         email: fb.currentUser!.email.toString(),
-        name: nameController.text,
-        powerCompany: dropDownValue ?? "",
+        name: name.toString(),
+        powerCompany: dropDownValue ?? userProfile!.powerCompany.toString(),
         pricezone: zone.toString(),
-        yearlyCosumption: yearlyCosumptionController.text,
-        numberOfPepole: numberOfPepoleControler.text,
-        powerCoins: powerCoinsController.text,
-        powerPoint: powerPointController.text,
+        yearlyCosumption: yearlyConsmtn,
+        numberOfPepole: numberOfPepole,
+        powerCoins: powerCoins,
+        powerPoint: powerPoint,
         hasSensor: hasSensor,
         hasElCar: hasElCar,
         hasEatPump: hasEatPump,
@@ -137,12 +179,6 @@ class ProfileController extends ChangeNotifier {
       loader = false;
       notifyListeners();
     }
-
-    // profileDocRef.update(data.toJson()).then((_) {
-    //   print('Profile data updated successfully!');
-    // }).catchError((error) {
-    //   print('Failed to update profile data: $error');
-    // });
   }
 
   clearController() {
@@ -165,8 +201,13 @@ class ProfileController extends ChangeNotifier {
           .get()
           .then((value) {
         userProfile = ProfileModel.fromJson(value.data()!);
+        hasSensorBool = userProfile!.hasSensor;
+        hasElCarBool = userProfile!.hasElCar;
+        hasEatPumpBool = userProfile!.hasEatPump;
+        hasSolarPanelBool = userProfile!.hasSolarPanel;
+        wantPushWarning1Bool = userProfile!.wantPushWarning1;
+        wantPushWarning2Bool = userProfile!.wantPushWarning2;
         notifyListeners();
-        log(userProfile!.email.toString());
         loader = false;
         notifyListeners();
       });

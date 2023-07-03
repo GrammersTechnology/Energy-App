@@ -1,3 +1,4 @@
+import 'package:demo/screen/bottom_screen/home/widget/columgraphwidget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +9,7 @@ import '../../../const/themes/colors.dart';
 import '../../../controller/auth_controller.dart';
 import '../../../controller/home_controller.dart';
 import '../../../routes/routes.dart';
+import '../repot/report_chart.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -52,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             },
             child: Text(
-              'Strompris',
+              'Report Graph',
               style: GoogleFonts.montserrat(
                   fontSize: 25, fontWeight: FontWeight.w500),
             ),
@@ -92,6 +94,18 @@ class _HomeScreenState extends State<HomeScreen> {
                       )
                     : Column(
                         children: [
+                          Text(
+                            'Price Predictor',
+                            style: GoogleFonts.montserrat(
+                                fontSize: 25, fontWeight: FontWeight.w500),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          const ColumnGraphWidget(),
+                          const SizedBox(
+                            height: 20,
+                          ),
                           Padding(
                             padding: const EdgeInsets.all(10),
                             child: ListView.builder(
