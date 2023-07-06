@@ -11,6 +11,7 @@ class ChartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Controller = Provider.of<ChartController>(context, listen: false);
+    // final homeController = Provider.of<HomeController>(context, listen: false);
     final size = MediaQuery.of(context).size;
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {

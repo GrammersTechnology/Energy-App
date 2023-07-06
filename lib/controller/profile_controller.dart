@@ -9,11 +9,10 @@ import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/widgets.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 import '../screen/bottom_screen/bottum_navigation_screen.dart';
 
 ProfileModel? userProfile;
+List<SavingTips> savingTips = [];
 
 class ProfileController extends ChangeNotifier {
   FirebaseAuth fb = FirebaseAuth.instance;
@@ -31,6 +30,7 @@ class ProfileController extends ChangeNotifier {
   final powerCoinsController = TextEditingController();
   final powerPointController = TextEditingController();
 
+  bool allBool = userProfile?.all ?? false;
   bool hasSensorBool = userProfile?.hasSensor ?? false;
   bool hasElCarBool = userProfile?.hasElCar ?? false;
   bool hasEatPumpBool = userProfile?.hasEatPump ?? false;
@@ -49,6 +49,11 @@ class ProfileController extends ChangeNotifier {
 
   hasElCarValueChange(value) {
     hasElCarBool = value;
+    notifyListeners();
+  }
+
+  allValueChange(value) {
+    allBool = value;
     notifyListeners();
   }
 
@@ -92,14 +97,7 @@ class ProfileController extends ChangeNotifier {
     notifyListeners();
   }
 
-  updateUserProfileDetails(
-      bool hasSensor,
-      bool hasElCar,
-      bool hasEatPump,
-      bool hasSolarPanel,
-      bool wantPushWarning1,
-      bool wantPushWarning2,
-      context) async {
+  updateUserProfileDetails(context) async {
     loader = true;
     String name;
     String yearlyConsmtn;
@@ -148,6 +146,7 @@ class ProfileController extends ChangeNotifier {
     log(powerPoint);
     print("object$name");
     ProfileModel data = ProfileModel(
+        all: hasElCarBool && hasSolarPanelBool && hasEatPumpBool ? true : false,
         email: fb.currentUser!.email.toString(),
         name: name.toString(),
         powerCompany: dropDownValue ?? userProfile!.powerCompany.toString(),
@@ -156,13 +155,18 @@ class ProfileController extends ChangeNotifier {
         numberOfPepole: numberOfPepole,
         powerCoins: powerCoins,
         powerPoint: powerPoint,
-        hasSensor: hasSensor,
-        hasElCar: hasElCar,
-        hasEatPump: hasEatPump,
-        hasSolarPanel: hasSolarPanel,
-        wantPushWarning1: wantPushWarning1,
-        wantPushWarning2: wantPushWarning2);
-
+        hasSensor: hasSensorBool,
+        hasElCar: hasElCarBool,
+        hasEatPump: hasEatPumpBool,
+        hasSolarPanel: hasSolarPanelBool,
+        wantPushWarning1: wantPushWarning1Bool,
+        wantPushWarning2: wantPushWarning2Bool);
+    if (allBool) {
+      hasElCarBool = true;
+      hasEatPumpBool = true;
+      hasSolarPanelBool = true;
+      notifyListeners();
+    }
     try {
       await db
           .collection('user')

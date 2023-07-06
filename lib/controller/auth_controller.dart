@@ -196,7 +196,8 @@ class AuthController extends ChangeNotifier {
         hasEatPump: false,
         hasSolarPanel: false,
         wantPushWarning1: false,
-        wantPushWarning2: false);
+        wantPushWarning2: false,
+        all: false);
 
     try {
       await db
