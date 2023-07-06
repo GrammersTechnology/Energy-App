@@ -42,7 +42,8 @@ class ProfileModel {
       hasEatPump,
       hasSolarPanel,
       wantPushWarning1,
-      wantPushWarning2;
+      wantPushWarning2,
+      all;
 
   ProfileModel({
     required this.email,
@@ -59,6 +60,7 @@ class ProfileModel {
     required this.hasSolarPanel,
     required this.wantPushWarning1,
     required this.wantPushWarning2,
+    required this.all,
   });
   factory ProfileModel.fromJson(Map<String, dynamic> json) => ProfileModel(
       email: json["email"],
@@ -71,6 +73,7 @@ class ProfileModel {
       powerPoint: json["powerPoint"],
       hasSensor: json['hasSensor'],
       hasElCar: json['hasElCar'],
+      all: json['all'],
       hasEatPump: json['hasEatPump'],
       hasSolarPanel: json['hasSolarPanel'],
       wantPushWarning1: json['wantPushWarning1'],
@@ -89,6 +92,34 @@ class ProfileModel {
         "hasEatPump": hasEatPump,
         "hasSolarPanel": hasSolarPanel,
         "wantPushWarning1": wantPushWarning1,
-        "wantPushWarning2": wantPushWarning2
+        "wantPushWarning2": wantPushWarning2,
+        'all': all
       };
+}
+
+class SavingTips {
+  String readmoretxt;
+  String savingstips;
+  bool All;
+  bool ElCar;
+  bool HeatPump;
+  bool SolarPanels;
+  dynamic dateTIme;
+
+  SavingTips(
+      {required this.readmoretxt,
+      required this.savingstips,
+      required this.All,
+      required this.ElCar,
+      required this.HeatPump,
+      required this.SolarPanels,
+      required this.dateTIme});
+  factory SavingTips.fromJson(Map<String, dynamic> Json) => SavingTips(
+      readmoretxt: Json["ReadMoreTxt"],
+      savingstips: Json["SavingsTips"],
+      All: Json['All'],
+      ElCar: Json['ElCar'],
+      HeatPump: Json['HeatPump'],
+      SolarPanels: Json['SolarPanels'],
+      dateTIme: Json['TimeDate']);
 }

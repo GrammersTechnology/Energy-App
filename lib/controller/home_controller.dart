@@ -1,19 +1,29 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:demo/controller/profile_controller.dart';
+import 'package:demo/model/model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../services/home_services.dart';
 
 class HomeController extends ChangeNotifier {
-  Stream<List<GraphData>> get graphDataStream => _graphDataController.stream;
-  final _graphDataController = StreamController<List<GraphData>>();
+  FirebaseAuth fb = FirebaseAuth.instance;
+  FirebaseFirestore db = FirebaseFirestore.instance;
+
+  StreamController<List<GraphData>> graphDataStream =
+      StreamController<List<GraphData>>();
   List result = [];
 
   List<GraphData> stepLineGraph = [];
   bool loader = false;
   fecthData(context) async {
+    loader = true;
     GraphData temp = GraphData(x: 1, y: 5);
     final perf = await SharedPreferences.getInstance();
 
@@ -41,8 +51,6 @@ class HomeController extends ChangeNotifier {
             x: dateTimeStart.hour + dateTimeStart.minute + dateTimeStart.second,
             y: result[i]['NOK_per_kWh']);
         stepLineGraph.add(temp);
-        // log(stepLineGraph[i].x.toString());
-        // log(stepLineGraph[i].x.runtimeType.toString());
         notifyListeners();
       }
       if (stepLineGraph.isNotEmpty) {
@@ -62,17 +70,16 @@ class HomeController extends ChangeNotifier {
         });
       }
     }
-    _graphDataController.sink.add(stepLineGraph); // Emit the updated graph data
+    graphDataStream.sink.add(stepLineGraph); // Emit the updated graph data
 
     loader = false;
     notifyListeners();
   }
 
-  @override
-  void dispose() {
-    _graphDataController.close(); // Close the stream controller
-    super.dispose();
-  }
+  // dispose() {
+  //   graphDataStream.close(); // Close the stream controller
+  //   super.dispose();
+  // }
 
   ///////////////////////// Column Graph/////////////////////////////////
   ///
@@ -101,6 +108,115 @@ class HomeController extends ChangeNotifier {
       }
     }
     loader = false;
+  }
+
+  getTips(context) async {
+    final controller = Provider.of<ProfileController>(context, listen: false);
+    await db.collection("savings_tips").get().then((value) {
+      log("message");
+      final data = value.docs;
+      List<SavingTips> tempData = [];
+
+      if (data.isNotEmpty) {
+        for (var element in data) {
+          final singleData = SavingTips(
+              readmoretxt: element.data()['ReadMoreTxt'],
+              savingstips: element.data()['SavingsTips'],
+              All: element.data()['All'],
+              ElCar: element.data()['ElCar'],
+              HeatPump: element.data()['HeatPump'],
+              SolarPanels: element.data()['SolarPanels'],
+              dateTIme: element.data()['TimeDate']);
+
+          tempData.add(singleData);
+        }
+      }
+      // log(tempData.elementAt(0).savingstips.toString());
+      savingTips.clear();
+
+      if (tempData.isNotEmpty) {
+        if (controller.hasElCarBool &&
+            controller.hasEatPumpBool &&
+            controller.hasSolarPanelBool) {
+          print(
+              "controller.hasElCarBool &&controller.hasEatPumpBool &&controller.hasSolarPanelBool");
+          for (var element in tempData) {
+            if (element.All == true) {
+              log(savingTips.toString());
+
+              savingTips.add(element);
+            }
+          }
+          // } else if (controller.hasElCarBool && controller.hasEatPumpBool) {
+          //   savingTips.clear();
+          //   for (var element in tempData) {
+          //     if (element.HeatPump && element.ElCar == true) {
+          //       savingTips.add(element);
+          //       log(savingTips.first.savingstips.toString());
+          //     }
+          //   }
+          // } else if (controller.hasEatPumpBool && controller.hasSolarPanelBool) {
+          //   savingTips.clear();
+          //   for (var element in tempData) {
+          //     if (element.HeatPump && element.SolarPanels == true) {
+          //       savingTips.add(element);
+          //       log(savingTips.first.savingstips.toString());
+          //     }
+          //   }
+          //   // for (var element in data.docs) {}
+          // } else if (controller.hasElCarBool && controller.hasSolarPanelBool) {
+          //   savingTips.clear();
+          //   for (var element in tempData) {
+          //     if (element.ElCar && element.SolarPanels == true) {
+          //       savingTips.add(element);
+          //       log(savingTips.first.savingstips.toString());
+          //     }
+          //   }
+          // for (var element in data.docs) {}
+        } else if (controller.hasElCarBool) {
+          print('controller.hasElCarBool');
+          for (var element in tempData) {
+            if (element.ElCar == true) {
+              savingTips.add(element);
+              log(savingTips.first.savingstips.toString());
+            }
+          }
+          // for (var element in data.docs) {}
+        } else if (controller.hasEatPumpBool) {
+          print('controller.hasEatPumpBool');
+          for (var element in tempData) {
+            if (element.HeatPump == true) {
+              savingTips.add(element);
+              log(savingTips.first.savingstips.toString());
+            }
+          }
+          // for (var element in data.docs) {}
+        } else if (controller.hasSolarPanelBool) {
+          print('controller.hasSolarPanelBool');
+          for (var element in tempData) {
+            if (element.SolarPanels == true) {
+              savingTips.add(element);
+              log(savingTips.first.savingstips.toString());
+            }
+          }
+        }
+      } else {
+        savingTips.clear();
+      }
+      log(savingTips.length.toString());
+
+      //sorting//
+      if (savingTips.length > 1) {
+        for (var element in savingTips) {
+          DateTime date = DateTime.parse(element.dateTIme.toString());
+          log(date.runtimeType.toString());
+        }
+        savingTips.sort((a, b) => a.dateTIme.toString().compareTo(b.dateTIme));
+      }
+      notifyListeners();
+    }).catchError((error) {
+      print('Error retrieving data: $error');
+    });
   }
 }
 

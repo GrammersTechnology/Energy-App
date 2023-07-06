@@ -27,9 +27,8 @@ class BottumNavigationScreen extends StatelessWidget {
       context,
       controller: _controller,
       screens: const [
-        HomeScreen(),
-
         ReoprtScreen(),
+        HomeScreen(),
         ChartScreen(),
         // Container(),
         ProfileScreen()

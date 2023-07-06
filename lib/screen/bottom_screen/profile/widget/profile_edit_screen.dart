@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:demo/const/space_helper.dart';
 import 'package:demo/controller/profile_controller.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +5,6 @@ import 'package:provider/provider.dart';
 
 import '../../../../const/themes/colors.dart';
 import '../../../../const/widgets/custom_button.dart';
-import '../../../../const/widgets/text_filed_widgets.dart';
 
 class ProfileEditScreen extends StatelessWidget {
   const ProfileEditScreen({super.key});
@@ -141,6 +138,21 @@ class ProfileEditScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
+                        // SizedBox(
+                        //   child: Row(
+                        //     children: [
+                        //       Text("All"),
+                        //       Spacer(),
+                        //       Switch(
+                        //         value: controller.allBool,
+                        //         onChanged: (value) {
+                        //           controller.allValueChange(value);
+                        //         },
+                        //       ),
+                        //       hSpaceMedium
+                        //     ],
+                        //   ),
+                        // ),
                         SizedBox(
                           child: Row(
                             children: [
@@ -237,14 +249,7 @@ class ProfileEditScreen extends StatelessWidget {
                 ),
                 LoginButtonWidget(
                   onTap: () {
-                    controller.updateUserProfileDetails(
-                        controller.hasSensorBool,
-                        controller.hasElCarBool,
-                        controller.hasEatPumpBool,
-                        controller.hasSolarPanelBool,
-                        controller.wantPushWarning1Bool,
-                        controller.wantPushWarning2Bool,
-                        context);
+                    controller.updateUserProfileDetails(context);
                   },
                   title: 'Update  Now',
                 )
