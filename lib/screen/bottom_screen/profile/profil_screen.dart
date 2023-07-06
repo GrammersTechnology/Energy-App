@@ -148,12 +148,16 @@ class ProfileScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              FittedBox(
-                child: Text(
-                  rowOneContent,
-                  style: AppText.blackTextStyle.copyWith(
-                    fontWeight: AppText.bold,
-                    fontSize: 16,
+              SizedBox(
+                width: 300,
+                height: 30,
+                child: FittedBox(
+                  child: Text(
+                    rowOneContent,
+                    style: AppText.blackTextStyle.copyWith(
+                      fontWeight: AppText.bold,
+                      fontSize: 16,
+                    ),
                   ),
                 ),
               ),
