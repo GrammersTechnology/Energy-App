@@ -18,19 +18,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
-  void didChangeDependencies() {
-    final controller = Provider.of<HomeController>(context, listen: false);
-
-    Future.delayed(const Duration(seconds: 3)).then((value) {
-      controller.fecthData(
-        context,
-      );
-    });
-
-    super.didChangeDependencies();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final authController = Provider.of<AuthController>(context, listen: false);
     final Controller = Provider.of<HomeController>(context, listen: false);
