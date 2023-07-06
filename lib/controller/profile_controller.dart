@@ -216,7 +216,7 @@ class ProfileController extends ChangeNotifier {
         notifyListeners();
       });
     } catch (e) {
-      Messenger.pop(msg: e.toString(), context: context);
+      // Messenger.pop(msg: e.toString(), context: context);
       loader = false;
       notifyListeners();
     }

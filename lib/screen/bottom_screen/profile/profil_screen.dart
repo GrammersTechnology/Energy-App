@@ -20,7 +20,7 @@ class ProfileScreen extends StatelessWidget {
 
     return Consumer<ProfileController>(builder: (context, controller, _) {
       return controller.loader
-          ? CircularProgressIndicator()
+          ? const Center(child: CircularProgressIndicator())
           : userProfile != null
               ? Scaffold(
                   appBar: AppBar(
@@ -36,7 +36,7 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     actions: [
                       IconButton(
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.edit,
                           size: 24,
                         ),
@@ -44,10 +44,10 @@ class ProfileScreen extends StatelessWidget {
                         onPressed: () {
                           // ProfileController()
                           //     .addUserProfileDetails(true, true, true, true, true, true);
-                          Routes.push(screen: ProfileEditScreen());
+                          Routes.push(screen: const ProfileEditScreen());
                         },
                       ),
-                      SizedBox(width: 24),
+                      const SizedBox(width: 24),
                     ],
                   ),
                   body: SafeArea(
@@ -106,7 +106,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 )
               : Container(
-                  child: Center(child: Text("Data Not Available")),
+                  child: const Center(child: Text("Data Not Available")),
                 );
     });
   }

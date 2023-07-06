@@ -1,9 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:demo/auth/screen/loginscreen.dart';
 import 'package:demo/const/space_helper.dart';
 import 'package:demo/const/themes/colors.dart';
+import 'package:demo/controller/auth_controller.dart';
 import 'package:demo/controller/profile_controller.dart';
 import 'package:demo/screen/bottom_screen/repot/widgets/tips_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +17,8 @@ class ReoprtScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authController = Provider.of<AuthController>(context, listen: false);
+
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       final controller = Provider.of<HomeController>(context, listen: false);
       controller.getTips(context);
@@ -28,10 +30,23 @@ class ReoprtScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
         centerTitle: true,
         title: Text(
-          'Report Graph',
+          'Strompris',
           style:
               GoogleFonts.montserrat(fontSize: 25, fontWeight: FontWeight.w500),
         ),
+        actions: [
+          GestureDetector(
+            child: const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Icon(Icons.logout),
+            ),
+            onTap: () {
+              authController.signout(context);
+              authController.clearLocalData();
+              Routes.pushreplace(screen: const LoginScreen());
+            },
+          )
+        ],
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -88,9 +103,9 @@ class ReoprtScreen extends StatelessWidget {
                                 children: [
                                   TextButton(
                                       onPressed: () {
-                                        Routes.push(screen: TipsScreen());
+                                        Routes.push(screen: const TipsScreen());
                                       },
-                                      child: Text(
+                                      child: const Text(
                                         'Read more',
                                         style: TextStyle(
                                           color: Colors.white,
@@ -103,7 +118,7 @@ class ReoprtScreen extends StatelessWidget {
                             ],
                           )),
                     )
-                  : Text("Savings Tips Not Available"),
+                  : const Text("Savings Tips Not Available"),
               vSpaceXl
             ],
           ),

@@ -42,7 +42,7 @@ class StepperGraphWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<HomeController>(builder: (context, controller, widget) {
       return controller.loader
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(),
             )
           : SizedBox(

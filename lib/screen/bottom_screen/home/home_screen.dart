@@ -2,12 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import '../../../auth/screen/loginscreen.dart';
 import '../../../const/space_helper.dart';
 import '../../../const/themes/colors.dart';
-import '../../../controller/auth_controller.dart';
 import '../../../controller/home_controller.dart';
-import '../../../routes/routes.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -19,7 +16,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    final authController = Provider.of<AuthController>(context, listen: false);
     final Controller = Provider.of<HomeController>(context, listen: false);
     // final size = MediaQuery.of(context).size;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
@@ -39,24 +35,11 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             },
             child: Text(
-              'Report Graph',
+              'Daily Report',
               style: GoogleFonts.montserrat(
                   fontSize: 25, fontWeight: FontWeight.w500),
             ),
           ),
-          actions: [
-            GestureDetector(
-              child: const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Icon(Icons.logout),
-              ),
-              onTap: () {
-                authController.signout(context);
-                authController.clearLocalData();
-                Routes.pushreplace(screen: const LoginScreen());
-              },
-            )
-          ],
         ),
         body: Consumer<HomeController>(
             builder: (context, homeController, widget) {
