@@ -39,49 +39,26 @@ class StepperGraphWidget extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  @override
   Widget build(BuildContext context) {
     return Consumer<HomeController>(builder: (context, controller, widget) {
-      final graphDataStream = controller.graphDataStream.stream;
-
       return controller.loader
           ? Center(
               child: CircularProgressIndicator(),
             )
-          : StreamBuilder<List<GraphData>>(
-              stream: graphDataStream,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  final List<GraphData> graphDataList = snapshot.data!;
-                  return SizedBox(
-                    width: double.infinity,
-                    height: 250,
-                    child: SfCartesianChart(
-                      primaryXAxis: CategoryAxis(title: AxisTitle(text: "")),
-                      series: <ChartSeries>[
-                        StepLineSeries<GraphData, String>(
-                          dataSource: graphDataList,
-                          xValueMapper: (GraphData sales, _) =>
-                              sales.x.toString(),
-                          yValueMapper: (GraphData sales, _) => sales.y,
-                          // dataLabelSettings: DataLabelSettings(isVisible: true)
-                        )
-                      ],
-                    ),
-                  );
-                } else if (snapshot.hasError) {
-                  return Center(
-                    child: Text('Error: ${snapshot.error}'),
-                  );
-                } else if (snapshot.connectionState ==
-                    ConnectionState.waiting) {
-                  return const Center(child: Text('Data Not Available'));
-                } else {
-                  return const Center(
-                    child: Text('Data Not Available'),
-                  );
-                }
-              },
+          : SizedBox(
+              width: double.infinity,
+              height: 250,
+              child: SfCartesianChart(
+                primaryXAxis: CategoryAxis(title: AxisTitle(text: "")),
+                series: <ChartSeries>[
+                  StepLineSeries<GraphData, String>(
+                    dataSource: controller.stepLineGraph,
+                    xValueMapper: (GraphData sales, _) => sales.x.toString(),
+                    yValueMapper: (GraphData sales, _) => sales.y,
+                    // dataLabelSettings: DataLabelSettings(isVisible: true)
+                  )
+                ],
+              ),
             );
     });
   }

@@ -16,7 +16,7 @@ class HomeController extends ChangeNotifier {
   FirebaseAuth fb = FirebaseAuth.instance;
   FirebaseFirestore db = FirebaseFirestore.instance;
 
-  StreamController<List<GraphData>> graphDataStream =
+  static StreamController<List<GraphData>> graphDataStream =
       StreamController<List<GraphData>>();
   List result = [];
 
