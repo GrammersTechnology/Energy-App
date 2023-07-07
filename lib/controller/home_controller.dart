@@ -115,7 +115,7 @@ class HomeController extends ChangeNotifier {
       log("message");
       final data = value.docs;
       List<SavingTips> tempData = [];
-
+      notifyListeners();
       if (data.isNotEmpty) {
         for (var element in data) {
           final singleData = SavingTips(
@@ -129,6 +129,10 @@ class HomeController extends ChangeNotifier {
           notifyListeners();
           tempData.add(singleData);
           notifyListeners();
+
+          Future.delayed(const Duration(seconds: 5)).then((value) {
+            notifyListeners();
+          });
         }
       }
       // log(tempData.elementAt(0).savingstips.toString());

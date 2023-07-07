@@ -12,8 +12,21 @@ import '../../../controller/home_controller.dart';
 import '../../../routes/routes.dart';
 import '../home/widget/custom_graphwidget.dart';
 
-class ReoprtScreen extends StatelessWidget {
+class ReoprtScreen extends StatefulWidget {
   const ReoprtScreen({super.key});
+
+  @override
+  State<ReoprtScreen> createState() => _ReoprtScreenState();
+}
+
+class _ReoprtScreenState extends State<ReoprtScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 5)).then((value) {
+      setState(() {});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,10 +42,15 @@ class ReoprtScreen extends StatelessWidget {
         backgroundColor: AppColors.primaryColor,
         automaticallyImplyLeading: false,
         centerTitle: true,
-        title: Text(
-          'Strompris',
-          style:
-              GoogleFonts.montserrat(fontSize: 25, fontWeight: FontWeight.w500),
+        title: GestureDetector(
+          onTap: () {
+            setState(() {});
+          },
+          child: Text(
+            'Strompris',
+            style: GoogleFonts.montserrat(
+                fontSize: 25, fontWeight: FontWeight.w500),
+          ),
         ),
         actions: [
           GestureDetector(
@@ -70,7 +88,7 @@ class ReoprtScreen extends StatelessWidget {
               const StepperGraphWidget(),
               vSpaceMedium,
               Text(
-                'Spare Tips',
+                'Savings Tips',
                 style: GoogleFonts.montserrat(
                     fontSize: 25, fontWeight: FontWeight.w500),
               ),
