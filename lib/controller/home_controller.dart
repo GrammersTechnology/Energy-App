@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -127,8 +126,9 @@ class HomeController extends ChangeNotifier {
               HeatPump: element.data()['HeatPump'],
               SolarPanels: element.data()['SolarPanels'],
               dateTIme: element.data()['TimeDate']);
-
+          notifyListeners();
           tempData.add(singleData);
+          notifyListeners();
         }
       }
       // log(tempData.elementAt(0).savingstips.toString());

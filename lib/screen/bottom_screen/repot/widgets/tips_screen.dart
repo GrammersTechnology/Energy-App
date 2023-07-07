@@ -11,17 +11,28 @@ class TipsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 80,
+        backgroundColor: AppColors.primaryColor,
+        automaticallyImplyLeading: true,
+        centerTitle: true,
+        title: Text(
+          'Savings Tips',
+          style:
+              GoogleFonts.montserrat(fontSize: 25, fontWeight: FontWeight.w500),
+        ),
+      ),
       body: SafeArea(
         child: savingTips.isNotEmpty
             ? ListView.separated(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 separatorBuilder: (context, index) {
                   return vSpaceRegular;
                 },
                 itemCount: savingTips.length,
                 itemBuilder: (context, index) {
                   return Container(
-                      padding: EdgeInsets.all(8),
+                      padding: const EdgeInsets.all(8),
                       // height: 100,
                       width: double.infinity,
                       decoration: BoxDecoration(
@@ -44,7 +55,7 @@ class TipsScreen extends StatelessWidget {
                         ],
                       ));
                 })
-            : Center(
+            : const Center(
                 child: Text("Tips not available"),
               ),
       ),
