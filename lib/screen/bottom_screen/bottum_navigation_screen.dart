@@ -8,10 +8,11 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
 
 import 'home/home_screen.dart';
+import 'hva_kaster/hva_koster_screen.dart';
 
 class BottumNavigationScreen extends StatelessWidget {
   final PersistentTabController _controller =
-      PersistentTabController(initialIndex: 0);
+      PersistentTabController(initialIndex: 3);
 
   BottumNavigationScreen({super.key});
 
@@ -30,7 +31,7 @@ class BottumNavigationScreen extends StatelessWidget {
         ReoprtScreen(),
         HomeScreen(),
         ChartScreen(),
-        // Container(),
+        HvaKosterScreen(),
         ProfileScreen()
       ],
       items: [
@@ -40,7 +41,6 @@ class BottumNavigationScreen extends StatelessWidget {
           activeColorPrimary: CupertinoColors.white,
           inactiveColorPrimary: CupertinoColors.systemGrey,
         ),
-
         PersistentBottomNavBarItem(
           icon: const Icon(CupertinoIcons.graph_circle_fill),
           title: ("Report"),
@@ -53,12 +53,12 @@ class BottumNavigationScreen extends StatelessWidget {
           activeColorPrimary: CupertinoColors.white,
           inactiveColorPrimary: CupertinoColors.systemGrey,
         ),
-        // PersistentBottomNavBarItem(
-        //   icon: const Icon(CupertinoIcons.video_camera_solid),
-        //   title: ("Reels"),
-        //   activeColorPrimary: CupertinoColors.white,
-        //   inactiveColorPrimary: CupertinoColors.systemGrey,
-        // ),
+        PersistentBottomNavBarItem(
+          icon: const Icon(CupertinoIcons.video_camera_solid),
+          title: ("Hav Koster"),
+          activeColorPrimary: CupertinoColors.white,
+          inactiveColorPrimary: CupertinoColors.systemGrey,
+        ),
         PersistentBottomNavBarItem(
           icon: const Icon(CupertinoIcons.profile_circled),
           title: ("Profile"),
