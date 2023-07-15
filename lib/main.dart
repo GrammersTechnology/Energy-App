@@ -8,12 +8,13 @@ import 'package:provider/provider.dart';
 import 'controller/auth_controller.dart';
 import 'controller/chartcontroller.dart';
 import 'controller/home_controller.dart';
+import 'controller/hva_kaster_controller.dart';
 import 'controller/profile_controller.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
+  // HomeWidget.registerBackgroundCallback(backgroundCallback);
   runApp(const MyApp());
 }
 
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
             create: (_) => ChartController()),
         ChangeNotifierProvider<ProfileController>(
             create: (_) => ProfileController()),
+        ChangeNotifierProvider<HvaController>(create: (_) => HvaController()),
       ],
       child: MaterialApp(
         navigatorKey: Routes.navigatorKey,
