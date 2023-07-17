@@ -1,4 +1,5 @@
-import 'dart:convert';
+// ignore_for_file: avoid_print
+
 import 'dart:developer';
 
 import 'package:demo/services/hav_koster_services.dart';
@@ -34,7 +35,7 @@ class HvaController extends ChangeNotifier {
         for (var element in firstLevelValues) {
           final value = element['details']['front_end_text'];
           final split = value.toString().split('');
-          element['details']['front_end_text'] = split.first;
+          element['details']['front_end_text'];
           log(element['details']['front_end_text'].toString());
           print("===========================================");
         }

@@ -15,7 +15,7 @@ class SplashScreen extends StatelessWidget {
     });
     return Scaffold(
         body: Container(
-      child: Center(
+      child: const Center(
           child: Icon(
         Icons.ac_unit,
         size: 50,

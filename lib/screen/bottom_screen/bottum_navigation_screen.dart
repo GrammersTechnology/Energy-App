@@ -12,7 +12,7 @@ import 'hva_kaster/hva_koster_screen.dart';
 
 class BottumNavigationScreen extends StatelessWidget {
   final PersistentTabController _controller =
-      PersistentTabController(initialIndex: 3);
+      PersistentTabController(initialIndex: 0);
 
   BottumNavigationScreen({super.key});
 
@@ -36,25 +36,25 @@ class BottumNavigationScreen extends StatelessWidget {
       ],
       items: [
         PersistentBottomNavBarItem(
-          icon: const Icon(CupertinoIcons.home),
+          icon: const Icon(CupertinoIcons.graph_circle),
           title: ("Home"),
           activeColorPrimary: CupertinoColors.white,
           inactiveColorPrimary: CupertinoColors.systemGrey,
         ),
         PersistentBottomNavBarItem(
-          icon: const Icon(CupertinoIcons.graph_circle_fill),
+          icon: const Icon(CupertinoIcons.square_list),
           title: ("Report"),
           activeColorPrimary: CupertinoColors.white,
           inactiveColorPrimary: CupertinoColors.systemGrey,
         ),
         PersistentBottomNavBarItem(
-          icon: const Icon(CupertinoIcons.search),
-          title: ("Search"),
+          icon: const Icon(CupertinoIcons.map),
+          title: ("Status"),
           activeColorPrimary: CupertinoColors.white,
           inactiveColorPrimary: CupertinoColors.systemGrey,
         ),
         PersistentBottomNavBarItem(
-          icon: const Icon(CupertinoIcons.video_camera_solid),
+          icon: const Icon(CupertinoIcons.money_dollar_circle),
           title: ("Hav Koster"),
           activeColorPrimary: CupertinoColors.white,
           inactiveColorPrimary: CupertinoColors.systemGrey,

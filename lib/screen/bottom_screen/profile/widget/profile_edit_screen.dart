@@ -18,7 +18,11 @@ class ProfileEditScreen extends StatelessWidget {
     });
     return Consumer<ProfileController>(builder: (context, controller, _) {
       return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          backgroundColor: AppColors.primaryColor,
+          centerTitle: true,
+          title: const Text('Edit Profile'),
+        ),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -44,18 +48,21 @@ class ProfileEditScreen extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(20))),
                   child: DropdownButton(
                     iconEnabledColor: const Color.fromARGB(255, 27, 25, 25),
                     focusColor: const Color.fromARGB(255, 209, 204, 204),
                     borderRadius: BorderRadius.circular(10),
                     hint: Text(
-                      userProfile?.powerCompany ??
-                          controller.dropDownValue ??
-                          " Select From List",
+                      (userProfile?.powerCompany.isNotEmpty == true)
+                          ? userProfile!.powerCompany
+                          : (controller.dropDownValue?.isNotEmpty == true)
+                              ? controller.dropDownValue!
+                              : "Select From List",
                       style: const TextStyle(
-                          color: Color.fromARGB(255, 36, 34, 34)),
+                        color: Color.fromARGB(255, 36, 34, 34),
+                      ),
                     ),
                     underline: const SizedBox(),
                     isExpanded: true,
@@ -72,7 +79,9 @@ class ProfileEditScreen extends StatelessWidget {
                 TextFormField(
                   controller: controller.nameController,
                   decoration: InputDecoration(
-                    hintText: userProfile?.name ?? "Name",
+                    hintText: (userProfile?.name.isNotEmpty == true)
+                        ? userProfile?.name
+                        : "Name",
                     border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(30)),
                     ),
@@ -82,7 +91,9 @@ class ProfileEditScreen extends StatelessWidget {
                 TextFormField(
                   controller: controller.zoneController,
                   decoration: InputDecoration(
-                    hintText: userProfile?.pricezone ?? "Zone",
+                    hintText: (userProfile?.pricezone.isNotEmpty == true)
+                        ? userProfile?.pricezone
+                        : "Zone",
                     border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(30)),
                     ),
@@ -93,8 +104,9 @@ class ProfileEditScreen extends StatelessWidget {
                   keyboardType: TextInputType.number,
                   controller: controller.yearlyCosumptionController,
                   decoration: InputDecoration(
-                    hintText:
-                        userProfile?.yearlyCosumption ?? "Yearly Consumption ",
+                    hintText: (userProfile?.yearlyCosumption != "0")
+                        ? userProfile?.yearlyCosumption
+                        : "Yearly Consumption ",
                     border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(30)),
                     ),
@@ -105,7 +117,9 @@ class ProfileEditScreen extends StatelessWidget {
                   keyboardType: TextInputType.number,
                   controller: controller.numberOfPepoleControler,
                   decoration: InputDecoration(
-                    hintText: userProfile?.numberOfPepole ?? "Number Of Pepole",
+                    hintText: (userProfile?.numberOfPepole != "0")
+                        ? userProfile?.numberOfPepole
+                        : "Number Of Pepole",
                     border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(30)),
                     ),
@@ -116,7 +130,9 @@ class ProfileEditScreen extends StatelessWidget {
                   keyboardType: TextInputType.number,
                   controller: controller.powerCoinsController,
                   decoration: InputDecoration(
-                    hintText: userProfile?.powerCoins ?? "Power Coins",
+                    hintText: (userProfile?.powerCoins != "0")
+                        ? userProfile?.powerCoins
+                        : "Power Coins",
                     border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(30)),
                     ),
@@ -127,7 +143,9 @@ class ProfileEditScreen extends StatelessWidget {
                   keyboardType: TextInputType.number,
                   controller: controller.powerPointController,
                   decoration: InputDecoration(
-                    hintText: userProfile?.powerPoint ?? "Power Point",
+                    hintText: (userProfile?.powerPoint != "0")
+                        ? userProfile?.powerPoint
+                        : "Power Point",
                     border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(30)),
                     ),
@@ -156,8 +174,8 @@ class ProfileEditScreen extends StatelessWidget {
                         SizedBox(
                           child: Row(
                             children: [
-                              Text("Has El Car"),
-                              Spacer(),
+                              const Text("Has El Car"),
+                              const Spacer(),
                               Switch(
                                 value: controller.hasElCarBool,
                                 onChanged: (value) {
@@ -171,8 +189,8 @@ class ProfileEditScreen extends StatelessWidget {
                         SizedBox(
                           child: Row(
                             children: [
-                              Text("Want Push Warning2"),
-                              Spacer(),
+                              const Text("Want Push Warning2"),
+                              const Spacer(),
                               Switch(
                                 value: controller.wantPushWarning2Bool,
                                 onChanged: (value) {
@@ -186,8 +204,8 @@ class ProfileEditScreen extends StatelessWidget {
                         SizedBox(
                           child: Row(
                             children: [
-                              Text("hasSensor"),
-                              Spacer(),
+                              const Text("hasSensor"),
+                              const Spacer(),
                               Switch(
                                 value: controller.hasSensorBool,
                                 onChanged: (value) {
@@ -201,8 +219,8 @@ class ProfileEditScreen extends StatelessWidget {
                         SizedBox(
                           child: Row(
                             children: [
-                              Text("wantPushWarning1"),
-                              Spacer(),
+                              const Text("wantPushWarning1"),
+                              const Spacer(),
                               Switch(
                                 value: controller.wantPushWarning1Bool,
                                 onChanged: (value) {
@@ -216,8 +234,8 @@ class ProfileEditScreen extends StatelessWidget {
                         SizedBox(
                           child: Row(
                             children: [
-                              Text("hasEatPump"),
-                              Spacer(),
+                              const Text("hasEatPump"),
+                              const Spacer(),
                               Switch(
                                 value: controller.hasEatPumpBool,
                                 onChanged: (value) {
@@ -231,8 +249,8 @@ class ProfileEditScreen extends StatelessWidget {
                         SizedBox(
                           child: Row(
                             children: [
-                              Text("hasSolarPanel"),
-                              Spacer(),
+                              const Text("hasSolarPanel"),
+                              const Spacer(),
                               Switch(
                                 value: controller.hasSolarPanelBool,
                                 onChanged: (value) {
