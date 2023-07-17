@@ -12,28 +12,15 @@ import '../../../controller/home_controller.dart';
 import '../../../routes/routes.dart';
 import '../home/widget/custom_graphwidget.dart';
 
-class ReoprtScreen extends StatefulWidget {
+class ReoprtScreen extends StatelessWidget {
   const ReoprtScreen({super.key});
-
-  @override
-  State<ReoprtScreen> createState() => _ReoprtScreenState();
-}
-
-class _ReoprtScreenState extends State<ReoprtScreen> {
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(const Duration(seconds: 5)).then((value) {
-      setState(() {});
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     final authController = Provider.of<AuthController>(context, listen: false);
+    final controller = Provider.of<HomeController>(context, listen: false);
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      final controller = Provider.of<HomeController>(context, listen: false);
       controller.getTips(context);
     });
     return Scaffold(
@@ -43,9 +30,7 @@ class _ReoprtScreenState extends State<ReoprtScreen> {
         automaticallyImplyLeading: false,
         centerTitle: true,
         title: GestureDetector(
-          onTap: () {
-            setState(() {});
-          },
+          onTap: () {},
           child: Text(
             'Strompris',
             style: GoogleFonts.montserrat(
@@ -66,79 +51,85 @@ class _ReoprtScreenState extends State<ReoprtScreen> {
           )
         ],
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              vSpaceMin,
-              Text(
-                'Price Predictor',
-                style: GoogleFonts.montserrat(
-                    fontSize: 25, fontWeight: FontWeight.w500),
-              ),
-              vSpaceMedium,
-              const ColumnGraphWidget(),
-              vSpaceRegular,
-              Text(
-                'Price Graph',
-                style: GoogleFonts.montserrat(
-                    fontSize: 25, fontWeight: FontWeight.w500),
-              ),
-              vSpaceRegular,
-              const StepperGraphWidget(),
-              vSpaceMedium,
-              Text(
-                'Savings Tips',
-                style: GoogleFonts.montserrat(
-                    fontSize: 25, fontWeight: FontWeight.w500),
-              ),
-              vSpaceRegular,
-              savingTips.isNotEmpty
-                  ? Padding(
-                      padding: const EdgeInsets.only(right: 16, left: 16),
-                      child: Container(
-                          // height: 100,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                              color: AppColors.primaryColor,
-                              borderRadius: BorderRadius.circular(15)),
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 8.0, right: 8, top: 8),
-                                child: Text(
-                                  savingTips.first.savingstips,
-                                  style: GoogleFonts.nunitoSans(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w900,
+      body: RefreshIndicator(
+        onRefresh: () {
+          return controller.getTips(context);
+        },
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                vSpaceMin,
+                Text(
+                  'Price Predictor',
+                  style: GoogleFonts.montserrat(
+                      fontSize: 25, fontWeight: FontWeight.w500),
+                ),
+                vSpaceMedium,
+                const ColumnGraphWidget(),
+                vSpaceRegular,
+                Text(
+                  'Price Graph',
+                  style: GoogleFonts.montserrat(
+                      fontSize: 25, fontWeight: FontWeight.w500),
+                ),
+                vSpaceRegular,
+                const StepperGraphWidget(),
+                vSpaceMedium,
+                Text(
+                  'Savings Tips',
+                  style: GoogleFonts.montserrat(
+                      fontSize: 25, fontWeight: FontWeight.w500),
+                ),
+                vSpaceRegular,
+                savingTips.isNotEmpty
+                    ? Padding(
+                        padding: const EdgeInsets.only(right: 16, left: 16),
+                        child: Container(
+                            // height: 100,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                color: AppColors.primaryColor,
+                                borderRadius: BorderRadius.circular(15)),
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 8.0, right: 8, top: 8),
+                                  child: Text(
+                                    savingTips.first.savingstips,
+                                    style: GoogleFonts.nunitoSans(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w900,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  TextButton(
-                                      onPressed: () {
-                                        Routes.push(screen: const TipsScreen());
-                                      },
-                                      child: const Text(
-                                        'Read more',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w900,
-                                        ),
-                                      )),
-                                ],
-                              )
-                            ],
-                          )),
-                    )
-                  : const Text("Savings Tips Not Available"),
-              vSpaceXl
-            ],
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    TextButton(
+                                        onPressed: () {
+                                          Routes.push(
+                                              screen: const TipsScreen());
+                                        },
+                                        child: const Text(
+                                          'Read more',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w900,
+                                          ),
+                                        )),
+                                  ],
+                                )
+                              ],
+                            )),
+                      )
+                    : const Text("Savings Tips Not Available"),
+                vSpaceXl
+              ],
+            ),
           ),
         ),
       ),
