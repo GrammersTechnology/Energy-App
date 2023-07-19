@@ -22,18 +22,13 @@ class _HomeScreenState extends State<HomeScreen> {
       Controller.fecthData(context);
     });
     return Scaffold(
-        drawer: GestureDetector(),
+        // drawer: GestureDetector(),
         appBar: AppBar(
           toolbarHeight: 80,
           backgroundColor: AppColors.primaryColor,
           automaticallyImplyLeading: false,
           centerTitle: true,
           title: GestureDetector(
-            onTap: () {
-              Controller.fecthData(
-                context,
-              );
-            },
             child: Text(
               'Daily Report',
               style: GoogleFonts.montserrat(
