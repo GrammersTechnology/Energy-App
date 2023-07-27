@@ -9,11 +9,16 @@ import 'controller/auth_controller.dart';
 import 'controller/chartcontroller.dart';
 import 'controller/home_controller.dart';
 import 'controller/hva_kaster_controller.dart';
+import 'controller/local_notification.dart';
 import 'controller/profile_controller.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await NotificationService().initNotification();
+  NotificationService().morningNotification();
+  NotificationService().afterNoonNotification();
+
   // HomeWidget.registerBackgroundCallback(backgroundCallback);
   runApp(const MyApp());
 }
