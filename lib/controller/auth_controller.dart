@@ -148,14 +148,14 @@ class AuthController extends ChangeNotifier {
       final pref = await SharedPreferences.getInstance();
       await pref.setString('email', email.toString());
       await pref.setString('password', password.toString());
-      await fetchZoneIdFromFirestore(context);
+      await fetchZoneIdFromFirestore();
       Routes.pushreplace(screen: BottumNavigationScreen());
     } catch (e) {
       Messenger.pop(msg: e.toString(), context: context);
     }
   }
 
-  fetchZoneIdFromFirestore(context) async {
+  fetchZoneIdFromFirestore() async {
     // Get the current user ID from Firebase Authentication
     final pref = await SharedPreferences.getInstance();
     try {
@@ -179,7 +179,7 @@ class AuthController extends ChangeNotifier {
         print('Error retrieving data: $error');
       });
     } catch (e) {
-      Messenger.pop(msg: e.toString(), context: context);
+      // Messenger.pop(msg: e.toString(), context: context);
     }
   }
 
