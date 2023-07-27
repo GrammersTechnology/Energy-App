@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:demo/controller/auth_controller.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -149,12 +150,11 @@ class NotificationService {
   String? priceContent;
   String? savingTips;
   Future<String?> getNotificationContent(url) async {
+    AuthController().fetchZoneIdFromFirestore();
     final pref = await SharedPreferences.getInstance();
     final zone = pref.getString('zone');
     String baseUrl =
         'https://predictor-tdg24xwvka-ew.a.run.app/get_push_notification_${url + zone}';
-    //  final sf =
-    //       'https://predictor-tdg24xwvka-ew.a.run.app/get_push_notification_';saving_tips_text?price_area=NO2
     final response = await Dio().get(baseUrl + url);
     if (response.statusCode == 200) {
       final result = response.data['text'];
