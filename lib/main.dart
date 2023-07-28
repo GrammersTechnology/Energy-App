@@ -19,7 +19,6 @@ Future<void> main() async {
   NotificationService().morningNotification();
   NotificationService().afterNoonNotification();
 
-  // HomeWidget.registerBackgroundCallback(backgroundCallback);
   runApp(const MyApp());
 }
 

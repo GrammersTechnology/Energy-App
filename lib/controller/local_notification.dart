@@ -41,18 +41,13 @@ class NotificationService {
         iOS: DarwinNotificationDetails());
   }
 
-  Future showNotification(
-      {int id = 0, String? title, String? body, String? payLoad}) async {
-    return notificationsPlugin.show(
-        id, title, body, await notificationDetails());
-  }
-
 ///////////////////////////
   ///
   ///
   ///
   Future afterNoonNotification({id = 0, payload}) async {
     tz.initializeTimeZones();
+    tz.setLocalLocation(tz.getLocation("Europe/Paris"));
     priceContent = await getNotificationContent("price_text?price_area=");
 
     localNotificationsPlugin.zonedSchedule(
@@ -71,20 +66,12 @@ class NotificationService {
 
   Future<tz.TZDateTime> schedulDailyAfterNoon(TimeOfDay time) async {
     tz.initializeTimeZones();
+    tz.setLocalLocation(tz.getLocation("Europe/Paris"));
     final now = tz.TZDateTime.now(tz.local);
-    log(now.hour.toString() + ":" + now.minute.toString() + ":");
-    log(now.location.toString());
-    log(TimeOfDay.now().toString());
     final scheduledDate = tz.TZDateTime(
-      tz.local,
-      now.year,
-      now.month,
-      now.day,
-      time.hour,
-      time.minute,
-    );
-    print("test now time$now");
-    print("test shedulr time$scheduledDate");
+        tz.local, now.year, now.month, now.day, time.hour, time.minute);
+    print(" afternoon test now time$now");
+    print("afternoon test shedulr time$scheduledDate");
 
     if (scheduledDate.isBefore(now)) {
       priceContent = await getNotificationContent("price_text?price_area=");
@@ -96,10 +83,6 @@ class NotificationService {
 
       return scheduledDate;
     }
-    // return scheduledDate.isBefore(now)
-    //     ? scheduledDate.add(const Duration(days: 1))
-    //     :
-    //      scheduledDate;
   }
 
   ///////////////   morning tips  //////////////////////
@@ -110,8 +93,8 @@ class NotificationService {
     localNotificationsPlugin.zonedSchedule(
         id,
         "Saving Tips",
-        priceContent ?? "tri",
-        await schedulDailyMroning(TimeOfDay(hour: 9, minute: 00)),
+        savingTips ?? "",
+        await schedulDailyMroning(TimeOfDay(hour: 9, minute: 0)),
         await notificationDetails(),
         payload: payload,
         androidAllowWhileIdle: true,
@@ -122,29 +105,22 @@ class NotificationService {
 
   Future<tz.TZDateTime> schedulDailyMroning(TimeOfDay time) async {
     tz.initializeTimeZones();
+    tz.setLocalLocation(tz.getLocation("Europe/Paris"));
     final now = tz.TZDateTime.now(tz.local);
-    log(now.hour.toString() + ":" + now.minute.toString() + ":");
-    log(now.location.toString());
-    log(TimeOfDay.now().toString());
     final scheduledDate = tz.TZDateTime(
         tz.local, now.year, now.month, now.day, time.hour, time.minute);
-    print("test now time$now");
-    print("test shedulr time$scheduledDate");
+    print("morning test now time$now");
+    print("morning test shedulr time$scheduledDate");
 
     if (scheduledDate.isBefore(now)) {
       savingTips = await getNotificationContent("saving_tips_text?price_area=");
       notificationDetails();
-      print(priceContent);
       return scheduledDate.add(const Duration(days: 1));
     } else {
       savingTips = await getNotificationContent("saving_tips_text?price_area=");
       notificationDetails();
       return scheduledDate;
     }
-    // return scheduledDate.isBefore(now)
-    //     ? scheduledDate.add(const Duration(days: 1))
-    //     :
-    //      scheduledDate;
   }
 
   String? priceContent;
