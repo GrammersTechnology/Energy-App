@@ -59,12 +59,14 @@ class SignupScreen extends StatelessWidget {
                       ),
                       vSpaceXl,
                       vSpaceXl,
-                      LoginButtonWidget(
-                        title: "SIGNUP",
-                        onTap: () {
-                          controller.signup(context);
-                        },
-                      ),
+                      controller.loader
+                          ? CircularProgressIndicator()
+                          : LoginButtonWidget(
+                              title: "SIGNUP",
+                              onTap: () {
+                                controller.signup(context);
+                              },
+                            ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 15),
                         child: Row(

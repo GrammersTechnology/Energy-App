@@ -130,17 +130,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           const SizedBox(
                                                             width: 10,
                                                           ),
-                                                          Text(
-                                                            "\$ ${homeController.result[index]['NOK_per_kWh']}",
-                                                            style: GoogleFonts
-                                                                .archivo(
-                                                                    color: Colors
-                                                                        .white,
-                                                                    fontSize:
-                                                                        20,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w800),
+                                                          LimitedBox(
+                                                            child: Text(
+                                                              "\$ ${homeController.result[index]['NOK_per_kWh'] * 1.25.round()}",
+                                                              style: GoogleFonts.archivo(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize: 20,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w800),
+                                                            ),
                                                           ),
                                                         ],
                                                       ),

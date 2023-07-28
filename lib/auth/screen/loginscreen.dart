@@ -52,12 +52,14 @@ class LoginScreen extends StatelessWidget {
                       ),
                       vSpaceXl,
                       vSpaceXl,
-                      LoginButtonWidget(
-                        title: "LOGIN",
-                        onTap: () {
-                          controller.login(context);
-                        },
-                      ),
+                      controller.loader
+                          ? CircularProgressIndicator()
+                          : LoginButtonWidget(
+                              title: "LOGIN",
+                              onTap: () {
+                                controller.login(context);
+                              },
+                            ),
                       vSpaceMin,
                       Padding(
                         padding: const EdgeInsets.only(bottom: 15),

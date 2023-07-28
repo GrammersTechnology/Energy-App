@@ -53,6 +53,7 @@ class AuthController extends ChangeNotifier {
 
       clearLocalData();
       loader = false;
+      notifyListeners();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Row(
@@ -138,6 +139,8 @@ class AuthController extends ChangeNotifier {
   }
 
   login(context) async {
+    loader = true;
+    notifyListeners();
     try {
       await fb.signInWithEmailAndPassword(
           email: emailController.text, password: passwordController.text);
@@ -149,13 +152,19 @@ class AuthController extends ChangeNotifier {
       await pref.setString('email', email.toString());
       await pref.setString('password', password.toString());
       await fetchZoneIdFromFirestore();
+      loader = false;
+      notifyListeners();
       Routes.pushreplace(screen: BottumNavigationScreen());
     } catch (e) {
+      loader = false;
+      notifyListeners();
       Messenger.pop(msg: e.toString(), context: context);
     }
   }
 
   fetchZoneIdFromFirestore() async {
+    loader = true;
+    notifyListeners();
     // Get the current user ID from Firebase Authentication
     final pref = await SharedPreferences.getInstance();
     try {
@@ -175,7 +184,11 @@ class AuthController extends ChangeNotifier {
         // } else {
         //   print('User document not found.');
         // }
+        loader = false;
+        notifyListeners();
       }).catchError((error) {
+        loader = false;
+        notifyListeners();
         print('Error retrieving data: $error');
       });
     } catch (e) {
@@ -184,6 +197,8 @@ class AuthController extends ChangeNotifier {
   }
 
   addUserProfileDetails(context) async {
+    loader = true;
+    notifyListeners();
     ProfileModel data = ProfileModel(
         email: fb.currentUser!.email.toString(),
         name: '',
@@ -209,9 +224,12 @@ class AuthController extends ChangeNotifier {
           .doc(fb.currentUser!.uid)
           .set(data.toJson());
       // .set(data.toJson());
+      loader = false;
       notifyListeners();
       // saveAuthLocal();
     } catch (e) {
+      loader = false;
+      notifyListeners();
       Messenger.pop(msg: e.toString(), context: context);
     }
   }
