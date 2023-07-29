@@ -233,6 +233,25 @@ class AuthController extends ChangeNotifier {
       Messenger.pop(msg: e.toString(), context: context);
     }
   }
+
+  updateZoneIdFromFirestore(String zone, String email) async {
+    loader = true;
+    notifyListeners();
+    // Get the current user ID from Firebase Authentication
+    final pref = await SharedPreferences.getInstance();
+    try {
+      final data = UserModel(zone: zone, email: email);
+      await db
+          .collection("user")
+          .doc(fb.currentUser?.uid)
+          // .collection('auth')
+          .set(data.toJson());
+      loader = false;
+      notifyListeners();
+    } catch (e) {
+      // Messenger.pop(msg: e.toString(), context: context);
+    }
+  }
 }
 
 class UserModel {

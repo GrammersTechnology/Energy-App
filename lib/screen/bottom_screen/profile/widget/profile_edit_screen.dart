@@ -79,7 +79,7 @@ class ProfileEditScreen extends StatelessWidget {
                 TextFormField(
                   controller: controller.nameController,
                   decoration: InputDecoration(
-                    label: Text("Name"),
+                    label: const Text("Name"),
                     hintText: (userProfile?.name.isNotEmpty == true)
                         ? userProfile?.name
                         : "Name",
@@ -92,7 +92,7 @@ class ProfileEditScreen extends StatelessWidget {
                 TextFormField(
                   controller: controller.zoneController,
                   decoration: InputDecoration(
-                    label: Text("Zone"),
+                    label: const Text("Zone"),
                     hintText: (userProfile?.pricezone.isNotEmpty == true)
                         ? userProfile?.pricezone
                         : "Zone",
@@ -106,7 +106,7 @@ class ProfileEditScreen extends StatelessWidget {
                   keyboardType: TextInputType.number,
                   controller: controller.yearlyCosumptionController,
                   decoration: InputDecoration(
-                    label: Text("Yearly Consumption"),
+                    label: const Text("Yearly Consumption"),
                     hintText: (userProfile?.yearlyCosumption != "0")
                         ? userProfile?.yearlyCosumption
                         : "Yearly Consumption ",
@@ -120,7 +120,7 @@ class ProfileEditScreen extends StatelessWidget {
                   keyboardType: TextInputType.number,
                   controller: controller.numberOfPepoleControler,
                   decoration: InputDecoration(
-                    label: Text("Number Of Pepole"),
+                    label: const Text("Number Of Pepole"),
                     hintText: (userProfile?.numberOfPepole != "0")
                         ? userProfile?.numberOfPepole
                         : "Number Of Pepole",
@@ -134,7 +134,7 @@ class ProfileEditScreen extends StatelessWidget {
                   keyboardType: TextInputType.number,
                   controller: controller.powerCoinsController,
                   decoration: InputDecoration(
-                    label: Text("Power Coins"),
+                    label: const Text("Power Coins"),
                     hintText: (userProfile?.powerCoins != "0")
                         ? userProfile?.powerCoins
                         : "Power Coins",
@@ -148,7 +148,7 @@ class ProfileEditScreen extends StatelessWidget {
                   keyboardType: TextInputType.number,
                   controller: controller.powerPointController,
                   decoration: InputDecoration(
-                    label: Text("Power Point"),
+                    label: const Text("Power Point"),
                     hintText: (userProfile?.powerPoint != "0")
                         ? userProfile?.powerPoint
                         : "Power Point",

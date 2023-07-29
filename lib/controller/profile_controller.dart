@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csv/csv.dart';
+import 'package:demo/controller/auth_controller.dart';
 import 'package:demo/controller/home_controller.dart';
 import 'package:demo/model/model.dart';
 import 'package:demo/routes/messenger.dart';
@@ -117,7 +118,7 @@ class ProfileController extends ChangeNotifier {
     if (zoneController.text.isEmpty) {
       zone = userProfile!.pricezone;
     } else {
-      zone = nameController.text;
+      zone = zoneController.text;
     }
     if (yearlyCosumptionController.text.isEmpty) {
       yearlyConsmtn = userProfile!.yearlyCosumption;
@@ -177,8 +178,12 @@ class ProfileController extends ChangeNotifier {
           .doc(fb.currentUser!.uid)
           .update(data.toJson());
       Provider.of<HomeController>(context, listen: false).getTips(context);
+      await AuthController()
+          .updateZoneIdFromFirestore(zone, fb.currentUser!.email.toString());
+      await AuthController().fetchZoneIdFromFirestore();
       Routes.pushreplace(screen: BottumNavigationScreen());
       clearController();
+
       loader = false;
       notifyListeners();
     } catch (e) {

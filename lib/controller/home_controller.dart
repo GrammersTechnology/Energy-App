@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:demo/controller/auth_controller.dart';
 import 'package:demo/controller/profile_controller.dart';
 import 'package:demo/model/model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -25,7 +26,7 @@ class HomeController extends ChangeNotifier {
     loader = true;
     GraphData temp = GraphData(x: 1, y: 5);
     final perf = await SharedPreferences.getInstance();
-
+    await AuthController().fetchZoneIdFromFirestore();
     final zone = perf.getString("zone");
     log(zone.toString());
 
@@ -86,6 +87,7 @@ class HomeController extends ChangeNotifier {
   List<GraphData> columnGraphData = [];
   feacthColumnGraphData(context) async {
     loader = true;
+    AuthController().fetchZoneIdFromFirestore();
     final perf = await SharedPreferences.getInstance();
 
     final zone = perf.getString("zone");
