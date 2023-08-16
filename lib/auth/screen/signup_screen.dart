@@ -20,71 +20,69 @@ class SignupScreen extends StatelessWidget {
         child: Consumer<AuthController>(builder: (context, controller, widget) {
           return Column(children: [
             AuthContainerWidget(size: size, title: "Sign up"),
-            Container(
-                child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Column(children: [
-                      vSpaceXl,
-                      TextFromFieldWidget(
-                          hint: "Email",
-                          showPasswordToggle: false,
-                          prefixIcon: Icons.email,
-                          controller: controller.emailController),
-                      vSpaceRegular,
-                      TextFromFieldWidget(
-                          hint: "Password",
-                          showPasswordToggle: true,
-                          prefixIcon: Icons.key,
-                          controller: controller.passwordController),
-                      vSpaceRegular,
-                      Container(
-                        decoration: BoxDecoration(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(30)),
-                            border: Border.all(color: Colors.grey)),
-                        child: DropdownButton(
-                          hint: Text(
-                              controller.dropdowmValue ?? " Select From List"),
-                          underline: const SizedBox(),
-                          isExpanded: true,
-                          items: controller.dropdwonList
-                              .map((e) =>
-                                  DropdownMenuItem(value: e, child: Text(e)))
-                              .toList(),
-                          onChanged: (value) {
-                            controller.changeDropDownValue(value);
+            Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Column(children: [
+                  vSpaceXl,
+                  TextFromFieldWidget(
+                      hint: "Email",
+                      showPasswordToggle: false,
+                      prefixIcon: Icons.email,
+                      controller: controller.emailController),
+                  vSpaceRegular,
+                  TextFromFieldWidget(
+                      hint: "Password",
+                      showPasswordToggle: true,
+                      prefixIcon: Icons.key,
+                      controller: controller.passwordController),
+                  vSpaceRegular,
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(30)),
+                        border: Border.all(color: Colors.grey)),
+                    child: DropdownButton(
+                      hint:
+                          Text(controller.dropdowmValue ?? " Select From List"),
+                      underline: const SizedBox(),
+                      isExpanded: true,
+                      items: controller.dropdwonList
+                          .map(
+                              (e) => DropdownMenuItem(value: e, child: Text(e)))
+                          .toList(),
+                      onChanged: (value) {
+                        controller.changeDropDownValue(value);
+                      },
+                      onTap: () {},
+                    ),
+                  ),
+                  vSpaceXl,
+                  vSpaceXl,
+                  controller.loader
+                      ? const CircularProgressIndicator()
+                      : LoginButtonWidget(
+                          title: "SIGNUP",
+                          onTap: () {
+                            controller.signup(context);
                           },
-                          onTap: () {},
                         ),
-                      ),
-                      vSpaceXl,
-                      vSpaceXl,
-                      controller.loader
-                          ? CircularProgressIndicator()
-                          : LoginButtonWidget(
-                              title: "SIGNUP",
-                              onTap: () {
-                                controller.signup(context);
-                              },
-                            ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 15),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text("Already have an account?"),
-                            TextButton(
-                                onPressed: () {
-                                  Routes.pushreplace(
-                                      screen: const LoginScreen());
-                                  controller.emailController.clear();
-                                  controller.passwordController.clear();
-                                },
-                                child: const Text("Login"))
-                          ],
-                        ),
-                      ),
-                    ])))
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text("Already have an account?"),
+                        TextButton(
+                            onPressed: () {
+                              Routes.pushreplace(screen: const LoginScreen());
+                              controller.emailController.clear();
+                              controller.passwordController.clear();
+                            },
+                            child: const Text("Login"))
+                      ],
+                    ),
+                  ),
+                ]))
           ]);
         }),
       ),

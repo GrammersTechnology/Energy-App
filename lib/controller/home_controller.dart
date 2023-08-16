@@ -28,7 +28,7 @@ class HomeController extends ChangeNotifier {
     final perf = await SharedPreferences.getInstance();
     await AuthController().fetchZoneIdFromFirestore();
     final zone = perf.getString("zone");
-    log(zone.toString());
+    log("--------------------" + zone.toString());
 
     result = (await HomeScreenServicesScreen().dataDetailsApi(context, zone))!;
 
@@ -87,20 +87,18 @@ class HomeController extends ChangeNotifier {
   List<GraphData> columnGraphData = [];
   feacthColumnGraphData(context) async {
     loader = true;
-    AuthController().fetchZoneIdFromFirestore();
+    await AuthController().fetchZoneIdFromFirestore();
     final perf = await SharedPreferences.getInstance();
 
     final zone = perf.getString("zone");
-    final result =
-        (await HomeScreenServicesScreen().columnGraphDataApi(context, zone))!;
-    log(result.toString());
-    if (result.isNotEmpty) {
+    final result = await HomeScreenServicesScreen()
+        .columnGraphDataApi(context, zone.toString());
+    // log(result.toString());
+    if (result!.isNotEmpty) {
       columnGraphData.clear();
       for (var element in result) {
         final x = element['date'];
-        print(x.toString());
         final y = element['day_average_price'];
-        print(y.toString());
         // log(y.runtimeType.toString());
         GraphData columnGraphDataelement = GraphData(x: x.toString(), y: y);
         columnGraphData.add(columnGraphDataelement);
@@ -114,7 +112,6 @@ class HomeController extends ChangeNotifier {
   getTips(context) async {
     final controller = Provider.of<ProfileController>(context, listen: false);
     await db.collection("savings_tips").get().then((value) {
-      log("message");
       final data = value.docs;
       List<SavingTips> tempData = [];
       notifyListeners();
@@ -123,10 +120,10 @@ class HomeController extends ChangeNotifier {
           final singleData = SavingTips(
               readmoretxt: element.data()['ReadMoreTxt'],
               savingstips: element.data()['SavingsTips'],
-              All: element.data()['All'],
-              ElCar: element.data()['ElCar'],
-              HeatPump: element.data()['HeatPump'],
-              SolarPanels: element.data()['SolarPanels'],
+              allItems: element.data()['All'],
+              elCars: element.data()['ElCar'],
+              heatPumps: element.data()['HeatPump'],
+              solarPanels: element.data()['SolarPanels'],
               dateTIme: element.data()['TimeDate']);
           notifyListeners();
           tempData.add(singleData);
@@ -144,10 +141,8 @@ class HomeController extends ChangeNotifier {
         if (controller.hasElCarBool &&
             controller.hasEatPumpBool &&
             controller.hasSolarPanelBool) {
-          print(
-              "controller.hasElCarBool &&controller.hasEatPumpBool &&controller.hasSolarPanelBool");
           for (var element in tempData) {
-            if (element.All == true) {
+            if (element.allItems == true) {
               log(savingTips.toString());
 
               savingTips.add(element);
@@ -180,27 +175,24 @@ class HomeController extends ChangeNotifier {
           //   }
           // for (var element in data.docs) {}
         } else if (controller.hasElCarBool) {
-          print('controller.hasElCarBool');
           for (var element in tempData) {
-            if (element.ElCar == true) {
+            if (element.elCars == true) {
               savingTips.add(element);
               log(savingTips.first.savingstips.toString());
             }
           }
           // for (var element in data.docs) {}
         } else if (controller.hasEatPumpBool) {
-          print('controller.hasEatPumpBool');
           for (var element in tempData) {
-            if (element.HeatPump == true) {
+            if (element.heatPumps == true) {
               savingTips.add(element);
               log(savingTips.first.savingstips.toString());
             }
           }
           // for (var element in data.docs) {}
         } else if (controller.hasSolarPanelBool) {
-          print('controller.hasSolarPanelBool');
           for (var element in tempData) {
-            if (element.SolarPanels == true) {
+            if (element.solarPanels == true) {
               savingTips.add(element);
               log(savingTips.first.savingstips.toString());
             }
@@ -220,9 +212,7 @@ class HomeController extends ChangeNotifier {
         savingTips.sort((a, b) => a.dateTIme.toString().compareTo(b.dateTIme));
       }
       notifyListeners();
-    }).catchError((error) {
-      print('Error retrieving data: $error');
-    });
+    }).catchError((error) {});
   }
 }
 

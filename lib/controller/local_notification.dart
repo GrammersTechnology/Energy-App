@@ -34,7 +34,6 @@ class NotificationService {
   }
 
   static notificationDetails() {
-    print("object");
     return const NotificationDetails(
         android: AndroidNotificationDetails('channelId', 'channelName',
             importance: Importance.max),
@@ -44,21 +43,19 @@ class NotificationService {
 ///////////////////////////
   ///
   ///
-  ///
   Future afterNoonNotification({id = 0, payload}) async {
     tz.initializeTimeZones();
-    tz.setLocalLocation(tz.getLocation("Europe/Paris"));
     priceContent = await getNotificationContent("price_text?price_area=");
-
+    log("Pice Tips+++++++++++++++++++:$priceContent");
     localNotificationsPlugin.zonedSchedule(
         id,
         "Price Tips",
         priceContent ?? "",
-        // tz.TZDateTime.from(DateTime.now().add(Duration(seconds: 5)), tz.local),
         await schedulDailyAfterNoon(const TimeOfDay(hour: 14, minute: 0)),
         await notificationDetails(),
         payload: payload,
         androidAllowWhileIdle: true,
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
         matchDateTimeComponents: DateTimeComponents.time);
@@ -70,8 +67,7 @@ class NotificationService {
     final now = tz.TZDateTime.now(tz.local);
     final scheduledDate = tz.TZDateTime(
         tz.local, now.year, now.month, now.day, time.hour, time.minute);
-    print(" afternoon test now time$now");
-    print("afternoon test shedulr time$scheduledDate");
+    print(now);
 
     if (scheduledDate.isBefore(now)) {
       priceContent = await getNotificationContent("price_text?price_area=");
@@ -90,6 +86,8 @@ class NotificationService {
   Future morningNotification({id = 0, payload}) async {
     tz.initializeTimeZones();
     savingTips = await getNotificationContent("saving_tips_text?price_area=");
+
+    log("Saving Tips-------------------------:$savingTips");
     localNotificationsPlugin.zonedSchedule(
         id,
         "Saving Tips",
@@ -98,6 +96,7 @@ class NotificationService {
         await notificationDetails(),
         payload: payload,
         androidAllowWhileIdle: true,
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
         matchDateTimeComponents: DateTimeComponents.time);
@@ -109,8 +108,6 @@ class NotificationService {
     final now = tz.TZDateTime.now(tz.local);
     final scheduledDate = tz.TZDateTime(
         tz.local, now.year, now.month, now.day, time.hour, time.minute);
-    print("morning test now time$now");
-    print("morning test shedulr time$scheduledDate");
 
     if (scheduledDate.isBefore(now)) {
       savingTips = await getNotificationContent("saving_tips_text?price_area=");
@@ -134,9 +131,13 @@ class NotificationService {
     final response = await Dio().get(baseUrl + url);
     if (response.statusCode == 200) {
       final result = response.data['text'];
-      log(result);
       return result;
     }
     return null;
+  }
+
+  showNotification() {
+    morningNotification();
+    afterNoonNotification();
   }
 }

@@ -3,7 +3,10 @@
 import 'dart:developer';
 
 import 'package:demo/const/themes/colors.dart';
+import 'package:demo/controller/chartcontroller.dart';
 import 'package:demo/controller/home_controller.dart';
+import 'package:demo/controller/hva_kaster_controller.dart';
+import 'package:demo/controller/profile_controller.dart';
 import 'package:demo/model/model.dart';
 import 'package:demo/routes/messenger.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -130,11 +133,36 @@ class AuthController extends ChangeNotifier {
       print("user password$userPassword");
       Routes.pushreplace(screen: const LoginScreen());
     } else {
-      Routes.pushreplace(screen: BottumNavigationScreen());
       print("email founded");
+      checkCurrentUser(context);
       final homeController =
           Provider.of<HomeController>(context, listen: false);
+
       homeController.fecthData(context);
+    }
+  }
+
+  Future<void> checkCurrentUser(context) async {
+    User? user = fb.currentUser;
+    if (user != null) {
+      final profileController =
+          Provider.of<ProfileController>(context, listen: false);
+      final homeController =
+          Provider.of<HomeController>(context, listen: false);
+      final chartController =
+          Provider.of<ChartController>(context, listen: false);
+      final hvaController = Provider.of<HvaController>(context, listen: false);
+      await profileController.getUserProfileDetails(context);
+
+      homeController.feacthColumnGraphData(context);
+      homeController.fecthData(context);
+      homeController.getTips(context);
+      chartController.getChartDetails(context);
+      hvaController.getHvaDetails();
+
+      Routes.pushreplace(screen: BottumNavigationScreen());
+    } else {
+      Routes.pushreplace(screen: const LoginScreen());
     }
   }
 
@@ -154,7 +182,7 @@ class AuthController extends ChangeNotifier {
       await fetchZoneIdFromFirestore();
       loader = false;
       notifyListeners();
-      Routes.pushreplace(screen: BottumNavigationScreen());
+      checkCurrentUser(context);
     } catch (e) {
       loader = false;
       notifyListeners();
@@ -238,7 +266,7 @@ class AuthController extends ChangeNotifier {
     loader = true;
     notifyListeners();
     // Get the current user ID from Firebase Authentication
-    final pref = await SharedPreferences.getInstance();
+    // final pref = await SharedPreferences.getInstance();
     try {
       final data = UserModel(zone: zone, email: email);
       await db
@@ -260,8 +288,8 @@ class UserModel {
   UserModel({this.password, required this.zone, required this.email});
   Map<String, dynamic> toJson() =>
       {"password": password, "email": email, "zone": zone};
-  factory UserModel.fromJson(Map<String, dynamic> Json) {
+  factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
-        zone: Json["zone"], email: Json["email"], password: Json["password"]);
+        zone: json["zone"], email: json["email"], password: json["password"]);
   }
 }
