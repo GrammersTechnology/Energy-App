@@ -16,19 +16,16 @@ class HvaController extends ChangeNotifier {
 
   getHvaDetails() async {
     loader = true;
-    log("message");
+
     final pref = await SharedPreferences.getInstance();
     String? zone = pref.getString('zone');
-    log(zone.toString());
     if (zone != null) {
       final response = await HvaKasterServices().getHavKasterDetails(zone);
       if (response != null) {
         firstLevelValues.clear();
-        // hvaModel = response;
-        List<String> firstLevelKeys = response.keys.toList();
         firstLevelValues = response.values.toList();
 
-        print('Values: $firstLevelValues');
+        // print('Values: $firstLevelValues');
         // Map<String,dynamic>demo=
         // List<String> firstElements =
         //     firstLevelKeys.map((key) => response[key].toString()).toList();
@@ -36,8 +33,7 @@ class HvaController extends ChangeNotifier {
           final value = element['details']['front_end_text'];
           final split = value.toString().split(' ');
           element['details']['front_end_text'] = split.first;
-          log(element['details']['front_end_text'].toString());
-          print("===========================================");
+          // log(element['details']['front_end_text'].toString());
         }
         // log(data);
       }

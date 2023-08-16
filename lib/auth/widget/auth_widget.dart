@@ -6,10 +6,11 @@ import '../../const/themes/colors.dart';
 import '../../const/themes/text.dart';
 
 class AuthContainerWidget extends StatelessWidget {
-  AuthContainerWidget({super.key, required this.size, required this.title});
+  const AuthContainerWidget(
+      {super.key, required this.size, required this.title});
 
   final Size size;
-  String title;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class AuthContainerWidget extends StatelessWidget {
             children: [
               vSpaceXl,
               vSpaceXl,
-              Icon(
+              const Icon(
                 Icons.ac_unit,
                 color: Colors.white,
                 size: 60,
@@ -31,7 +32,7 @@ class AuthContainerWidget extends StatelessWidget {
               vSpaceXl,
               Row(
                 children: [
-                  Spacer(),
+                  const Spacer(),
                   Text(title, style: AppText.whiteTextStyle),
                   hSpaceMedium
                 ],

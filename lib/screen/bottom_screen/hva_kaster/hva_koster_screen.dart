@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:demo/const/themes/colors.dart';
 import 'package:demo/controller/hva_kaster_controller.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +14,7 @@ class HvaKosterScreen extends StatelessWidget {
     final hvaController = Provider.of<HvaController>(context, listen: false);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       hvaController.getHvaDetails();
+      log(("Hva page started"));
     });
     return Scaffold(
       appBar: AppBar(
@@ -73,152 +76,150 @@ class HvaKosterScreen extends StatelessWidget {
                                                     'assets/images/ev.png',
                                                     height: 50,
                                                   );
-                                return Container(
-                                  child: Column(children: [
-                                    const SizedBox(
-                                      height: 15,
-                                    ),
-                                    Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            controller.firstLevelValues[index]
-                                                        ['details']
-                                                    ['front_end_text'] ??
-                                                "",
-                                            style: const TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          image
-                                        ]),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Row(
+                                return Column(children: [
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Container(
-                                          width: size.width / 4,
-                                          height: 35,
-                                          color: const Color(0XFFdae1ef),
-                                          child: const Center(
-                                              child: Text(
-                                            "Na",
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.w600),
-                                          )),
+                                        Text(
+                                          controller.firstLevelValues[index]
+                                                      ['details']
+                                                  ['front_end_text'] ??
+                                              "",
+                                          style: const TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold),
                                         ),
-                                        Container(
-                                          color: const Color(0XFFdcefe9),
-                                          width: size.width / 4,
-                                          height: 35,
-                                          child: const Center(
-                                              child: Text("Biligst",
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.w600))),
-                                        ),
-                                        Container(
-                                          color: const Color(0XFFf6d7d3),
-                                          width: size.width / 4,
-                                          height: 35,
-                                          child: const Center(
-                                              child: Text("Dyrest",
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.w600))),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        SizedBox(
-                                          width: size.width / 4,
-                                          height: 35,
-                                          // color: const Color.fromARGB(255, 231, 193, 79),
-                                          child: Center(
-                                              child: Text(
-                                            "${controller.firstLevelValues[index]['cost']['current']['cost'] ?? ""} kr",
-                                            style: const TextStyle(
-                                                fontSize: 17,
-                                                fontWeight: FontWeight.w500),
-                                          )),
-                                        ),
-                                        SizedBox(
-                                          width: size.width / 4,
-                                          height: 35,
-                                          // color: const Color.fromARGB(255, 231, 193, 79),
-                                          child: Center(
-                                              child: Text(
-                                                  "${controller.firstLevelValues[index]['cost']['cheapest']['cost'] ?? ""} kr",
-                                                  style: const TextStyle(
-                                                      fontSize: 17,
-                                                      fontWeight:
-                                                          FontWeight.w500))),
-                                        ),
-                                        SizedBox(
-                                          width: size.width / 4,
-                                          height: 35,
-                                          // color: const Color.fromARGB(255, 231, 193, 79),
-                                          child: Center(
-                                              child: Text(
-                                                  "${controller.firstLevelValues[index]['cost']['most_expensive']['cost'] ?? ""} kr",
-                                                  style: const TextStyle(
-                                                      fontSize: 17,
-                                                      fontWeight:
-                                                          FontWeight.w500))),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        SizedBox(
-                                          width: size.width / 4,
-                                          height: 35,
-                                          // color: const Color.fromARGB(255, 231, 193, 79),
-                                          child: const Center(
-                                              child: Text("kl 16-17",
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.w500))),
-                                        ),
-                                        SizedBox(
-                                          width: size.width / 4,
-                                          height: 35,
-                                          // color: const Color.fromARGB(255, 231, 193, 79),
-                                          child: const Center(
-                                              child: Text("kl 22-23",
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.w500))),
-                                        ),
-                                        SizedBox(
-                                          width: size.width / 4,
-                                          height: 35,
-                                          // color: const Color.fromARGB(255, 231, 193, 79),
-                                          child: const Center(
-                                              child: Text("kl 17-18",
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.w500))),
-                                        ),
-                                      ],
-                                    )
-                                  ]),
-                                );
+                                        image
+                                      ]),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        width: size.width / 4,
+                                        height: 35,
+                                        color: const Color(0XFFdae1ef),
+                                        child: const Center(
+                                            child: Text(
+                                          "Na",
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w600),
+                                        )),
+                                      ),
+                                      Container(
+                                        color: const Color(0XFFdcefe9),
+                                        width: size.width / 4,
+                                        height: 35,
+                                        child: const Center(
+                                            child: Text("Biligst",
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.w600))),
+                                      ),
+                                      Container(
+                                        color: const Color(0XFFf6d7d3),
+                                        width: size.width / 4,
+                                        height: 35,
+                                        child: const Center(
+                                            child: Text("Dyrest",
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.w600))),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      SizedBox(
+                                        width: size.width / 4,
+                                        height: 35,
+                                        // color: const Color.fromARGB(255, 231, 193, 79),
+                                        child: Center(
+                                            child: Text(
+                                          "${controller.firstLevelValues[index]['cost']['current']['cost'] ?? ""} kr",
+                                          style: const TextStyle(
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.w500),
+                                        )),
+                                      ),
+                                      SizedBox(
+                                        width: size.width / 4,
+                                        height: 35,
+                                        // color: const Color.fromARGB(255, 231, 193, 79),
+                                        child: Center(
+                                            child: Text(
+                                                "${controller.firstLevelValues[index]['cost']['cheapest']['cost'] ?? ""} kr",
+                                                style: const TextStyle(
+                                                    fontSize: 17,
+                                                    fontWeight:
+                                                        FontWeight.w500))),
+                                      ),
+                                      SizedBox(
+                                        width: size.width / 4,
+                                        height: 35,
+                                        // color: const Color.fromARGB(255, 231, 193, 79),
+                                        child: Center(
+                                            child: Text(
+                                                "${controller.firstLevelValues[index]['cost']['most_expensive']['cost'] ?? ""} kr",
+                                                style: const TextStyle(
+                                                    fontSize: 17,
+                                                    fontWeight:
+                                                        FontWeight.w500))),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      SizedBox(
+                                        width: size.width / 4,
+                                        height: 35,
+                                        // color: const Color.fromARGB(255, 231, 193, 79),
+                                        child: const Center(
+                                            child: Text("kl 16-17",
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.w500))),
+                                      ),
+                                      SizedBox(
+                                        width: size.width / 4,
+                                        height: 35,
+                                        // color: const Color.fromARGB(255, 231, 193, 79),
+                                        child: const Center(
+                                            child: Text("kl 22-23",
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.w500))),
+                                      ),
+                                      SizedBox(
+                                        width: size.width / 4,
+                                        height: 35,
+                                        // color: const Color.fromARGB(255, 231, 193, 79),
+                                        child: const Center(
+                                            child: Text("kl 17-18",
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.w500))),
+                                      ),
+                                    ],
+                                  )
+                                ]);
                               }),
                         )),
         );

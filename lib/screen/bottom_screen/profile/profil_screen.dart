@@ -12,10 +12,11 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Controller = Provider.of<ProfileController>(context, listen: false);
+    final profileController =
+        Provider.of<ProfileController>(context, listen: false);
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Controller.getUserProfileDetails(context);
+      profileController.getUserProfileDetails(context);
     });
 
     return Consumer<ProfileController>(builder: (context, controller, _) {
@@ -105,9 +106,7 @@ class ProfileScreen extends StatelessWidget {
                     ),
                   ),
                 )
-              : Container(
-                  child: const Center(child: Text("Data Not Available")),
-                );
+              : const Center(child: Text("Data Not Available"));
     });
   }
 

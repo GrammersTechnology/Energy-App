@@ -18,7 +18,6 @@ class ChartService {
         final result = response.data;
         chartController.loader = false;
 
-        chartController.notifyListeners();
         return result;
       }
     } on DioException catch (e) {

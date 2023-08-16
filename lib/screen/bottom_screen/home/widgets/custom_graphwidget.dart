@@ -9,10 +9,6 @@ class ColumnGraphWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      final controller = Provider.of<HomeController>(context, listen: false);
-      controller.feacthColumnGraphData(context);
-    });
     return Consumer<HomeController>(builder: (context, controller, widget) {
       return controller.columnGraphData.isNotEmpty
           ? SizedBox(
@@ -39,27 +35,33 @@ class StepperGraphWidget extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
+  @override
   Widget build(BuildContext context) {
     return Consumer<HomeController>(builder: (context, controller, widget) {
       return controller.loader
           ? const Center(
               child: CircularProgressIndicator(),
             )
-          : SizedBox(
-              width: double.infinity,
-              height: 250,
-              child: SfCartesianChart(
-                primaryXAxis: CategoryAxis(title: AxisTitle(text: "")),
-                series: <ChartSeries>[
-                  StepLineSeries<GraphData, String>(
-                    dataSource: controller.stepLineGraph,
-                    xValueMapper: (GraphData sales, _) => sales.x.toString(),
-                    yValueMapper: (GraphData sales, _) => sales.y,
-                    // dataLabelSettings: DataLabelSettings(isVisible: true)
-                  )
-                ],
-              ),
-            );
+          : controller.stepLineGraph.isEmpty
+              ? const Center(
+                  child: Text("Graph Not Avaibale"),
+                )
+              : SizedBox(
+                  width: double.infinity,
+                  height: 250,
+                  child: SfCartesianChart(
+                    primaryXAxis: CategoryAxis(title: AxisTitle(text: "")),
+                    series: <ChartSeries>[
+                      StepLineSeries<GraphData, String>(
+                        dataSource: controller.stepLineGraph,
+                        xValueMapper: (GraphData sales, _) =>
+                            sales.x.toString(),
+                        yValueMapper: (GraphData sales, _) => sales.y,
+                        // dataLabelSettings: DataLabelSettings(isVisible: true)
+                      )
+                    ],
+                  ),
+                );
     });
   }
 }

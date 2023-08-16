@@ -6,8 +6,8 @@ class SearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 234, 233, 233),
+    return const Scaffold(
+      backgroundColor: Color.fromARGB(255, 234, 233, 233),
       body: SafeArea(
           child: SingleChildScrollView(
         child: Column(
@@ -21,9 +21,9 @@ class SearchScreen extends StatelessWidget {
 }
 
 class SearchContainer extends StatelessWidget {
-  SearchContainer({super.key, required this.title});
+  const SearchContainer({super.key, required this.title});
 
-  String title;
+  final String title;
   @override
   Widget build(BuildContext context) {
     return SizedBox(

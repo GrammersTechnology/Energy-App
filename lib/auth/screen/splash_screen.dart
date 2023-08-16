@@ -13,14 +13,12 @@ class SplashScreen extends StatelessWidget {
           Provider.of<AuthController>(context, listen: false);
       authController.cheackLocalData(context);
     });
-    return Scaffold(
-        body: Container(
-      child: const Center(
-          child: Icon(
-        Icons.ac_unit,
-        size: 50,
-        color: AppColors.primaryColor,
-      )),
-    ));
+    return const Scaffold(
+        body: Center(
+            child: Icon(
+      Icons.ac_unit,
+      size: 50,
+      color: AppColors.primaryColor,
+    )));
   }
 }

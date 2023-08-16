@@ -15,69 +15,67 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    print("login");
     return Consumer<AuthController>(builder: (context, controller, widget) {
       return Scaffold(
         body: SingleChildScrollView(
           child: Column(children: [
             AuthContainerWidget(size: size, title: "Login"),
-            Container(
-                child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Column(children: [
-                      vSpaceXl,
-                      TextFromFieldWidget(
-                          hint: "Email",
-                          showPasswordToggle: false,
-                          prefixIcon: Icons.email,
-                          controller: controller.emailController),
-                      vSpaceRegular,
-                      TextFromFieldWidget(
-                          hint: "Password",
-                          showPasswordToggle: true,
-                          prefixIcon: Icons.key,
-                          controller: controller.passwordController),
-                      vSpaceSmall,
-                      Row(
-                        children: [
-                          const Spacer(),
-                          TextButton(
-                              onPressed: () {},
-                              child: const Text(
-                                "Forget Password ?",
-                                style: TextStyle(color: Colors.grey),
-                              )),
-                          hSpaceSmall
-                        ],
-                      ),
-                      vSpaceXl,
-                      vSpaceXl,
-                      controller.loader
-                          ? CircularProgressIndicator()
-                          : LoginButtonWidget(
-                              title: "LOGIN",
-                              onTap: () {
-                                controller.login(context);
-                              },
-                            ),
-                      vSpaceMin,
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 15),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text("Don't have an account?"),
-                            TextButton(
-                                onPressed: () {
-                                  Routes.push(screen: const SignupScreen());
-                                  controller.emailController.clear();
-                                  controller.passwordController.clear();
-                                },
-                                child: const Text("Register"))
-                          ],
+            Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Column(children: [
+                  vSpaceXl,
+                  TextFromFieldWidget(
+                      hint: "Email",
+                      showPasswordToggle: false,
+                      prefixIcon: Icons.email,
+                      controller: controller.emailController),
+                  vSpaceRegular,
+                  TextFromFieldWidget(
+                      hint: "Password",
+                      showPasswordToggle: true,
+                      prefixIcon: Icons.key,
+                      controller: controller.passwordController),
+                  vSpaceSmall,
+                  Row(
+                    children: [
+                      const Spacer(),
+                      TextButton(
+                          onPressed: () {},
+                          child: const Text(
+                            "Forget Password ?",
+                            style: TextStyle(color: Colors.grey),
+                          )),
+                      hSpaceSmall
+                    ],
+                  ),
+                  vSpaceXl,
+                  vSpaceXl,
+                  controller.loader
+                      ? const CircularProgressIndicator()
+                      : LoginButtonWidget(
+                          title: "LOGIN",
+                          onTap: () {
+                            controller.login(context);
+                          },
                         ),
-                      ),
-                    ])))
+                  vSpaceMin,
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text("Don't have an account?"),
+                        TextButton(
+                            onPressed: () {
+                              Routes.push(screen: const SignupScreen());
+                              controller.emailController.clear();
+                              controller.passwordController.clear();
+                            },
+                            child: const Text("Register"))
+                      ],
+                    ),
+                  ),
+                ]))
           ]),
         ),
       );

@@ -100,28 +100,28 @@ class ProfileModel {
 class SavingTips {
   String readmoretxt;
   String savingstips;
-  bool All;
-  bool ElCar;
-  bool HeatPump;
-  bool SolarPanels;
+  bool allItems;
+  bool elCars;
+  bool heatPumps;
+  bool solarPanels;
   dynamic dateTIme;
 
   SavingTips(
       {required this.readmoretxt,
       required this.savingstips,
-      required this.All,
-      required this.ElCar,
-      required this.HeatPump,
-      required this.SolarPanels,
+      required this.allItems,
+      required this.elCars,
+      required this.heatPumps,
+      required this.solarPanels,
       required this.dateTIme});
-  factory SavingTips.fromJson(Map<String, dynamic> Json) => SavingTips(
-      readmoretxt: Json["ReadMoreTxt"],
-      savingstips: Json["SavingsTips"],
-      All: Json['All'],
-      ElCar: Json['ElCar'],
-      HeatPump: Json['HeatPump'],
-      SolarPanels: Json['SolarPanels'],
-      dateTIme: Json['TimeDate']);
+  factory SavingTips.fromJson(Map<String, dynamic> json) => SavingTips(
+      readmoretxt: json["ReadMoreTxt"],
+      savingstips: json["SavingsTips"],
+      allItems: json['All'],
+      elCars: json['ElCar'],
+      heatPumps: json['HeatPump'],
+      solarPanels: json['SolarPanels'],
+      dateTIme: json['TimeDate']);
 }
 
 class HavKasterModel {

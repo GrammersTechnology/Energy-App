@@ -94,8 +94,6 @@ class ProfileController extends ChangeNotifier {
         dropdwonList.add(value);
         notifyListeners();
       }
-      print(dropdwonList.first.toString());
-      print(dropdwonList.last.toString());
     }
     notifyListeners();
   }
@@ -147,7 +145,6 @@ class ProfileController extends ChangeNotifier {
     log(numberOfPepole);
     log(powerCoins);
     log(powerPoint);
-    print("object$name");
     ProfileModel data = ProfileModel(
         all: hasElCarBool && hasSolarPanelBool && hasEatPumpBool ? true : false,
         email: fb.currentUser!.email.toString(),

@@ -4,7 +4,6 @@ import 'package:demo/routes/routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'controller/auth_controller.dart';
 import 'controller/chartcontroller.dart';
 import 'controller/home_controller.dart';
@@ -16,8 +15,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await NotificationService().initNotification();
-  NotificationService().morningNotification();
-  NotificationService().afterNoonNotification();
+  NotificationService().showNotification();
 
   runApp(const MyApp());
 }

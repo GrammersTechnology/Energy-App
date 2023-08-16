@@ -2,9 +2,10 @@ import 'package:demo/const/themes/text.dart';
 import 'package:flutter/material.dart';
 
 class LoginButtonWidget extends StatelessWidget {
-  LoginButtonWidget({super.key, required this.title, required this.onTap});
-  String title;
-  Function()? onTap;
+  const LoginButtonWidget(
+      {super.key, required this.title, required this.onTap});
+  final String title;
+  final Function()? onTap;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

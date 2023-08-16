@@ -11,10 +11,11 @@ class ProfileEditScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Controller = Provider.of<ProfileController>(context, listen: false);
+    final profileController =
+        Provider.of<ProfileController>(context, listen: false);
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Controller.fetchCSVData();
+      profileController.fetchCSVData();
     });
     return Consumer<ProfileController>(builder: (context, controller, _) {
       return Scaffold(

@@ -15,10 +15,10 @@ class TextFromFieldWidget extends StatefulWidget {
   final bool showPasswordToggle;
 
   @override
-  _TextFromFieldWidgetState createState() => _TextFromFieldWidgetState();
+  TextFromFieldWidgetState createState() => TextFromFieldWidgetState();
 }
 
-class _TextFromFieldWidgetState extends State<TextFromFieldWidget> {
+class TextFromFieldWidgetState extends State<TextFromFieldWidget> {
   bool isObscure = true;
 
   @override

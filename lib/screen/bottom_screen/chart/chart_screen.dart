@@ -10,18 +10,19 @@ class ChartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Controller = Provider.of<ChartController>(context, listen: false);
+    final chartController =
+        Provider.of<ChartController>(context, listen: false);
     // final homeController = Provider.of<HomeController>(context, listen: false);
     final size = MediaQuery.of(context).size;
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Controller.getChartDetails(context, '');
+      chartController.getChartDetails(context);
     });
     return Consumer<ChartController>(builder: (context, controller, widget) {
       return Scaffold(
         body: RefreshIndicator(
           onRefresh: () {
-            return controller.getChartDetails(context, '');
+            return controller.getChartDetails(context);
           },
           child: SafeArea(
             child: controller.loader == true
@@ -30,11 +31,11 @@ class ChartScreen extends StatelessWidget {
                   )
                 : SingleChildScrollView(
                     child: controller.data == null
-                        ? Padding(
-                            padding: const EdgeInsets.only(top: 150),
+                        ? const Padding(
+                            padding: EdgeInsets.only(top: 150),
                             child: Center(
                               child: Column(
-                                children: const [
+                                children: [
                                   CircularProgressIndicator(),
                                   Text("Finding Data.."),
                                 ],
