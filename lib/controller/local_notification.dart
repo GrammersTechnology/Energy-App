@@ -67,7 +67,6 @@ class NotificationService {
     final now = tz.TZDateTime.now(tz.local);
     final scheduledDate = tz.TZDateTime(
         tz.local, now.year, now.month, now.day, time.hour, time.minute);
-    print(now);
 
     if (scheduledDate.isBefore(now)) {
       priceContent = await getNotificationContent("price_text?price_area=");

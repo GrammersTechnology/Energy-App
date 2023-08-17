@@ -26,7 +26,7 @@ class AuthController extends ChangeNotifier {
   final passwordController = TextEditingController();
 
   String? dropdowmValue;
-  List<String> dropdwonList = ["NO1", "NO2", "NO3", "NO4", "NO5"];
+  List<String> dropdwonList = ["1", "2", "3", "4", "5"];
 
   changeDropDownValue(value) {
     dropdowmValue = value;
@@ -39,7 +39,8 @@ class AuthController extends ChangeNotifier {
     loader = true;
     try {
       await fb.createUserWithEmailAndPassword(
-          email: emailController.text, password: passwordController.text);
+          email: emailController.text.trim(),
+          password: passwordController.text.trim());
       final data = UserModel(zone: dropdowmValue, email: fb.currentUser?.email);
       await db
           .collection("user")
@@ -171,7 +172,8 @@ class AuthController extends ChangeNotifier {
     notifyListeners();
     try {
       await fb.signInWithEmailAndPassword(
-          email: emailController.text, password: passwordController.text);
+          email: emailController.text.trim(),
+          password: passwordController.text.trim());
       notifyListeners();
       // saveAuthLocal();
       final email = fb.currentUser?.email;
