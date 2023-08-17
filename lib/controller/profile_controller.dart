@@ -23,6 +23,14 @@ class ProfileController extends ChangeNotifier {
   List<dynamic> csvTable = [];
   List<String> dropdwonList = [];
   String? dropDownValue;
+  String? zoneDropdowmValue;
+  List<String> zoneDropdwonList = [
+    "NO1",
+    "NO2",
+    "NO3",
+    "NO4",
+    "NO5",
+  ];
 
   bool loader = false;
   final nameController = TextEditingController();
@@ -42,6 +50,11 @@ class ProfileController extends ChangeNotifier {
   bool wantPushWarning2Bool = userProfile?.wantPushWarning2 ?? false;
   changeDropDownValue(value) {
     dropDownValue = value;
+    notifyListeners();
+  }
+
+  changeZoneDropDownValue(value) {
+    zoneDropdowmValue = value;
     notifyListeners();
   }
 
@@ -113,11 +126,13 @@ class ProfileController extends ChangeNotifier {
     } else {
       name = nameController.text;
     }
-    if (zoneController.text.isEmpty) {
-      zone = userProfile!.pricezone;
-    } else {
-      zone = zoneController.text;
-    }
+    // if (zoneController.text.isEmpty) {
+    //   zone = userProfile!.pricezone;
+    // } else {
+    //   zone = zoneController.text;
+    // }
+    zone = zoneDropdowmValue ?? userProfile!.pricezone;
+
     if (yearlyCosumptionController.text.isEmpty) {
       yearlyConsmtn = userProfile!.yearlyCosumption;
     } else {
@@ -192,7 +207,7 @@ class ProfileController extends ChangeNotifier {
 
   clearController() {
     nameController.clear();
-    zoneController.clear();
+    // zoneController.clear();
     yearlyCosumptionController.clear();
     numberOfPepoleControler.clear();
     powerCoinsController.clear();

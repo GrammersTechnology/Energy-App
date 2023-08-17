@@ -90,19 +90,39 @@ class ProfileEditScreen extends StatelessWidget {
                   ),
                 ),
                 vSpaceRegular,
-                TextFormField(
-                  keyboardType: TextInputType.number,
-                  controller: controller.zoneController,
-                  decoration: InputDecoration(
-                    label: const Text("Zone"),
-                    hintText: (userProfile?.pricezone.isNotEmpty == true)
-                        ? userProfile?.pricezone
-                        : "Zone",
-                    border: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(30)),
-                    ),
+                Container(
+                  padding: EdgeInsets.only(left: 15),
+                  decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(Radius.circular(30)),
+                      border: Border.all(color: Colors.grey)),
+                  child: DropdownButton(
+                    hint: Text(
+                        controller.zoneDropdowmValue ?? " Select From List"),
+                    underline: const SizedBox(),
+                    isExpanded: true,
+                    items: controller.zoneDropdwonList
+                        .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+                        .toList(),
+                    onChanged: (value) {
+                      controller.changeZoneDropDownValue(value);
+                    },
+                    onTap: () {},
                   ),
                 ),
+                // vSpaceRegular,
+                // TextFormField(
+                //   keyboardType: TextInputType.number,
+                //   controller: controller.zoneController,
+                //   decoration: InputDecoration(
+                //     label: const Text("Zone"),
+                //     hintText: (userProfile?.pricezone.isNotEmpty == true)
+                //         ? userProfile?.pricezone
+                //         : "Zone",
+                //     border: const OutlineInputBorder(
+                //       borderRadius: BorderRadius.all(Radius.circular(30)),
+                //     ),
+                //   ),
+                // ),
                 vSpaceRegular,
                 TextFormField(
                   keyboardType: TextInputType.number,
