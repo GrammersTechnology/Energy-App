@@ -37,6 +37,7 @@ class SignupScreen extends StatelessWidget {
                       controller: controller.passwordController),
                   vSpaceRegular,
                   Container(
+                    padding: EdgeInsets.only(left: 15),
                     decoration: BoxDecoration(
                         borderRadius:
                             const BorderRadius.all(Radius.circular(30)),

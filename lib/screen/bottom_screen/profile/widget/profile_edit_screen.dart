@@ -91,6 +91,7 @@ class ProfileEditScreen extends StatelessWidget {
                 ),
                 vSpaceRegular,
                 TextFormField(
+                  keyboardType: TextInputType.number,
                   controller: controller.zoneController,
                   decoration: InputDecoration(
                     label: const Text("Zone"),
