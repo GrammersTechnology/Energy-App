@@ -206,7 +206,8 @@ class AuthController extends ChangeNotifier {
 
         // Access the zone ID field
         String zoneId = data.pricezone.toString();
-        log("fetchrdddddddd dataaaaaaa " + zoneId.substring(zoneId.length - 1));
+
+        zoneId = zoneId.substring(zoneId.length - 1);
         pref.setString('zone', zoneId.toString());
 
         loader = false;

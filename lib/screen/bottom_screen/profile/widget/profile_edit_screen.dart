@@ -91,7 +91,7 @@ class ProfileEditScreen extends StatelessWidget {
                 ),
                 vSpaceRegular,
                 Container(
-                  padding: EdgeInsets.only(left: 15),
+                  padding: const EdgeInsets.only(left: 15),
                   decoration: BoxDecoration(
                       borderRadius: const BorderRadius.all(Radius.circular(30)),
                       border: Border.all(color: Colors.grey)),
