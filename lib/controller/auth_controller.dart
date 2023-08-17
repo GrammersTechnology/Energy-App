@@ -1,7 +1,4 @@
-// ignore_for_file: avoid_print
-
 import 'dart:developer';
-
 import 'package:demo/const/themes/colors.dart';
 import 'package:demo/controller/chartcontroller.dart';
 import 'package:demo/controller/home_controller.dart';
@@ -14,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../auth/screen/loginscreen.dart';
 import '../routes/routes.dart';
 import '../screen/bottom_screen/bottum_navigation_screen.dart';
@@ -26,7 +22,7 @@ class AuthController extends ChangeNotifier {
   final passwordController = TextEditingController();
 
   String? dropdowmValue;
-  List<String> dropdwonList = ["1", "2", "3", "4", "5"];
+  List<String> dropdwonList = ["NO1", "NO2", "NO3", "NO4", "NO5"];
 
   changeDropDownValue(value) {
     dropdowmValue = value;
@@ -210,10 +206,9 @@ class AuthController extends ChangeNotifier {
 
         // Access the zone ID field
         String zoneId = data.pricezone.toString();
+        log("fetchrdddddddd dataaaaaaa " + zoneId.substring(zoneId.length - 1));
         pref.setString('zone', zoneId.toString());
-        // } else {
-        //   print('User document not found.');
-        // }
+
         loader = false;
         notifyListeners();
       }).catchError((error) {
