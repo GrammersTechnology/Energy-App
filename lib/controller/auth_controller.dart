@@ -134,7 +134,7 @@ class AuthController extends ChangeNotifier {
       checkCurrentUser(context);
       final homeController =
           Provider.of<HomeController>(context, listen: false);
-
+      homeController.getTips(context);
       homeController.fecthData(context);
     }
   }

@@ -9,7 +9,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../../../controller/home_controller.dart';
-import '../../../controller/local_notification.dart';
 import '../../../routes/routes.dart';
 import 'widgets/custom_graphwidget.dart';
 

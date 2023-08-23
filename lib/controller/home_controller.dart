@@ -28,7 +28,7 @@ class HomeController extends ChangeNotifier {
     final perf = await SharedPreferences.getInstance();
     await AuthController().fetchZoneIdFromFirestore();
     final zone = perf.getString("zone");
-    log("--------------------" + zone.toString());
+    log("--------------------$zone");
 
     result = (await HomeScreenServicesScreen().dataDetailsApi(context, zone))!;
 
@@ -46,10 +46,10 @@ class HomeController extends ChangeNotifier {
             "${dateTimeEnd.day}-${dateTimeEnd.month}-${dateTimeEnd.year}";
 
         ///////// data for first graph//////
-
+        print(result[i]['NOK_per_kWh']);
         temp = GraphData(
             x: dateTimeStart.hour + dateTimeStart.minute + dateTimeStart.second,
-            y: result[i]['NOK_per_kWh']);
+            y: result[i]['NOK_per_kWh'] * 1.25);
         stepLineGraph.add(temp);
         notifyListeners();
       }
@@ -70,8 +70,8 @@ class HomeController extends ChangeNotifier {
         });
       }
     }
+    savingTips.first.savingstips;
     graphDataStream.sink.add(stepLineGraph); // Emit the updated graph data
-
     loader = false;
     notifyListeners();
   }
