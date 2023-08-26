@@ -190,7 +190,7 @@ class HvaKosterScreen extends StatelessWidget {
                                         // color: const Color.fromARGB(255, 231, 193, 79),
                                         child: Center(
                                             child: Text(
-                                                "${controller.firstLevelValues[index]['cost']['current']['start_time'] ?? ""}",
+                                                "kl ${controller.firstLevelValues[index]['cost']['current']['start_hour'] ?? ""} - ${controller.firstLevelValues[index]['cost']['current']['end_hour'] ?? ""}",
                                                 style: const TextStyle(
                                                     fontSize: 15,
                                                     fontWeight:
@@ -200,8 +200,9 @@ class HvaKosterScreen extends StatelessWidget {
                                         width: size.width / 4,
                                         height: 35,
                                         // color: const Color.fromARGB(255, 231, 193, 79),
-                                        child: const Center(
-                                            child: Text("kl 22-23",
+                                        child: Center(
+                                            child: Text(
+                                                "kl ${controller.firstLevelValues[index]['cost']['cheapest']['start_hour'] ?? ""} - ${controller.firstLevelValues[index]['cost']['cheapest']['end_hour'] ?? ""}",
                                                 style: TextStyle(
                                                     fontSize: 15,
                                                     fontWeight:
@@ -211,8 +212,9 @@ class HvaKosterScreen extends StatelessWidget {
                                         width: size.width / 4,
                                         height: 35,
                                         // color: const Color.fromARGB(255, 231, 193, 79),
-                                        child: const Center(
-                                            child: Text("kl 17-18",
+                                        child: Center(
+                                            child: Text(
+                                                "kl ${controller.firstLevelValues[index]['cost']['most_expensive']['start_hour'] ?? ""} - ${controller.firstLevelValues[index]['cost']['most_expensive']['end_hour'] ?? ""}",
                                                 style: TextStyle(
                                                     fontSize: 15,
                                                     fontWeight:

@@ -140,7 +140,7 @@ class ChartScreen extends StatelessWidget {
                                                               FontWeight.w600),
                                                     ),
                                                     Text(
-                                                      "  ${controller.data!.fyllingsgrad}",
+                                                      "  ${controller.data?.fyllingsgrad.round()}",
                                                       style: const TextStyle(
                                                           fontSize: 17,
                                                           fontWeight:
@@ -168,7 +168,7 @@ class ChartScreen extends StatelessWidget {
                                                                 FontWeight
                                                                     .w600)),
                                                     Text(
-                                                        "  ${controller.data!.kapasitetTWh}",
+                                                        "  ${controller.data!.kapasitetTWh.round()}",
                                                         style: const TextStyle(
                                                             fontSize: 17,
                                                             fontWeight:
@@ -196,7 +196,7 @@ class ChartScreen extends StatelessWidget {
                                                                 FontWeight
                                                                     .w600)),
                                                     Text(
-                                                        " ${controller.data!.fyllingTWh}",
+                                                        " ${controller.data!.fyllingTWh.round()}",
                                                         style: const TextStyle(
                                                             fontSize: 17,
                                                             fontWeight:
@@ -242,7 +242,7 @@ class ChartScreen extends StatelessWidget {
                                                       height: 5,
                                                     ),
                                                     Text(
-                                                        "${controller.data!.fyllingTWh.toString().substring(0, 5)} TWh",
+                                                        "${controller.data!.fyllingTWh.round()} TWh",
                                                         style: const TextStyle(
                                                             fontSize: 15,
                                                             fontWeight:
@@ -267,7 +267,7 @@ class ChartScreen extends StatelessWidget {
                                                       height: 5,
                                                     ),
                                                     Text(
-                                                        "${controller.data!.fyllingsgradForrigeUke.toString().substring(0, 5)} %",
+                                                        "${controller.data!.fyllingsgradForrigeUke.roundToDouble()} %",
                                                         style: const TextStyle(
                                                           fontSize: 15,
                                                           fontWeight:
