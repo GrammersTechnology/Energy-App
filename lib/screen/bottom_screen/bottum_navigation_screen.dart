@@ -1,16 +1,11 @@
-import 'package:demo/controller/profile_controller.dart';
 import 'package:demo/screen/bottom_screen/chart/chart_screen.dart';
+import 'package:demo/screen/bottom_screen/home/widgets/tips_screen.dart';
 import 'package:demo/screen/bottom_screen/profile/profil_screen.dart';
 import 'package:demo/screen/bottom_screen/home/home_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
-import 'package:provider/provider.dart';
 
-import '../../controller/chartcontroller.dart';
-import '../../controller/home_controller.dart';
-import '../../controller/hva_kaster_controller.dart';
-import 'report/report_screen.dart';
 import 'hva_kaster/hva_koster_screen.dart';
 
 class BottumNavigationScreen extends StatelessWidget {
@@ -27,7 +22,7 @@ class BottumNavigationScreen extends StatelessWidget {
       controller: _controller,
       screens: const [
         HomeScreen(),
-        ReportsScreen(),
+        TipsScreen(),
         ChartScreen(),
         HvaKosterScreen(),
         ProfileScreen()
@@ -41,7 +36,7 @@ class BottumNavigationScreen extends StatelessWidget {
         ),
         PersistentBottomNavBarItem(
           icon: const Icon(CupertinoIcons.square_list),
-          title: ("Report"),
+          title: ("Sparetips"),
           activeColorPrimary: CupertinoColors.white,
           inactiveColorPrimary: CupertinoColors.systemGrey,
         ),
@@ -53,7 +48,7 @@ class BottumNavigationScreen extends StatelessWidget {
         ),
         PersistentBottomNavBarItem(
           icon: const Icon(CupertinoIcons.money_dollar_circle),
-          title: ("Hav Koster"),
+          title: ("HVA Koster"),
           activeColorPrimary: CupertinoColors.white,
           inactiveColorPrimary: CupertinoColors.systemGrey,
         ),

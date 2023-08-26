@@ -3,7 +3,6 @@ import 'package:demo/const/space_helper.dart';
 import 'package:demo/const/themes/colors.dart';
 import 'package:demo/controller/auth_controller.dart';
 import 'package:demo/controller/profile_controller.dart';
-import 'package:demo/screen/bottom_screen/home/widgets/tips_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -104,22 +103,23 @@ class HomeScreen extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  TextButton(
-                                      onPressed: () {
-                                        Routes.push(screen: const TipsScreen());
-                                      },
-                                      child: const Text(
-                                        'Read more',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w900,
-                                        ),
-                                      ))
-                                ])
+                            // Row(
+                            //     mainAxisAlignment: MainAxisAlignment.end,
+                            //     children: [
+                            //       TextButton(
+                            //           onPressed: () {
+                            //             Routes.push(screen: const TipsScreen());
+                            //           },
+                            //           child: const Text(
+                            //             'Read more',
+                            //             style: TextStyle(
+                            //               color: Colors.white,
+                            //               fontSize: 16,
+                            //               fontWeight: FontWeight.w900,
+                            //             ),
+                            //           ))
+                            //     ])
+                            vSpaceRegular
                           ])))
                   : const Text("Savings Tips Not Available"),
               vSpaceXl

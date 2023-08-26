@@ -188,9 +188,10 @@ class HvaKosterScreen extends StatelessWidget {
                                         width: size.width / 4,
                                         height: 35,
                                         // color: const Color.fromARGB(255, 231, 193, 79),
-                                        child: const Center(
-                                            child: Text("kl 16-17",
-                                                style: TextStyle(
+                                        child: Center(
+                                            child: Text(
+                                                "${controller.firstLevelValues[index]['cost']['current']['start_time'] ?? ""}",
+                                                style: const TextStyle(
                                                     fontSize: 15,
                                                     fontWeight:
                                                         FontWeight.w500))),
