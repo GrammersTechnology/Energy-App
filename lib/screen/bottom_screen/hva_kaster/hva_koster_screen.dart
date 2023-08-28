@@ -203,7 +203,7 @@ class HvaKosterScreen extends StatelessWidget {
                                         child: Center(
                                             child: Text(
                                                 "kl ${controller.firstLevelValues[index]['cost']['cheapest']['start_hour'] ?? ""} - ${controller.firstLevelValues[index]['cost']['cheapest']['end_hour'] ?? ""}",
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     fontSize: 15,
                                                     fontWeight:
                                                         FontWeight.w500))),
@@ -215,7 +215,7 @@ class HvaKosterScreen extends StatelessWidget {
                                         child: Center(
                                             child: Text(
                                                 "kl ${controller.firstLevelValues[index]['cost']['most_expensive']['start_hour'] ?? ""} - ${controller.firstLevelValues[index]['cost']['most_expensive']['end_hour'] ?? ""}",
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     fontSize: 15,
                                                     fontWeight:
                                                         FontWeight.w500))),
