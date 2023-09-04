@@ -46,7 +46,6 @@ class HomeController extends ChangeNotifier {
             "${dateTimeEnd.day}-${dateTimeEnd.month}-${dateTimeEnd.year}";
 
         ///////// data for first graph//////
-        print(result[i]['NOK_per_kWh']);
         temp = GraphData(
             x: dateTimeStart.hour + dateTimeStart.minute + dateTimeStart.second,
             y: result[i]['NOK_per_kWh'] * 1.25);
@@ -76,11 +75,6 @@ class HomeController extends ChangeNotifier {
     notifyListeners();
   }
 
-  // dispose() {
-  //   graphDataStream.close(); // Close the stream controller
-  //   super.dispose();
-  // }
-
   ///////////////////////// Column Graph/////////////////////////////////
   ///
 
@@ -93,13 +87,11 @@ class HomeController extends ChangeNotifier {
     final zone = perf.getString("zone");
     final result = await HomeScreenServicesScreen()
         .columnGraphDataApi(context, zone.toString());
-    // log(result.toString());
     if (result!.isNotEmpty) {
       columnGraphData.clear();
       for (var element in result) {
         final x = element['date'];
         final y = element['day_average_price'];
-        // log(y.runtimeType.toString());
         GraphData columnGraphDataelement = GraphData(x: x.toString(), y: y);
         columnGraphData.add(columnGraphDataelement);
 
@@ -134,7 +126,6 @@ class HomeController extends ChangeNotifier {
           });
         }
       }
-      // log(tempData.elementAt(0).savingstips.toString());
       savingTips.clear();
 
       if (tempData.isNotEmpty) {
@@ -148,32 +139,6 @@ class HomeController extends ChangeNotifier {
               savingTips.add(element);
             }
           }
-          // } else if (controller.hasElCarBool && controller.hasEatPumpBool) {
-          //   savingTips.clear();
-          //   for (var element in tempData) {
-          //     if (element.HeatPump && element.ElCar == true) {
-          //       savingTips.add(element);
-          //       log(savingTips.first.savingstips.toString());
-          //     }
-          //   }
-          // } else if (controller.hasEatPumpBool && controller.hasSolarPanelBool) {
-          //   savingTips.clear();
-          //   for (var element in tempData) {
-          //     if (element.HeatPump && element.SolarPanels == true) {
-          //       savingTips.add(element);
-          //       log(savingTips.first.savingstips.toString());
-          //     }
-          //   }
-          //   // for (var element in data.docs) {}
-          // } else if (controller.hasElCarBool && controller.hasSolarPanelBool) {
-          //   savingTips.clear();
-          //   for (var element in tempData) {
-          //     if (element.ElCar && element.SolarPanels == true) {
-          //       savingTips.add(element);
-          //       log(savingTips.first.savingstips.toString());
-          //     }
-          //   }
-          // for (var element in data.docs) {}
         } else if (controller.hasElCarBool) {
           for (var element in tempData) {
             if (element.elCars == true) {
@@ -181,7 +146,6 @@ class HomeController extends ChangeNotifier {
               log(savingTips.first.savingstips.toString());
             }
           }
-          // for (var element in data.docs) {}
         } else if (controller.hasEatPumpBool) {
           for (var element in tempData) {
             if (element.heatPumps == true) {
@@ -189,7 +153,6 @@ class HomeController extends ChangeNotifier {
               log(savingTips.first.savingstips.toString());
             }
           }
-          // for (var element in data.docs) {}
         } else if (controller.hasSolarPanelBool) {
           for (var element in tempData) {
             if (element.solarPanels == true) {
