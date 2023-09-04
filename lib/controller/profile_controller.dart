@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csv/csv.dart';
+import 'package:demo/const/api_error_helper.dart';
 import 'package:demo/controller/auth_controller.dart';
 import 'package:demo/controller/home_controller.dart';
 import 'package:demo/model/model.dart';
@@ -126,11 +127,6 @@ class ProfileController extends ChangeNotifier {
     } else {
       name = nameController.text;
     }
-    // if (zoneController.text.isEmpty) {
-    //   zone = userProfile!.pricezone;
-    // } else {
-    //   zone = zoneController.text;
-    // }
     zone = zoneDropdowmValue ?? userProfile!.pricezone;
 
     if (yearlyCosumptionController.text.isEmpty) {
@@ -207,7 +203,6 @@ class ProfileController extends ChangeNotifier {
 
   clearController() {
     nameController.clear();
-    // zoneController.clear();
     yearlyCosumptionController.clear();
     numberOfPepoleControler.clear();
     powerCoinsController.clear();
@@ -236,7 +231,7 @@ class ProfileController extends ChangeNotifier {
         notifyListeners();
       });
     } catch (e) {
-      // Messenger.pop(msg: e.toString(), context: context);
+      ErrorHandlerCode().status401(e);
       loader = false;
       notifyListeners();
     }

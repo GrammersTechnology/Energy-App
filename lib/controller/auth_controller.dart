@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:demo/const/api_error_helper.dart';
 import 'package:demo/const/themes/colors.dart';
 import 'package:demo/controller/chartcontroller.dart';
 import 'package:demo/controller/home_controller.dart';
@@ -49,8 +50,6 @@ class AuthController extends ChangeNotifier {
       loader = false;
       notifyListeners();
     } catch (e) {
-      log("--------------------error ${e.toString()}--------------------------");
-
       clearLocalData();
       loader = false;
       notifyListeners();
@@ -126,11 +125,8 @@ class AuthController extends ChangeNotifier {
     log(userEmail.toString());
     log(userPassword.toString());
     if (userEmail == null || userPassword == null) {
-      print("use name$userEmail");
-      print("user password$userPassword");
       Routes.pushreplace(screen: const LoginScreen());
     } else {
-      print("email founded");
       checkCurrentUser(context);
       final homeController =
           Provider.of<HomeController>(context, listen: false);
@@ -201,7 +197,6 @@ class AuthController extends ChangeNotifier {
           .doc(fb.currentUser?.uid)
           .get()
           .then((value) {
-        // if () {
         final data = ProfileModel.fromJson(value.data()!);
 
         // Access the zone ID field
@@ -215,10 +210,9 @@ class AuthController extends ChangeNotifier {
       }).catchError((error) {
         loader = false;
         notifyListeners();
-        print('Error retrieving data: $error');
       });
     } catch (e) {
-      // Messenger.pop(msg: e.toString(), context: context);
+      ErrorHandlerCode().status401(e);
     }
   }
 
@@ -249,10 +243,8 @@ class AuthController extends ChangeNotifier {
           .collection('profile')
           .doc(fb.currentUser!.uid)
           .set(data.toJson());
-      // .set(data.toJson());
       loader = false;
       notifyListeners();
-      // saveAuthLocal();
     } catch (e) {
       loader = false;
       notifyListeners();
@@ -263,19 +255,13 @@ class AuthController extends ChangeNotifier {
   updateZoneIdFromFirestore(String zone, String email) async {
     loader = true;
     notifyListeners();
-    // Get the current user ID from Firebase Authentication
-    // final pref = await SharedPreferences.getInstance();
     try {
       final data = UserModel(zone: zone, email: email);
-      await db
-          .collection("user")
-          .doc(fb.currentUser?.uid)
-          // .collection('auth')
-          .set(data.toJson());
+      await db.collection("user").doc(fb.currentUser?.uid).set(data.toJson());
       loader = false;
       notifyListeners();
     } catch (e) {
-      // Messenger.pop(msg: e.toString(), context: context);
+      ErrorHandlerCode().status401(e);
     }
   }
 }

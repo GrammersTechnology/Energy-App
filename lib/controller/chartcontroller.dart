@@ -34,12 +34,6 @@ class ChartController extends ChangeNotifier {
       for (var element in result) {
         if (element['omrType'].toString() == 'EL') {
           if (element['omrnr'].toString() == response) {
-            // log("omnr ${element['omrnr'].toString()}");
-            // log(element['fyllingsgrad'].toString());
-            // log(element['kapasitet_TWh'].toString());
-            // log(element['fylling_TWh'].toString());
-            // log(element['fyllingsgrad_forrige_uke'].toString());
-            // log(element['endring_fyllingsgrad'].toString());
             data = ChartDataModel(
                 omrnr: element['omrnr'],
                 isoAar: element["iso_aar"],
@@ -62,12 +56,6 @@ class ChartController extends ChangeNotifier {
       for (var element in result) {
         if (element['omrType'].toString() == 'EL') {
           if (element['omrnr'].toString() == response) {
-            // log("omnr ${element['omrnr'].toString()}");
-            // log(element['fyllingsgrad'].toString());
-            // log(element['kapasitet_TWh'].toString());
-            // log(element['fylling_TWh'].toString());
-            // log(element['fyllingsgrad_forrige_uke'].toString());
-            // log(element['endring_fyllingsgrad'].toString());
             data = ChartDataModel(
                 omrnr: element['omrnr'],
                 isoAar: element["iso_aar"],

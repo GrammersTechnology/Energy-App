@@ -1,7 +1,5 @@
 // ignore_for_file: avoid_print
 
-import 'dart:developer';
-
 import 'package:demo/services/hav_koster_services.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,17 +23,11 @@ class HvaController extends ChangeNotifier {
         firstLevelValues.clear();
         firstLevelValues = response.values.toList();
 
-        // print('Values: $firstLevelValues');
-        // Map<String,dynamic>demo=
-        // List<String> firstElements =
-        //     firstLevelKeys.map((key) => response[key].toString()).toList();
         for (var element in firstLevelValues) {
           final value = element['details']['front_end_text'];
           final split = value.toString().split(' ');
           element['details']['front_end_text'] = split.first;
-          // log(element['details']['front_end_text'].toString());
         }
-        // log(data);
       }
     }
     loader = false;
