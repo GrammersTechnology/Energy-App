@@ -1,6 +1,12 @@
+import 'package:demo/screen/bottom_screen/chart/chart_screen.dart';
+import 'package:demo/screen/bottom_screen/home/widgets/tips_screen.dart';
+import 'package:demo/screen/bottom_screen/profile/profil_screen.dart';
+import 'package:demo/screen/bottom_screen/home/home_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+
+import 'hva_kaster/hva_koster_screen.dart';
 
 class BottumNavigationScreen extends StatelessWidget {
   final PersistentTabController _controller =
@@ -14,17 +20,12 @@ class BottumNavigationScreen extends StatelessWidget {
         body: PersistentTabView(
       context,
       controller: _controller,
-      screens: [
-        Container(),
-        Container(),
-        Container(),
-        Container(),
-        Container()
-        // HomeScreen(),
-        // TipsScreen(),
-        // ChartScreen(),
-        // HvaKosterScreen(),
-        // ProfileScreen()
+      screens: const [
+        HomeScreen(),
+        TipsScreen(),
+        ChartScreen(),
+        HvaKosterScreen(),
+        ProfileScreen()
       ],
       items: [
         PersistentBottomNavBarItem(
