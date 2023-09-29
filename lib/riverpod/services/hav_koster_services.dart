@@ -4,25 +4,28 @@ import 'package:demo/const/api_error_helper.dart';
 import 'package:demo/controller/home_controller.dart';
 import 'package:dio/dio.dart';
 
+import '../../model/model.dart';
+
 class HvaKasterServices {
   // Future<HavKasterModel?>
-  Future<dynamic> getHavKasterDetails(zone) async {
+  Future<HavKasterModel?> getHavKasterDetails(zone) async {
+    // HavKasterModel? data;
     try {
+      log('https://predictor-tdg24xwvka-ew.a.run.app/appliances_cost?price_area=NO$zone');
       Response response = await Dio().get(
           'https://predictor-tdg24xwvka-ew.a.run.app/appliances_cost?price_area=NO$zone');
       if (response.statusCode == 200) {
-        // data = HavKasterModel.fromJson(response.data);
-        final data = response.data;
-        log(data.runtimeType.toString());
+        final result = HavKasterModel.fromJson(response.data);
+        log(result.toJson().toString());
+
         HomeController().loader = false;
-        HomeController().notifyListeners();
-        return data;
+        return result;
       }
     } catch (e) {
       ErrorHandlerCode().status401(e);
       HomeController().loader = false;
       HomeController().notifyListeners();
     }
-    return;
+    return null;
   }
 }

@@ -16,6 +16,7 @@ class HvaController extends ChangeNotifier {
     loader = true;
 
     final pref = await SharedPreferences.getInstance();
+
     String? zone = pref.getString('zone');
     if (zone != null) {
       final response = await HvaKasterServices().getHavKasterDetails(zone);
