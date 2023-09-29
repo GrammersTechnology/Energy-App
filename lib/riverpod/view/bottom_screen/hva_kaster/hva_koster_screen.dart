@@ -35,55 +35,103 @@ class HvaKosterScreen extends ConsumerWidget {
               padding: const EdgeInsets.only(left: 15, right: 15, bottom: 15),
               child: ListView(children: [
                 HvaWidget(
-                    cheapestCost: "dfssss",
-                    cheapestStartHourEndHour: "d",
-                    currentCost: "sdf",
-                    currentStartHourEndHour: "fd",
-                    mostExpensive: "rf",
-                    mostExpensiveStartHourEndHour: "df",
+                    cheapestCost: data.dishWasher.cost.cheapest.cost.toString(),
+                    cheapestStartHourEndHour:
+                        data.dishWasher.cost.cheapest.startHour +
+                            " - " +
+                            data.dishWasher.cost.cheapest.endHour,
+                    currentCost: data.dishWasher.cost.current.cost.toString(),
+                    currentStartHourEndHour:
+                        data.dishWasher.cost.current.startHour +
+                            " - " +
+                            data.dishWasher.cost.current.endHour,
+                    mostExpensive:
+                        data.dishWasher.cost.mostExpensive.cost.toString(),
+                    mostExpensiveStartHourEndHour:
+                        data.dishWasher.cost.mostExpensive.startHour +
+                            " - " +
+                            data.dishWasher.cost.mostExpensive.endHour,
                     size: size,
                     image: 'assets/images/dish_washer.png',
-                    title: data!.dishWasher.details.frontEndText),
+                    title: data.dishWasher.details.frontEndText),
                 HvaWidget(
-                    cheapestStartHourEndHour: "",
-                    currentCost: "",
-                    currentStartHourEndHour: "",
-                    mostExpensive: "",
-                    mostExpensiveStartHourEndHour: "",
-                    cheapestCost: "",
+                    cheapestCost: data.dryer.cost.cheapest.cost.toString(),
+                    cheapestStartHourEndHour:
+                        data.dryer.cost.cheapest.startHour +
+                            " - " +
+                            data.dryer.cost.cheapest.endHour,
+                    currentCost: data.dryer.cost.current.cost.toString(),
+                    currentStartHourEndHour: data.dryer.cost.current.startHour +
+                        " - " +
+                        data.dryer.cost.current.endHour,
+                    mostExpensive:
+                        data.dryer.cost.mostExpensive.cost.toString(),
+                    mostExpensiveStartHourEndHour:
+                        data.dryer.cost.mostExpensive.startHour +
+                            " - " +
+                            data.dryer.cost.mostExpensive.endHour,
                     size: size,
                     image: 'assets/images/dryer.png',
                     title: data.dryer.details.frontEndText),
                 HvaWidget(
-                    cheapestStartHourEndHour: "",
-                    currentCost: "",
-                    currentStartHourEndHour: "",
-                    mostExpensive: "",
-                    mostExpensiveStartHourEndHour: "",
-                    cheapestCost: "",
+                    cheapestCost: data.ev.cost.cheapest.cost.toString(),
+                    cheapestStartHourEndHour: data.ev.cost.cheapest.startHour +
+                        " - " +
+                        data.ev.cost.cheapest.endHour,
+                    currentCost: data.dishWasher.cost.current.cost.toString(),
+                    currentStartHourEndHour: data.ev.cost.current.startHour +
+                        " - " +
+                        data.ev.cost.current.endHour,
+                    mostExpensive: data.ev.cost.mostExpensive.cost.toString(),
+                    mostExpensiveStartHourEndHour:
+                        data.ev.cost.mostExpensive.startHour +
+                            " - " +
+                            data.ev.cost.mostExpensive.endHour,
                     size: size,
                     image: 'assets/images/ev.png',
-                    title: data.dishWasher.details.frontEndText),
+                    title: data.ev.details.frontEndText),
                 HvaWidget(
-                    cheapestStartHourEndHour: "",
-                    cheapestCost: "",
-                    currentCost: "",
-                    currentStartHourEndHour: "",
-                    mostExpensive: "",
-                    mostExpensiveStartHourEndHour: "",
+                    cheapestCost: data.shower.cost.cheapest.cost.toString(),
+                    cheapestStartHourEndHour:
+                        data.shower.cost.cheapest.startHour +
+                            " - " +
+                            data.shower.cost.cheapest.endHour,
+                    currentCost: data.shower.cost.current.cost.toString(),
+                    currentStartHourEndHour:
+                        data.shower.cost.current.startHour +
+                            " - " +
+                            data.shower.cost.current.endHour,
+                    mostExpensive:
+                        data.shower.cost.mostExpensive.cost.toString(),
+                    mostExpensiveStartHourEndHour:
+                        data.shower.cost.mostExpensive.startHour +
+                            " - " +
+                            data.shower.cost.mostExpensive.endHour,
                     size: size,
                     image: 'assets/images/washing_machine.png',
-                    title: data.dishWasher.details.frontEndText),
+                    title: data.shower.details.frontEndText),
                 HvaWidget(
-                    cheapestCost: "",
-                    cheapestStartHourEndHour: "",
-                    currentCost: "",
-                    currentStartHourEndHour: "",
-                    mostExpensive: "",
-                    mostExpensiveStartHourEndHour: "",
+                    cheapestCost:
+                        data.washingMachine.cost.cheapest.cost.toString(),
+                    cheapestStartHourEndHour:
+                        data.washingMachine.cost.cheapest.startHour +
+                            " - " +
+                            data.washingMachine.cost.cheapest.endHour,
+                    currentCost:
+                        data.washingMachine.cost.current.cost.toString(),
+                    currentStartHourEndHour:
+                        data.washingMachine.cost.current.startHour +
+                            " - " +
+                            data.washingMachine.cost.current.endHour,
+                    mostExpensive:
+                        data.washingMachine.cost.mostExpensive.cost.toString(),
+                    mostExpensiveStartHourEndHour:
+                        data.washingMachine.cost.mostExpensive.startHour +
+                            " - " +
+                            data.washingMachine.cost.mostExpensive.endHour,
                     size: size,
                     image: 'assets/images/shower.png',
-                    title: data.dishWasher.details.frontEndText),
+                    title: data.washingMachine.details.frontEndText),
                 // 'assets/images/dryer.png',
               ]),
             ));
@@ -91,11 +139,14 @@ class HvaKosterScreen extends ConsumerWidget {
           error: (error, stackTrace) {
             return SafeArea(
                 child: Center(
-              child: Text("data"),
+              child: Text("Something Went Wrong"),
             ));
           },
           loading: () {
-            return SafeArea(child: Center());
+            return SafeArea(
+                child: Center(
+              child: CircularProgressIndicator(),
+            ));
           },
         ));
   }
