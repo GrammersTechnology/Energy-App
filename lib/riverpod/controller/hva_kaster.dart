@@ -18,25 +18,34 @@ class HvaController {
     if (zone != null) {
       response = await HvaKasterServices().getHavKasterDetails(zone);
       if (response != null) {
-        dynamic value = response.dishWasher.details.frontEndText;
-        List split = value.toString().split(' ');
-        response.dishWasher.details.frontEndText = split.first;
-        value = response.dishWasher.details.frontEndText;
+        //dishWasher
+        dynamic dishWasher = response.dishWasher.details.frontEndText;
+        List splitdiShWasher = dishWasher.toString().split(' ');
+        response.dishWasher.details.frontEndText = splitdiShWasher.first;
 
-        split = value.toString().split(' ');
-        response.dishWasher.details.frontEndText = split.first;
-        value = response.dishWasher.details.frontEndText;
+//dryer
+        dynamic valueDryer = response.dryer.details.frontEndText;
 
-        split = value.toString().split(' ');
-        response.dishWasher.details.frontEndText = split.first;
-        value = response.dishWasher.details.frontEndText;
+        List splitValueDryer = valueDryer.toString().split(' ');
+        response.dryer.details.frontEndText = splitValueDryer.first;
 
-        split = value.toString().split(' ');
-        response.dishWasher.details.frontEndText = split.first;
-        value = response.dishWasher.details.frontEndText;
+        // ev
+        dynamic valueEv = response.ev.details.frontEndText;
 
-        split = value.toString().split(' ');
-        response.dishWasher.details.frontEndText = split.first;
+        List splitEv = valueEv.toString().split(' ');
+        response.ev.details.frontEndText = splitEv.first;
+        // shower
+        dynamic valueShower = response.shower.details.frontEndText;
+
+        List splitShower = valueShower.toString().split(' ');
+        response.shower.details.frontEndText = splitShower.first;
+        // washingMachine
+        dynamic valueWashingMachine =
+            response.washingMachine.details.frontEndText;
+
+        List splitWashingMachine = valueWashingMachine.toString().split(' ');
+        response.washingMachine.details.frontEndText =
+            splitWashingMachine.first;
         return response;
       }
       // if (response != null) {
@@ -49,8 +58,7 @@ class HvaController {
       //     element['details']['front_end_text'] = split.first;
       //   }
       // }
-         return null;
+      return null;
     }
- 
   }
 }
