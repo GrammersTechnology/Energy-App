@@ -1,11 +1,10 @@
 // ignore_for_file: avoid_print
 
-import 'package:demo/riverpod/services/hav_koster_services.dart';
-import 'package:flutter/material.dart';
+import 'package:demo/riverpod/Hva%20Koster/services/hav_koster_services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../model/model.dart';
+import '../model/kva_koster.dart';
 
 final userRepositeryProvider = Provider((ref) => HvaController());
 
@@ -60,5 +59,6 @@ class HvaController {
       // }
       return null;
     }
+    return null;
   }
 }

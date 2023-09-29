@@ -14,8 +14,6 @@ class HvaKasterServices {
         // data = HavKasterModel.fromJson(response.data);
         final data = response.data;
         log(data.runtimeType.toString());
-        HomeController().loader = false;
-        HomeController().notifyListeners();
         return data;
       }
     } catch (e) {

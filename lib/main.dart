@@ -1,12 +1,11 @@
 import 'package:demo/const/themes/colors.dart';
-import 'package:demo/riverpod/view/bottom_screen/hva_kaster/hva_koster_screen.dart';
 import 'package:demo/routes/routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'controller/local_notification.dart';
-import 'riverpod/auth/screen/splash_screen.dart';
+import 'riverpod/Hva Koster/view/hva_koster_screen.dart';
 // import 'package:provider/provider.dart';
 // import 'controller/auth_controller.dart';
 // import 'controller/chartcontroller.dart';

@@ -4,7 +4,7 @@ import 'package:demo/const/api_error_helper.dart';
 import 'package:demo/controller/home_controller.dart';
 import 'package:dio/dio.dart';
 
-import '../../model/model.dart';
+import '../model/kva_koster.dart';
 
 class HvaKasterServices {
   // Future<HavKasterModel?>
