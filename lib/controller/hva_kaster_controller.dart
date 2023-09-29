@@ -4,7 +4,7 @@ import 'package:demo/services/hav_koster_services.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../model/model.dart';
+import '../riverpod/Hva Koster/model/kva_koster.dart';
 
 class HvaController extends ChangeNotifier {
   bool loader = false;

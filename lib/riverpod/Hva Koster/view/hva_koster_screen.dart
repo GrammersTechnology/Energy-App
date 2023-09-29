@@ -1,13 +1,9 @@
 import 'dart:developer';
 
 import 'package:demo/const/themes/colors.dart';
-import 'package:demo/controller/hva_kaster_controller.dart';
 import 'package:demo/riverpod/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:provider/provider.dart';
-
-import '../../../../model/model.dart';
 
 class HvaKosterScreen extends ConsumerWidget {
   const HvaKosterScreen({super.key});
