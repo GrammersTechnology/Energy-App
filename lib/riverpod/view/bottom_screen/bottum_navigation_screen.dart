@@ -2,6 +2,12 @@ import 'package:demo/riverpod/Hva%20Koster/view/hva_koster_screen.dart';
 import 'package:demo/riverpod/Saving%20Tips/view/tips_screen.dart';
 import 'package:demo/riverpod/home/home_screen.dart';
 import 'package:demo/riverpod/profile/view/profil_screen.dart';
+
+import 'package:demo/riverpod/chart/view/chart_screen.dart';
+import 'package:demo/screen/bottom_screen/home/widgets/tips_screen.dart';
+import 'package:demo/screen/bottom_screen/profile/profil_screen.dart';
+import 'package:demo/screen/bottom_screen/home/home_screen.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';

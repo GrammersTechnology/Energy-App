@@ -1,6 +1,10 @@
+
 import 'package:demo/riverpod/Saving%20Tips/controller/saving_tips_controller.dart';
 import 'package:demo/riverpod/controller/auth_controller.dart';
 import 'package:demo/riverpod/home/controller/column_controller.dart';
+
+import 'package:demo/riverpod/chart/controller/chartcontroller.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'Hva Koster/controller/hva_kaster.dart';
@@ -12,6 +16,7 @@ final hvaProvider = FutureProvider((ref) {
   final hvaRepository = ref.watch(userRepositeryProvider);
   return hvaRepository.getHvaDetails();
 });
+
 
 // column Controller
 
@@ -34,4 +39,8 @@ final profileProvider = FutureProvider((ref) {
 final savingTipsProvider = FutureProvider((ref) {
   final savingTipsRepositary = ref.watch(saningTipsRepositeryProvider);
   return savingTipsRepositary.getTips();
+
+final chartProvider = FutureProvider((ref) {
+  final chartRepository = ref.watch(userChartProvider);
+  return chartRepository.getChartDetails();
 });

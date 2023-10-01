@@ -1,6 +1,12 @@
 import 'dart:developer';
 import 'package:demo/const/api_error_helper.dart';
 import 'package:demo/const/themes/colors.dart';
+
+import 'package:demo/riverpod/Hva%20Koster/controller/hva_kaster.dart';
+import 'package:demo/riverpod/chart/controller/chartcontroller.dart';
+import 'package:demo/controller/home_controller.dart';
+import 'package:demo/controller/profile_controller.dart';
+
 import 'package:demo/model/model.dart';
 import 'package:demo/riverpod/view/bottom_screen/bottum_navigation_screen.dart';
 import 'package:demo/routes/messenger.dart';
@@ -126,6 +132,19 @@ class AuthController {
   Future<void> checkCurrentUser(context) async {
     User? user = fb.currentUser;
     if (user != null) {
+
+      final profileController = ProfileController();
+      final homeController = HomeController();
+      final chartController = ChartController();
+      final hvaController = HvaController();
+      await profileController.getUserProfileDetails(context);
+
+      homeController.feacthColumnGraphData(context);
+      homeController.fecthData(context);
+      homeController.getTips(context);
+      chartController.getChartDetails();
+      hvaController.getHvaDetails();
+
       Routes.pushreplace(screen: BottumNavigationScreen());
     } else {
       Routes.pushreplace(screen: const LoginScreen());
