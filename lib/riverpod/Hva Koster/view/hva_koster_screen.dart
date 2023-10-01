@@ -24,7 +24,10 @@ class HvaKosterScreen extends ConsumerWidget {
         ),
         body: ref.watch(hvaProvider).when(
           data: (data) {
-            log(data!.toString());
+            // userRepositeryProvider
+            log("message");
+            log(data!.toJson().toString() + "ddddddddddddddddddddddddddd");
+
             return SafeArea(
                 child: Padding(
               padding: const EdgeInsets.only(left: 15, right: 15, bottom: 15),

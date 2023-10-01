@@ -8,7 +8,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      AuthControllerState().cheackLocalData(context);
+      AuthController().cheackLocalData(context);
     });
     return const Scaffold(
         body: Center(

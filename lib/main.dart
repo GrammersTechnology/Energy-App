@@ -1,5 +1,7 @@
+import 'package:demo/auth/screen/splash_screen.dart';
 import 'package:demo/const/themes/colors.dart';
-import 'package:demo/riverpod/chart/view/chart_screen.dart';
+import 'package:demo/riverpod/home/home_screen.dart';
+import 'package:demo/riverpod/profile/view/profil_screen.dart';
 import 'package:demo/routes/routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -68,7 +70,8 @@ class MyApp extends StatelessWidget {
       navigatorKey: Routes.navigatorKey,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: AppColors.primaryColor),
-      home: const ChartScreen(),
+      home: const SplashScreen(),
+
     );
   }
 }

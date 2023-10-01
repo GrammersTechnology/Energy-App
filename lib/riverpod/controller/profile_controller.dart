@@ -5,6 +5,7 @@ import 'package:demo/const/api_error_helper.dart';
 import 'package:demo/controller/auth_controller.dart';
 import 'package:demo/controller/home_controller.dart';
 import 'package:demo/model/model.dart';
+import 'package:demo/riverpod/Saving%20Tips/model/savinr_tips_model.dart';
 import 'package:demo/routes/messenger.dart';
 import 'package:demo/routes/routes.dart';
 import 'package:dio/dio.dart';
@@ -17,10 +18,9 @@ import '../../screen/bottom_screen/bottum_navigation_screen.dart';
 
 ProfileModel? userProfile;
 List<SavingTips> savingTips = [];
+final profileControllerProvider = Provider((ref) => ProfileController());
 
-class ProfileController extends StateNotifier<ProfileModel> {
-  ProfileController(super.state);
-
+class ProfileController {
   FirebaseAuth fb = FirebaseAuth.instance;
   FirebaseFirestore db = FirebaseFirestore.instance;
   List<dynamic> csvTable = [];
@@ -198,7 +198,7 @@ class ProfileController extends StateNotifier<ProfileModel> {
     powerPointController.clear();
   }
 
-  getUserProfileDetails(context) async {
+  Future<ProfileModel?> getUserProfileDetails() async {
     loader = true;
     try {
       await db
@@ -217,9 +217,11 @@ class ProfileController extends StateNotifier<ProfileModel> {
         wantPushWarning2Bool = userProfile!.wantPushWarning2;
         loader = false;
       });
+      return userProfile;
     } catch (e) {
       ErrorHandlerCode().status401(e);
       loader = false;
+      return userProfile;
     }
   }
 }

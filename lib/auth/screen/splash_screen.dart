@@ -1,7 +1,7 @@
 import 'package:demo/const/themes/colors.dart';
-import 'package:demo/controller/auth_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+
+import '../../riverpod/controller/auth_controller.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -9,9 +9,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      final authController =
-          Provider.of<AuthController>(context, listen: false);
-      authController.cheackLocalData(context);
+      AuthController().cheackLocalData(context);
     });
     return const Scaffold(
         body: Center(

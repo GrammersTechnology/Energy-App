@@ -3,8 +3,8 @@ import 'package:demo/controller/profile_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../../const/themes/colors.dart';
-import '../../../../../const/widgets/custom_button.dart';
+import '../../../const/themes/colors.dart';
+import '../../../const/widgets/custom_button.dart';
 
 class ProfileEditScreen extends StatelessWidget {
   const ProfileEditScreen({super.key});

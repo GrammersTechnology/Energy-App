@@ -1,20 +1,19 @@
 import 'package:demo/auth/screen/signup_screen.dart';
 import 'package:demo/const/space_helper.dart';
 import 'package:demo/const/widgets/custom_button.dart';
-import 'package:demo/controller/auth_controller.dart';
+import 'package:demo/riverpod/controller/auth_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../const/widgets/text_filed_widgets.dart';
 import '../../../routes/routes.dart';
-import '../../controller/auth_controller.dart';
 import '../widget/auth_widget.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends ConsumerWidget {
   const LoginScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final controller = ref.watch(authControllerProvider);
     final size = MediaQuery.of(context).size;
     return Scaffold(
       body: SingleChildScrollView(
@@ -28,13 +27,13 @@ class LoginScreen extends StatelessWidget {
                     hint: "Email",
                     showPasswordToggle: false,
                     prefixIcon: Icons.email,
-                    controller: TextEditingController(text: "shas@gmail.com")),
+                    controller: controller.emailController),
                 vSpaceRegular,
                 TextFromFieldWidget(
                     hint: "Password",
                     showPasswordToggle: true,
                     prefixIcon: Icons.key,
-                    controller: TextEditingController(text: "123456")),
+                    controller: controller.passwordController),
                 vSpaceSmall,
                 Row(
                   children: [
@@ -49,14 +48,11 @@ class LoginScreen extends StatelessWidget {
                   ],
                 ),
                 vSpaceXl,
-                // vSpaceXl,
-                // controller.loader
-                //     ? const CircularProgressIndicator()
-                //     :
+                vSpaceXl,
                 LoginButtonWidget(
                   title: "LOGIN",
                   onTap: () {
-                    AuthControllerState().login(context);
+                    ref.read(authControllerProvider).login(context);
                   },
                 ),
                 vSpaceMin,
@@ -69,8 +65,8 @@ class LoginScreen extends StatelessWidget {
                       TextButton(
                           onPressed: () {
                             Routes.push(screen: const SignupScreen());
-                            // controller.emailController.clear();
-                            // controller.passwordController.clear();
+                            controller.emailController.clear();
+                            controller.passwordController.clear();
                           },
                           child: const Text("Register"))
                     ],

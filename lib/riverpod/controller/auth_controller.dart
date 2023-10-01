@@ -1,51 +1,59 @@
 import 'dart:developer';
 import 'package:demo/const/api_error_helper.dart';
 import 'package:demo/const/themes/colors.dart';
+
 import 'package:demo/riverpod/Hva%20Koster/controller/hva_kaster.dart';
 import 'package:demo/riverpod/chart/controller/chartcontroller.dart';
 import 'package:demo/controller/home_controller.dart';
 import 'package:demo/controller/profile_controller.dart';
+
 import 'package:demo/model/model.dart';
+import 'package:demo/riverpod/view/bottom_screen/bottum_navigation_screen.dart';
 import 'package:demo/routes/messenger.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../../controller/auth_controller.dart';
-import '../../routes/routes.dart';
-import '../../screen/bottom_screen/bottum_navigation_screen.dart';
-import '../auth/screen/loginscreen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../routes/routes.dart';
+import '../auth/screen/loginscreen.dart';
 
-class AuthControllerState extends StateNotifier<AuthState> {
-  AuthControllerState()
-      : super(AuthState(
-            emailController: TextEditingController(),
-            passwordController: TextEditingController()));
+final authControllerProvider = Provider((ref) => AuthController());
 
+class AuthController {
   FirebaseAuth fb = FirebaseAuth.instance;
   FirebaseFirestore db = FirebaseFirestore.instance;
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
-  changeDropDownValue(String value) {
-    state = state.copyWith(dropdowmValue: value);
+  String? dropdowmValue;
+  List<String> dropdwonList = ["NO1", "NO2", "NO3", "NO4", "NO5"];
+
+  changeDropDownValue(value) {
+    dropdowmValue = value;
   }
 
-  Future<void> signup(BuildContext context) async {
-    state = state.copyWith(loader: true);
+  bool loader = false;
+
+  signup(context) async {
+    loader = true;
     try {
       await fb.createUserWithEmailAndPassword(
-          email: state.emailController.text.trim(),
-          password: state.passwordController.text.trim());
-      final data =
-          UserModel(zone: state.dropdowmValue, email: fb.currentUser?.email);
-      await db.collection("user").doc(fb.currentUser?.uid).set(data.toJson());
+          email: emailController.text.trim(),
+          password: passwordController.text.trim());
+      final data = UserModel(zone: dropdowmValue, email: fb.currentUser?.email);
+      await db
+          .collection("user")
+          .doc(fb.currentUser?.uid)
+          // .collection('auth')
+          .set(data.toJson());
       await addUserProfileDetails(context);
       await saveAuthLocal();
       Routes.pushreplace(screen: BottumNavigationScreen());
-      state = state.copyWith(loader: false);
+      loader = false;
     } catch (e) {
       clearLocalData();
-      state = state.copyWith(loader: false);
+      loader = false;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Row(
@@ -72,65 +80,59 @@ class AuthControllerState extends StateNotifier<AuthState> {
     }
   }
 
-  Future<void> signout(BuildContext context) async {
+  signout(context) async {
     try {
       await fb.signOut();
-      state = state.copyWith(loader: false);
-      state.emailController.clear();
-      state.passwordController.clear();
+      emailController.clear();
+      passwordController.clear();
       clearLocalData();
     } catch (e) {
       Messenger.pop(msg: e.toString(), context: context);
     }
   }
 
-  Future<void> saveAuthLocal() async {
+  saveAuthLocal() async {
     final email = fb.currentUser?.email;
-    final password = state.passwordController.text;
+    final password = passwordController.text;
     final pref = await SharedPreferences.getInstance();
     await pref.setString('email', email.toString());
     await pref.setString('password', password.toString());
-    await pref.setString('zone', state.dropdowmValue.toString().toUpperCase());
+    await pref.setString('zone', dropdowmValue.toString().toUpperCase());
   }
 
-  Future<void> clearLocalData() async {
+  clearLocalData() async {
     final pref = await SharedPreferences.getInstance();
     await pref.remove('email');
     await pref.remove('password');
     await pref.remove('zone');
   }
 
-  Future<void> getLocalData() async {
+  String? userEmail;
+  String? userPassword;
+
+  getLocalData() async {
     final pref = await SharedPreferences.getInstance();
-    state = state.copyWith(
-      userEmail: pref.getString('email'),
-      userPassword: pref.getString('password'),
-    );
+    userEmail = pref.getString('email');
+    userPassword = pref.getString('password');
   }
 
-  Future<void> cheackLocalData(BuildContext context) async {
+  cheackLocalData(context) async {
     final pref = await SharedPreferences.getInstance();
-    state = state.copyWith(
-      userEmail: pref.getString('email'),
-      userPassword: pref.getString('password'),
-    );
-
-    log(state.userEmail.toString());
-    log(state.userPassword.toString());
-
-    if (state.userEmail == null || state.userPassword == null) {
+    userEmail = pref.getString('email');
+    userPassword = pref.getString('password');
+    log(userEmail.toString());
+    log(userPassword.toString());
+    if (userEmail == null || userPassword == null) {
       Routes.pushreplace(screen: const LoginScreen());
     } else {
-      await checkCurrentUser(context);
-      final homeController = HomeController();
-      homeController.getTips(context);
-      homeController.fecthData(context);
+      checkCurrentUser(context);
     }
   }
 
-  Future<void> checkCurrentUser(BuildContext context) async {
+  Future<void> checkCurrentUser(context) async {
     User? user = fb.currentUser;
     if (user != null) {
+
       final profileController = ProfileController();
       final homeController = HomeController();
       final chartController = ChartController();
@@ -149,29 +151,34 @@ class AuthControllerState extends StateNotifier<AuthState> {
     }
   }
 
-  Future<void> login(BuildContext context) async {
-    state = state.copyWith(loader: true);
-    try {
-      await fb.signInWithEmailAndPassword(
-          email: state.emailController.text.trim(),
-          password: state.passwordController.text.trim());
-      // saveAuthLocal();
-      final email = fb.currentUser?.email;
-      final password = state.passwordController.text;
-      final pref = await SharedPreferences.getInstance();
-      await pref.setString('email', email.toString());
-      await pref.setString('password', password.toString());
-      await fetchZoneIdFromFirestore();
-      state = state.copyWith(loader: false);
-      checkCurrentUser(context);
-    } catch (e) {
-      state = state.copyWith(loader: false);
-      Messenger.pop(msg: e.toString(), context: context);
+  login(context) async {
+    loader = true;
+    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+      Messenger.pop(msg: "Please Fill your Details", context: context);
+    } else {
+      try {
+        await fb.signInWithEmailAndPassword(
+            email: emailController.text.trim(),
+            password: passwordController.text.trim());
+        // saveAuthLocal();
+        final email = fb.currentUser?.email;
+        final password = passwordController.text;
+        final pref = await SharedPreferences.getInstance();
+        await pref.setString('email', email.toString());
+        await pref.setString('password', password.toString());
+        await fetchZoneIdFromFirestore();
+        loader = false;
+        checkCurrentUser(context);
+      } catch (e) {
+        loader = false;
+        Messenger.pop(msg: e.toString(), context: context);
+      }
     }
   }
 
-  Future<void> fetchZoneIdFromFirestore() async {
-    state = state.copyWith(loader: true);
+  fetchZoneIdFromFirestore() async {
+    loader = true;
+    // Get the current user ID from Firebase Authentication
     final pref = await SharedPreferences.getInstance();
     try {
       db
@@ -182,26 +189,29 @@ class AuthControllerState extends StateNotifier<AuthState> {
           .get()
           .then((value) {
         final data = ProfileModel.fromJson(value.data()!);
+
+        // Access the zone ID field
         String zoneId = data.pricezone.toString();
+
         zoneId = zoneId.substring(zoneId.length - 1);
         pref.setString('zone', zoneId.toString());
+
+        loader = false;
       }).catchError((error) {
-        // Handle error
+        loader = false;
       });
     } catch (e) {
       ErrorHandlerCode().status401(e);
-    } finally {
-      state = state.copyWith(loader: false);
     }
   }
 
-  Future<void> addUserProfileDetails(BuildContext context) async {
-    state = state.copyWith(loader: true);
+  addUserProfileDetails(context) async {
+    loader = true;
     ProfileModel data = ProfileModel(
         email: fb.currentUser!.email.toString(),
         name: '',
         powerCompany: "",
-        pricezone: state.dropdowmValue.toString(),
+        pricezone: dropdowmValue.toString(),
         yearlyCosumption: "0",
         numberOfPepole: "0",
         powerCoins: "0",
@@ -221,56 +231,33 @@ class AuthControllerState extends StateNotifier<AuthState> {
           .collection('profile')
           .doc(fb.currentUser!.uid)
           .set(data.toJson());
+      loader = false;
     } catch (e) {
-      // Handle error
-    } finally {
-      state = state.copyWith(loader: false);
+      loader = false;
+      Messenger.pop(msg: e.toString(), context: context);
     }
   }
 
-  Future<void> updateZoneIdFromFirestore(String zone, String email) async {
-    state = state.copyWith(loader: true);
+  updateZoneIdFromFirestore(String zone, String email) async {
+    loader = true;
     try {
       final data = UserModel(zone: zone, email: email);
       await db.collection("user").doc(fb.currentUser?.uid).set(data.toJson());
+      loader = false;
     } catch (e) {
-      // Handle error
-    } finally {
-      state = state.copyWith(loader: false);
+      ErrorHandlerCode().status401(e);
     }
   }
 }
 
-class AuthState {
-  TextEditingController emailController;
-  TextEditingController passwordController;
-  String? dropdowmValue;
-  List<String> dropdwonList = ["NO1", "NO2", "NO3", "NO4", "NO5"];
-  String? userEmail;
-  String? userPassword;
+class UserModel {
+  String? email, zone, password;
 
-  AuthState({
-    required this.emailController,
-    required this.passwordController,
-    this.dropdowmValue,
-    this.userEmail,
-    this.userPassword,
-  });
-
-  AuthState copyWith({
-    TextEditingController? emailController,
-    TextEditingController? passwordController,
-    String? dropdowmValue,
-    bool? loader,
-    String? userEmail,
-    String? userPassword,
-  }) {
-    return AuthState(
-      emailController: emailController ?? this.emailController,
-      passwordController: passwordController ?? this.passwordController,
-      dropdowmValue: dropdowmValue ?? this.dropdowmValue,
-      userEmail: userEmail ?? this.userEmail,
-      userPassword: userPassword ?? this.userPassword,
-    );
+  UserModel({this.password, required this.zone, required this.email});
+  Map<String, dynamic> toJson() =>
+      {"password": password, "email": email, "zone": zone};
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    return UserModel(
+        zone: json["zone"], email: json["email"], password: json["password"]);
   }
 }
