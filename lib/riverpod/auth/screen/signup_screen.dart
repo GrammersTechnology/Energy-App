@@ -4,7 +4,6 @@ import 'package:demo/riverpod/auth/controller/auth_controller.dart';
 import 'package:demo/riverpod/auth/screen/loginscreen.dart';
 import 'package:demo/routes/routes.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../../const/widgets/text_filed_widgets.dart';
 import '../widget/auth_widget.dart';
@@ -17,78 +16,73 @@ class SignupScreen extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       body: SingleChildScrollView(
-        child: Consumer<AuthController>(builder: (context, controller, widget) {
-          return Column(children: [
-            AuthContainerWidget(size: size, title: "Sign up"),
-            Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Column(children: [
-                  vSpaceXl,
-                  TextFromFieldWidget(
-                      hint: "Email",
-                      showPasswordToggle: false,
-                      prefixIcon: Icons.email,
-                      controller: AuthController().emailController),
-                  vSpaceRegular,
-                  TextFromFieldWidget(
-                      hint: "Password",
-                      showPasswordToggle: true,
-                      prefixIcon: Icons.key,
-                      controller: AuthController().passwordController),
-                  vSpaceRegular,
-                  Container(
-                    padding: const EdgeInsets.only(left: 15),
-                    decoration: BoxDecoration(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(30)),
-                        border: Border.all(color: Colors.grey)),
-                    child: DropdownButton(
-                      hint: Text(AuthController().dropdowmValue ??
-                          " Select From List"),
-                      underline: const SizedBox(),
-                      isExpanded: true,
-                      items: AuthController()
-                          .dropdwonList
-                          .map(
-                              (e) => DropdownMenuItem(value: e, child: Text(e)))
-                          .toList(),
-                      onChanged: (value) {
-                        AuthController().changeDropDownValue(value);
-                      },
-                      onTap: () {},
-                    ),
-                  ),
-                  vSpaceXl,
-                  vSpaceXl,
-                  // AuthController().loader
-                  //     ? const CircularProgressIndicator()
-                  //     :
-                  LoginButtonWidget(
-                    title: "SIGNUP",
-                    onTap: () {
-                      AuthController().signup(context);
-                    },
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text("Already have an account?"),
-                        TextButton(
-                            onPressed: () {
-                              Routes.pushreplace(screen: const LoginScreen());
-                              AuthController().emailController.clear();
-                              AuthController().passwordController.clear();
-                            },
-                            child: const Text("Login"))
-                      ],
-                    ),
-                  ),
-                ]))
-          ]);
-        }),
-      ),
+          child: Column(children: [
+        AuthContainerWidget(size: size, title: "Sign up"),
+        Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Column(children: [
+              vSpaceXl,
+              TextFromFieldWidget(
+                  hint: "Email",
+                  showPasswordToggle: false,
+                  prefixIcon: Icons.email,
+                  controller: AuthController().emailController),
+              vSpaceRegular,
+              TextFromFieldWidget(
+                  hint: "Password",
+                  showPasswordToggle: true,
+                  prefixIcon: Icons.key,
+                  controller: AuthController().passwordController),
+              vSpaceRegular,
+              Container(
+                padding: const EdgeInsets.only(left: 15),
+                decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(30)),
+                    border: Border.all(color: Colors.grey)),
+                child: DropdownButton(
+                  hint: Text(
+                      AuthController().dropdowmValue ?? " Select From List"),
+                  underline: const SizedBox(),
+                  isExpanded: true,
+                  items: AuthController()
+                      .dropdwonList
+                      .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+                      .toList(),
+                  onChanged: (value) {
+                    AuthController().changeDropDownValue(value);
+                  },
+                  onTap: () {},
+                ),
+              ),
+              vSpaceXl,
+              vSpaceXl,
+              // AuthController().loader
+              //     ? const CircularProgressIndicator()
+              //     :
+              LoginButtonWidget(
+                title: "SIGNUP",
+                onTap: () {
+                  AuthController().signup(context);
+                },
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text("Already have an account?"),
+                    TextButton(
+                        onPressed: () {
+                          Routes.pushreplace(screen: const LoginScreen());
+                          AuthController().emailController.clear();
+                          AuthController().passwordController.clear();
+                        },
+                        child: const Text("Login"))
+                  ],
+                ),
+              ),
+            ]))
+      ])),
     );
   }
 }
