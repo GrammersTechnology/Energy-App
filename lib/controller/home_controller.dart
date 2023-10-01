@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:demo/controller/auth_controller.dart';
 import 'package:demo/controller/profile_controller.dart';
 import 'package:demo/model/model.dart';
+import 'package:demo/riverpod/Saving%20Tips/model/savinr_tips_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

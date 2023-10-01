@@ -2,6 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
+import '../../riverpod/Hva Koster/view/hva_koster_screen.dart';
+import '../../riverpod/home/home_screen.dart';
+import '../../riverpod/Saving Tips/view/tips_screen.dart';
+import '../../riverpod/profile/view/profil_screen.dart';
+import 'chart/chart_screen.dart';
+
 class BottumNavigationScreen extends StatelessWidget {
   final PersistentTabController _controller =
       PersistentTabController(initialIndex: 0);
@@ -15,16 +21,11 @@ class BottumNavigationScreen extends StatelessWidget {
       context,
       controller: _controller,
       screens: [
-        Container(),
-        Container(),
-        Container(),
-        Container(),
-        Container()
-        // HomeScreen(),
-        // TipsScreen(),
-        // ChartScreen(),
-        // HvaKosterScreen(),
-        // ProfileScreen()
+        HomeScreen(),
+        TipsScreen(),
+        ChartScreen(),
+        HvaKosterScreen(),
+        ProfileScreen()
       ],
       items: [
         PersistentBottomNavBarItem(

@@ -44,8 +44,6 @@ class HomeScreenServicesScreen {
   }
 
   Future<List<dynamic>?> columnGraphDataApi(context, zone) async {
-    final homeController = Provider.of<HomeController>(context, listen: false);
-    homeController.loader = true;
     String url =
         'https://predictor-tdg24xwvka-ew.a.run.app/predict_spotprice_seven_days?price_area=NO';
 
@@ -53,14 +51,10 @@ class HomeScreenServicesScreen {
       Response response = await Dio().get(url + zone);
       if (response.statusCode == 200) {
         final result = response.data;
-        homeController.loader = false;
 
-        homeController.notifyListeners();
         return result;
       }
     } on DioException catch (e) {
-      homeController.loader = false;
-      homeController.notifyListeners();
       ErrorHandlerCode().status401(e);
       log("error" + e.toString());
     }

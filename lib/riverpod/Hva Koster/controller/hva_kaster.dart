@@ -12,8 +12,8 @@ class HvaController {
   Future<HavKasterModel?> getHvaDetails() async {
     final pref = await SharedPreferences.getInstance();
     late HavKasterModel? response;
-    // String? zone = pref.getString('zone');
-    String? zone = "1";
+    String? zone = pref.getString('zone');
+    // String? zone = "1";
     if (zone != null) {
       response = await HvaKasterServices().getHavKasterDetails(zone);
       if (response != null) {
