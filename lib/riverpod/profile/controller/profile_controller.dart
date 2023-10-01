@@ -2,10 +2,9 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csv/csv.dart';
 import 'package:demo/const/api_error_helper.dart';
-import 'package:demo/controller/auth_controller.dart';
-import 'package:demo/controller/home_controller.dart';
 import 'package:demo/model/model.dart';
 import 'package:demo/riverpod/Saving%20Tips/model/savinr_tips_model.dart';
+import 'package:demo/riverpod/view/bottom_screen/bottum_navigation_screen.dart';
 import 'package:demo/routes/messenger.dart';
 import 'package:demo/routes/routes.dart';
 import 'package:dio/dio.dart';
@@ -13,8 +12,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/widgets.dart';
 import 'package:riverpod/riverpod.dart';
-
-import '../../screen/bottom_screen/bottum_navigation_screen.dart';
 
 ProfileModel? userProfile;
 List<SavingTips> savingTips = [];
@@ -176,10 +173,9 @@ class ProfileController {
           .collection('profile')
           .doc(fb.currentUser!.uid)
           .update(data.toJson());
-      HomeController().getTips(context);
-      await AuthController()
-          .updateZoneIdFromFirestore(zone, fb.currentUser!.email.toString());
-      await AuthController().fetchZoneIdFromFirestore();
+      // await AuthController()
+      //     .updateZoneIdFromFirestore(zone, fb.currentUser!.email.toString());
+      // await AuthController().fetchZoneIdFromFirestore();
       Routes.pushreplace(screen: BottumNavigationScreen());
       clearController();
 

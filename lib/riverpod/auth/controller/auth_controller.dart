@@ -1,22 +1,21 @@
 import 'dart:developer';
 import 'package:demo/const/api_error_helper.dart';
 import 'package:demo/const/themes/colors.dart';
-import 'package:demo/riverpod/Hva%20Koster/controller/hva_kaster.dart';
-import 'package:demo/riverpod/chart/controller/chartcontroller.dart';
-import 'package:demo/controller/home_controller.dart';
-import 'package:demo/controller/profile_controller.dart';
+
 import 'package:demo/model/model.dart';
+import 'package:demo/riverpod/view/bottom_screen/bottum_navigation_screen.dart';
 import 'package:demo/routes/messenger.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../auth/screen/loginscreen.dart';
-import '../routes/routes.dart';
-import '../screen/bottom_screen/bottum_navigation_screen.dart';
+import '../../../routes/routes.dart';
+import '../screen/loginscreen.dart';
 
-class AuthController extends ChangeNotifier {
+final authControllerProvider = Provider((ref) => AuthController());
+
+class AuthController {
   FirebaseAuth fb = FirebaseAuth.instance;
   FirebaseFirestore db = FirebaseFirestore.instance;
   final emailController = TextEditingController();
@@ -27,7 +26,6 @@ class AuthController extends ChangeNotifier {
 
   changeDropDownValue(value) {
     dropdowmValue = value;
-    notifyListeners();
   }
 
   bool loader = false;
@@ -48,11 +46,9 @@ class AuthController extends ChangeNotifier {
       await saveAuthLocal();
       Routes.pushreplace(screen: BottumNavigationScreen());
       loader = false;
-      notifyListeners();
     } catch (e) {
       clearLocalData();
       loader = false;
-      notifyListeners();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Row(
@@ -76,7 +72,6 @@ class AuthController extends ChangeNotifier {
           behavior: SnackBarBehavior.floating,
         ),
       );
-      notifyListeners();
     }
   }
 
@@ -114,45 +109,24 @@ class AuthController extends ChangeNotifier {
     final pref = await SharedPreferences.getInstance();
     userEmail = pref.getString('email');
     userPassword = pref.getString('password');
-    notifyListeners();
   }
 
   cheackLocalData(context) async {
     final pref = await SharedPreferences.getInstance();
     userEmail = pref.getString('email');
     userPassword = pref.getString('password');
-    notifyListeners();
     log(userEmail.toString());
     log(userPassword.toString());
     if (userEmail == null || userPassword == null) {
       Routes.pushreplace(screen: const LoginScreen());
     } else {
       checkCurrentUser(context);
-      final homeController =
-          Provider.of<HomeController>(context, listen: false);
-      homeController.getTips(context);
-      homeController.fecthData(context);
     }
   }
 
   Future<void> checkCurrentUser(context) async {
     User? user = fb.currentUser;
     if (user != null) {
-      final profileController =
-          Provider.of<ProfileController>(context, listen: false);
-      final homeController =
-          Provider.of<HomeController>(context, listen: false);
-      final chartController =
-          Provider.of<ChartController>(context, listen: false);
-      final hvaController = Provider.of<HvaController>(context, listen: false);
-      await profileController.getUserProfileDetails(context);
-
-      homeController.feacthColumnGraphData(context);
-      homeController.fecthData(context);
-      homeController.getTips(context);
-      chartController.getChartDetails();
-      hvaController.getHvaDetails();
-
       Routes.pushreplace(screen: BottumNavigationScreen());
     } else {
       Routes.pushreplace(screen: const LoginScreen());
@@ -161,32 +135,31 @@ class AuthController extends ChangeNotifier {
 
   login(context) async {
     loader = true;
-    notifyListeners();
-    try {
-      await fb.signInWithEmailAndPassword(
-          email: emailController.text.trim(),
-          password: passwordController.text.trim());
-      notifyListeners();
-      // saveAuthLocal();
-      final email = fb.currentUser?.email;
-      final password = passwordController.text;
-      final pref = await SharedPreferences.getInstance();
-      await pref.setString('email', email.toString());
-      await pref.setString('password', password.toString());
-      await fetchZoneIdFromFirestore();
-      loader = false;
-      notifyListeners();
-      checkCurrentUser(context);
-    } catch (e) {
-      loader = false;
-      notifyListeners();
-      Messenger.pop(msg: e.toString(), context: context);
+    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+      Messenger.pop(msg: "Please Fill your Details", context: context);
+    } else {
+      try {
+        await fb.signInWithEmailAndPassword(
+            email: emailController.text.trim(),
+            password: passwordController.text.trim());
+        // saveAuthLocal();
+        final email = fb.currentUser?.email;
+        final password = passwordController.text;
+        final pref = await SharedPreferences.getInstance();
+        await pref.setString('email', email.toString());
+        await pref.setString('password', password.toString());
+        await fetchZoneIdFromFirestore();
+        loader = false;
+        checkCurrentUser(context);
+      } catch (e) {
+        loader = false;
+        Messenger.pop(msg: e.toString(), context: context);
+      }
     }
   }
 
   fetchZoneIdFromFirestore() async {
     loader = true;
-    notifyListeners();
     // Get the current user ID from Firebase Authentication
     final pref = await SharedPreferences.getInstance();
     try {
@@ -206,10 +179,8 @@ class AuthController extends ChangeNotifier {
         pref.setString('zone', zoneId.toString());
 
         loader = false;
-        notifyListeners();
       }).catchError((error) {
         loader = false;
-        notifyListeners();
       });
     } catch (e) {
       ErrorHandlerCode().status401(e);
@@ -218,7 +189,6 @@ class AuthController extends ChangeNotifier {
 
   addUserProfileDetails(context) async {
     loader = true;
-    notifyListeners();
     ProfileModel data = ProfileModel(
         email: fb.currentUser!.email.toString(),
         name: '',
@@ -244,22 +214,18 @@ class AuthController extends ChangeNotifier {
           .doc(fb.currentUser!.uid)
           .set(data.toJson());
       loader = false;
-      notifyListeners();
     } catch (e) {
       loader = false;
-      notifyListeners();
       Messenger.pop(msg: e.toString(), context: context);
     }
   }
 
   updateZoneIdFromFirestore(String zone, String email) async {
     loader = true;
-    notifyListeners();
     try {
       final data = UserModel(zone: zone, email: email);
       await db.collection("user").doc(fb.currentUser?.uid).set(data.toJson());
       loader = false;
-      notifyListeners();
     } catch (e) {
       ErrorHandlerCode().status401(e);
     }

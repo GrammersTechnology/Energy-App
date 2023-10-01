@@ -1,4 +1,3 @@
-import 'package:demo/auth/screen/splash_screen.dart';
 import 'package:demo/const/themes/colors.dart';
 import 'package:demo/riverpod/home/home_screen.dart';
 import 'package:demo/riverpod/profile/view/profil_screen.dart';
@@ -8,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'controller/local_notification.dart';
+import 'riverpod/auth/screen/splash_screen.dart';
 // import 'package:provider/provider.dart';
 // import 'controller/auth_controller.dart';
 // import 'controller/chartcontroller.dart';
@@ -71,7 +71,6 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: AppColors.primaryColor),
       home: const SplashScreen(),
-
     );
   }
 }

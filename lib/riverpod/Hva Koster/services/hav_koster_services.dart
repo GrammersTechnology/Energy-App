@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:demo/const/api_error_helper.dart';
-import 'package:demo/controller/home_controller.dart';
 import 'package:dio/dio.dart';
 
 import '../model/kva_koster.dart';
@@ -18,13 +17,10 @@ class HvaKasterServices {
         final result = HavKasterModel.fromJson(response.data);
         log(result.toJson().toString());
 
-        HomeController().loader = false;
         return result;
       }
     } catch (e) {
       ErrorHandlerCode().status401(e);
-      HomeController().loader = false;
-      HomeController().notifyListeners();
     }
     return null;
   }
