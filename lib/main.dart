@@ -1,11 +1,11 @@
 import 'package:demo/const/themes/colors.dart';
+import 'package:demo/riverpod/chart/view/chart_screen.dart';
 import 'package:demo/routes/routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'controller/local_notification.dart';
-import 'riverpod/Hva Koster/view/hva_koster_screen.dart';
 // import 'package:provider/provider.dart';
 // import 'controller/auth_controller.dart';
 // import 'controller/chartcontroller.dart';
@@ -56,7 +56,7 @@ Future<void> main() async {
   await NotificationService().initNotification();
   NotificationService().showNotification();
 
-  runApp(ProviderScope(child: const MyApp()));
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -68,7 +68,7 @@ class MyApp extends StatelessWidget {
       navigatorKey: Routes.navigatorKey,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: AppColors.primaryColor),
-      home: const HvaKosterScreen(),
+      home: const ChartScreen(),
     );
   }
 }

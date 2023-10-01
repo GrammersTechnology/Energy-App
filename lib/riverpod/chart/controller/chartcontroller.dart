@@ -1,11 +1,17 @@
+import 'dart:convert';
 import 'dart:developer';
 
-import 'package:flutter/material.dart';
+import 'package:demo/riverpod/chart/services/chart_services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../services/chart_services.dart';
+final userChartProvider = Provider((ref) => ChartController());
 
-class ChartController extends ChangeNotifier {
+final dropdownListProvider = StateProvider<String>((ref) {
+  return 'Select From List';
+});
+
+class ChartController {
   String? dropdowmValue;
   ChartDataModel? data;
   bool loader = false;
@@ -13,20 +19,35 @@ class ChartController extends ChangeNotifier {
   List result = [];
   changeDropDownValue(value) {
     dropdowmValue = value;
-    notifyListeners();
     setChartData(result);
   }
 
-  getChartDetails(context) async {
+  Future<ChartDataModel> getChartDetails() async {
     loader = true;
-    result = (await ChartService().chartGraphDataApi(context))!;
-    if (result.isNotEmpty) {
-      setChartData(result);
+    result = (await ChartService().chartGraphDataApi())!;
+    final data = json.encode(result);
+    if (data.isEmpty) {
+      log('this is empty');
+    } else {
+      log('not empty');
+    }
+    if (data.isNotEmpty) {
+      final chartData = setChartData(result);
+
+      log('$chartData----------chart Data-----------');
+      return chartData;
     }
     loader = false;
+
+    return ChartDataModel(
+        fyllingsgrad: 0,
+        kapasitetTWh: 0,
+        fyllingTWh: 0,
+        fyllingsgradForrigeUke: 0,
+        endringFyllingsgrad: 0);
   }
 
-  setChartData(List result) async {
+  Future<ChartDataModel> setChartData(List result) async {
     loader = true;
     if (dropdowmValue != null) {
       final response =
@@ -43,6 +64,7 @@ class ChartController extends ChangeNotifier {
                 fyllingTWh: element['fylling_TWh'],
                 fyllingsgradForrigeUke: element['fyllingsgrad_forrige_uke'],
                 endringFyllingsgrad: element['endring_fyllingsgrad']);
+            return data!;
           }
         }
       }
@@ -66,12 +88,19 @@ class ChartController extends ChangeNotifier {
                 fyllingsgradForrigeUke:
                     element['fyllingsgrad_forrige_uke'] * 100,
                 endringFyllingsgrad: element['endring_fyllingsgrad'] * 100);
+            return data!;
           }
         }
       }
     }
     loader = false;
-    notifyListeners();
+
+    return ChartDataModel(
+        fyllingsgrad: 0,
+        kapasitetTWh: 0,
+        fyllingTWh: 0,
+        fyllingsgradForrigeUke: 0,
+        endringFyllingsgrad: 0);
   }
 }
 

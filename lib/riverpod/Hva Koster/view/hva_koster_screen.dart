@@ -24,8 +24,7 @@ class HvaKosterScreen extends ConsumerWidget {
         ),
         body: ref.watch(hvaProvider).when(
           data: (data) {
-            log("message");
-            log(data!.toJson().toString() + "ddddddddddddddddddddddddddd");
+            log(data!.toString());
             return SafeArea(
                 child: Padding(
               padding: const EdgeInsets.only(left: 15, right: 15, bottom: 15),
@@ -33,76 +32,55 @@ class HvaKosterScreen extends ConsumerWidget {
                 HvaWidget(
                     cheapestCost: data.dishWasher.cost.cheapest.cost.toString(),
                     cheapestStartHourEndHour:
-                        data.dishWasher.cost.cheapest.startHour +
-                            " - " +
-                            data.dishWasher.cost.cheapest.endHour,
+                        "${data.dishWasher.cost.cheapest.startHour} - ${data.dishWasher.cost.cheapest.endHour}",
                     currentCost: data.dishWasher.cost.current.cost.toString(),
                     currentStartHourEndHour:
-                        data.dishWasher.cost.current.startHour +
-                            " - " +
-                            data.dishWasher.cost.current.endHour,
+                        "${data.dishWasher.cost.current.startHour} - ${data.dishWasher.cost.current.endHour}",
                     mostExpensive:
                         data.dishWasher.cost.mostExpensive.cost.toString(),
                     mostExpensiveStartHourEndHour:
-                        data.dishWasher.cost.mostExpensive.startHour +
-                            " - " +
-                            data.dishWasher.cost.mostExpensive.endHour,
+                        "${data.dishWasher.cost.mostExpensive.startHour} - ${data.dishWasher.cost.mostExpensive.endHour}",
                     size: size,
                     image: 'assets/images/dish_washer.png',
                     title: data.dishWasher.details.frontEndText),
                 HvaWidget(
                     cheapestCost: data.dryer.cost.cheapest.cost.toString(),
                     cheapestStartHourEndHour:
-                        data.dryer.cost.cheapest.startHour +
-                            " - " +
-                            data.dryer.cost.cheapest.endHour,
+                        "${data.dryer.cost.cheapest.startHour} - ${data.dryer.cost.cheapest.endHour}",
                     currentCost: data.dryer.cost.current.cost.toString(),
-                    currentStartHourEndHour: data.dryer.cost.current.startHour +
-                        " - " +
-                        data.dryer.cost.current.endHour,
+                    currentStartHourEndHour:
+                        "${data.dryer.cost.current.startHour} - ${data.dryer.cost.current.endHour}",
                     mostExpensive:
                         data.dryer.cost.mostExpensive.cost.toString(),
                     mostExpensiveStartHourEndHour:
-                        data.dryer.cost.mostExpensive.startHour +
-                            " - " +
-                            data.dryer.cost.mostExpensive.endHour,
+                        "${data.dryer.cost.mostExpensive.startHour} - ${data.dryer.cost.mostExpensive.endHour}",
                     size: size,
                     image: 'assets/images/dryer.png',
                     title: data.dryer.details.frontEndText),
                 HvaWidget(
                     cheapestCost: data.ev.cost.cheapest.cost.toString(),
-                    cheapestStartHourEndHour: data.ev.cost.cheapest.startHour +
-                        " - " +
-                        data.ev.cost.cheapest.endHour,
+                    cheapestStartHourEndHour:
+                        "${data.ev.cost.cheapest.startHour} - ${data.ev.cost.cheapest.endHour}",
                     currentCost: data.dishWasher.cost.current.cost.toString(),
-                    currentStartHourEndHour: data.ev.cost.current.startHour +
-                        " - " +
-                        data.ev.cost.current.endHour,
+                    currentStartHourEndHour:
+                        "${data.ev.cost.current.startHour} - ${data.ev.cost.current.endHour}",
                     mostExpensive: data.ev.cost.mostExpensive.cost.toString(),
                     mostExpensiveStartHourEndHour:
-                        data.ev.cost.mostExpensive.startHour +
-                            " - " +
-                            data.ev.cost.mostExpensive.endHour,
+                        "${data.ev.cost.mostExpensive.startHour} - ${data.ev.cost.mostExpensive.endHour}",
                     size: size,
                     image: 'assets/images/ev.png',
                     title: data.ev.details.frontEndText),
                 HvaWidget(
                     cheapestCost: data.shower.cost.cheapest.cost.toString(),
                     cheapestStartHourEndHour:
-                        data.shower.cost.cheapest.startHour +
-                            " - " +
-                            data.shower.cost.cheapest.endHour,
+                        "${data.shower.cost.cheapest.startHour} - ${data.shower.cost.cheapest.endHour}",
                     currentCost: data.shower.cost.current.cost.toString(),
                     currentStartHourEndHour:
-                        data.shower.cost.current.startHour +
-                            " - " +
-                            data.shower.cost.current.endHour,
+                        "${data.shower.cost.current.startHour} - ${data.shower.cost.current.endHour}",
                     mostExpensive:
                         data.shower.cost.mostExpensive.cost.toString(),
                     mostExpensiveStartHourEndHour:
-                        data.shower.cost.mostExpensive.startHour +
-                            " - " +
-                            data.shower.cost.mostExpensive.endHour,
+                        "${data.shower.cost.mostExpensive.startHour} - ${data.shower.cost.mostExpensive.endHour}",
                     size: size,
                     image: 'assets/images/washing_machine.png',
                     title: data.shower.details.frontEndText),
@@ -110,21 +88,15 @@ class HvaKosterScreen extends ConsumerWidget {
                     cheapestCost:
                         data.washingMachine.cost.cheapest.cost.toString(),
                     cheapestStartHourEndHour:
-                        data.washingMachine.cost.cheapest.startHour +
-                            " - " +
-                            data.washingMachine.cost.cheapest.endHour,
+                        "${data.washingMachine.cost.cheapest.startHour} - ${data.washingMachine.cost.cheapest.endHour}",
                     currentCost:
                         data.washingMachine.cost.current.cost.toString(),
                     currentStartHourEndHour:
-                        data.washingMachine.cost.current.startHour +
-                            " - " +
-                            data.washingMachine.cost.current.endHour,
+                        "${data.washingMachine.cost.current.startHour} - ${data.washingMachine.cost.current.endHour}",
                     mostExpensive:
                         data.washingMachine.cost.mostExpensive.cost.toString(),
                     mostExpensiveStartHourEndHour:
-                        data.washingMachine.cost.mostExpensive.startHour +
-                            " - " +
-                            data.washingMachine.cost.mostExpensive.endHour,
+                        "${data.washingMachine.cost.mostExpensive.startHour} - ${data.washingMachine.cost.mostExpensive.endHour}",
                     size: size,
                     image: 'assets/images/shower.png',
                     title: data.washingMachine.details.frontEndText),
@@ -133,13 +105,13 @@ class HvaKosterScreen extends ConsumerWidget {
             ));
           },
           error: (error, stackTrace) {
-            return SafeArea(
+            return const SafeArea(
                 child: Center(
               child: Text("Something Went Wrong"),
             ));
           },
           loading: () {
-            return SafeArea(
+            return const SafeArea(
                 child: Center(
               child: CircularProgressIndicator(),
             ));
@@ -180,7 +152,7 @@ class HvaWidget extends StatelessWidget {
       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         Text(
           title,
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         // image
       ]),
@@ -229,7 +201,7 @@ class HvaWidget extends StatelessWidget {
             // color: const Color.fromARGB(255, 231, 193, 79),
             child: Center(
                 child: Text(
-              "${currentCost} ${"kr"}",
+              "$currentCost ${"kr"}",
               style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
             )),
           ),
@@ -238,7 +210,7 @@ class HvaWidget extends StatelessWidget {
             height: 35,
             // color: const Color.fromARGB(255, 231, 193, 79),
             child: Center(
-                child: Text("${cheapestCost} ${"kr"}",
+                child: Text("$cheapestCost ${"kr"}",
                     style: const TextStyle(
                         fontSize: 17, fontWeight: FontWeight.w500))),
           ),
@@ -247,7 +219,7 @@ class HvaWidget extends StatelessWidget {
             height: 35,
             // color: const Color.fromARGB(255, 231, 193, 79),
             child: Center(
-                child: Text("${mostExpensive} ${"kr"}",
+                child: Text("$mostExpensive ${"kr"}",
                     style: const TextStyle(
                         fontSize: 17, fontWeight: FontWeight.w500))),
           ),
@@ -261,7 +233,7 @@ class HvaWidget extends StatelessWidget {
             height: 35,
             // color: const Color.fromARGB(255, 231, 193, 79),
             child: Center(
-                child: Text("kl ${currentStartHourEndHour}",
+                child: Text("kl $currentStartHourEndHour",
                     style: const TextStyle(
                         fontSize: 15, fontWeight: FontWeight.w500))),
           ),
@@ -270,7 +242,7 @@ class HvaWidget extends StatelessWidget {
             height: 35,
             // color: const Color.fromARGB(255, 231, 193, 79),
             child: Center(
-                child: Text("kl ${cheapestStartHourEndHour}",
+                child: Text("kl $cheapestStartHourEndHour",
                     style: const TextStyle(
                         fontSize: 15, fontWeight: FontWeight.w500))),
           ),
@@ -279,7 +251,7 @@ class HvaWidget extends StatelessWidget {
             height: 35,
             // color: const Color.fromARGB(255, 231, 193, 79),
             child: Center(
-                child: Text("kl ${mostExpensiveStartHourEndHour}",
+                child: Text("kl $mostExpensiveStartHourEndHour",
                     style: const TextStyle(
                         fontSize: 15, fontWeight: FontWeight.w500))),
           ),

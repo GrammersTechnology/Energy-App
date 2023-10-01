@@ -1,5 +1,5 @@
 import 'package:demo/riverpod/Hva%20Koster/view/hva_koster_screen.dart';
-import 'package:demo/screen/bottom_screen/chart/chart_screen.dart';
+import 'package:demo/riverpod/chart/view/chart_screen.dart';
 import 'package:demo/screen/bottom_screen/home/widgets/tips_screen.dart';
 import 'package:demo/screen/bottom_screen/profile/profil_screen.dart';
 import 'package:demo/screen/bottom_screen/home/home_screen.dart';
