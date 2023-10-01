@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:demo/controller/auth_controller.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -10,6 +9,8 @@ import 'dart:async';
 import 'package:timezone/timezone.dart' as tz;
 // import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:timezone/data/latest.dart' as tz;
+
+import '../riverpod/auth/controller/auth_controller.dart';
 
 class NotificationService {
   final FlutterLocalNotificationsPlugin notificationsPlugin =

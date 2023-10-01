@@ -1,5 +1,5 @@
-import 'package:demo/auth/screen/loginscreen.dart';
 import 'package:demo/const/space_helper.dart';
+import 'package:demo/riverpod/auth/screen/loginscreen.dart';
 import 'package:flutter/material.dart';
 
 import '../../../const/themes/colors.dart';

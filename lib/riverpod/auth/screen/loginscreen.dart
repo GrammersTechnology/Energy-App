@@ -1,7 +1,7 @@
-import 'package:demo/auth/screen/signup_screen.dart';
 import 'package:demo/const/space_helper.dart';
 import 'package:demo/const/widgets/custom_button.dart';
-import 'package:demo/riverpod/controller/auth_controller.dart';
+import 'package:demo/riverpod/auth/controller/auth_controller.dart';
+import 'package:demo/riverpod/auth/screen/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../const/widgets/text_filed_widgets.dart';

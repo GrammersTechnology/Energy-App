@@ -1,9 +1,8 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:demo/controller/auth_controller.dart';
 import 'package:demo/model/model.dart';
-import 'package:demo/riverpod/controller/profile_controller.dart';
+import 'package:demo/riverpod/profile/controller/profile_controller.dart';
 import 'package:demo/riverpod/home/model/home_model.dart';
 import 'package:demo/riverpod/home/services/home_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -18,7 +17,7 @@ class ColumnGraphController {
 
   List<GraphData> columnGraphData = [];
   Future<List<GraphData>> feacthColumnGraphData() async {
-    await AuthController().fetchZoneIdFromFirestore();
+    // await AuthController().fetchZoneIdFromFirestore();
     final perf = await SharedPreferences.getInstance();
 
     // final zone = perf.getString("zone");

@@ -1,7 +1,7 @@
-import 'package:demo/auth/screen/loginscreen.dart';
 import 'package:demo/const/space_helper.dart';
 import 'package:demo/const/widgets/custom_button.dart';
-import 'package:demo/controller/auth_controller.dart';
+import 'package:demo/riverpod/auth/controller/auth_controller.dart';
+import 'package:demo/riverpod/auth/screen/loginscreen.dart';
 import 'package:demo/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -28,13 +28,13 @@ class SignupScreen extends StatelessWidget {
                       hint: "Email",
                       showPasswordToggle: false,
                       prefixIcon: Icons.email,
-                      controller: controller.emailController),
+                      controller: AuthController().emailController),
                   vSpaceRegular,
                   TextFromFieldWidget(
                       hint: "Password",
                       showPasswordToggle: true,
                       prefixIcon: Icons.key,
-                      controller: controller.passwordController),
+                      controller: AuthController().passwordController),
                   vSpaceRegular,
                   Container(
                     padding: const EdgeInsets.only(left: 15),
@@ -43,29 +43,30 @@ class SignupScreen extends StatelessWidget {
                             const BorderRadius.all(Radius.circular(30)),
                         border: Border.all(color: Colors.grey)),
                     child: DropdownButton(
-                      hint:
-                          Text(controller.dropdowmValue ?? " Select From List"),
+                      hint: Text(AuthController().dropdowmValue ??
+                          " Select From List"),
                       underline: const SizedBox(),
                       isExpanded: true,
-                      items: controller.dropdwonList
+                      items: AuthController()
+                          .dropdwonList
                           .map(
                               (e) => DropdownMenuItem(value: e, child: Text(e)))
                           .toList(),
                       onChanged: (value) {
-                        controller.changeDropDownValue(value);
+                        AuthController().changeDropDownValue(value);
                       },
                       onTap: () {},
                     ),
                   ),
                   vSpaceXl,
                   vSpaceXl,
-                  // controller.loader
+                  // AuthController().loader
                   //     ? const CircularProgressIndicator()
                   //     :
                   LoginButtonWidget(
                     title: "SIGNUP",
                     onTap: () {
-                      controller.signup(context);
+                      AuthController().signup(context);
                     },
                   ),
                   Padding(
@@ -77,8 +78,8 @@ class SignupScreen extends StatelessWidget {
                         TextButton(
                             onPressed: () {
                               Routes.pushreplace(screen: const LoginScreen());
-                              controller.emailController.clear();
-                              controller.passwordController.clear();
+                              AuthController().emailController.clear();
+                              AuthController().passwordController.clear();
                             },
                             child: const Text("Login"))
                       ],

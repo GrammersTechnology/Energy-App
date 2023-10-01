@@ -1,5 +1,5 @@
 import 'package:demo/const/themes/colors.dart';
-import 'package:demo/riverpod/controller/auth_controller.dart';
+import 'package:demo/riverpod/auth/controller/auth_controller.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatelessWidget {

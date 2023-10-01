@@ -1,4 +1,4 @@
-import 'package:demo/riverpod/controller/profile_controller.dart';
+import 'package:demo/riverpod/profile/controller/profile_controller.dart';
 import 'package:demo/riverpod/provider.dart';
 import 'package:demo/routes/routes.dart';
 import 'package:flutter/material.dart';
