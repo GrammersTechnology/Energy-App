@@ -41,7 +41,7 @@ class TipsScreen extends ConsumerWidget {
                 if (snapShot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
                 } else if (snapShot.hasError) {
-                  return Text("Something went Wrong");
+                  return InternetChecking();
                 } else if (snapShot.hasData) {
                   data = snapShot.data ?? [];
                   print(data);

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:demo/riverpod/chart/services/chart_services.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,6 +18,7 @@ class ChartController {
   bool loader = false;
   List dropdwonList = ["NO1", "NO2", "NO3", "NO4", "NO5"];
   List result = [];
+  BuildContext? context;
   changeDropDownValue(value) {
     dropdowmValue = value;
     setChartData(result);
@@ -24,7 +26,7 @@ class ChartController {
 
   Future<ChartDataModel> getChartDetails() async {
     loader = true;
-    result = (await ChartService().chartGraphDataApi())!;
+    result = (await ChartService().chartGraphDataApi(context))!;
     final data = json.encode(result);
     if (data.isEmpty) {
       log('this is empty');

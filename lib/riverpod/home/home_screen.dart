@@ -40,8 +40,8 @@ class HomeScreen extends ConsumerWidget {
                 child: Icon(Icons.logout),
               ),
               onTap: () {
-                // authController.signout(context);
-                // authController.clearLocalData();
+                 AuthController().signout(context);
+                 AuthController().clearLocalData();
                 Routes.pushreplace(screen: const LoginScreen());
               },
             )
@@ -80,7 +80,7 @@ class HomeScreen extends ConsumerWidget {
                 if (snapShot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
                 } else if (snapShot.hasError) {
-                  return Text("Something went Wrong");
+                  return InternetChecking();
                 } else if (snapShot.hasData) {
                   data = snapShot.data ?? [];
                   print(data);

@@ -44,7 +44,7 @@ class ProfileScreen extends ConsumerWidget {
               if (snapShot.connectionState == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator());
               } else if (snapShot.hasError) {
-                return Text("Something Went Wrong");
+                return InternetChecking();
               } else {
                 final data = snapShot.data;
                 return SafeArea(

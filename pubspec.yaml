@@ -48,6 +48,8 @@ dependencies:
   flutter_local_notifications: ^15.1.0+1
   flutter_native_timezone: ^2.0.0
   flutter_riverpod: ^2.4.1
+  internet_connection_checker: ^1.0.0+1
+  connectivity: ^3.0.6
 
 dev_dependencies:
   flutter_test:

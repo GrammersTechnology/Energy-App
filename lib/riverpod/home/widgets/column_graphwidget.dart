@@ -25,12 +25,12 @@ class ColumnGraphWidget extends ConsumerWidget {
                                 dataLabelSettings:
                                     const DataLabelSettings(isVisible: true))
                           ])
-                    : Text("Data is Empty");
+                    : const Text("Data is Empty");
               },
               error: (error, stackTrace) =>
-                  SafeArea(child: Text("Something went Rong")),
+                  const SafeArea(child: Text("Something went wrong")),
               loading: () {
-                return SafeArea(
+                return const SafeArea(
                     child: Center(child: CircularProgressIndicator()));
               },
             ));

@@ -14,7 +14,7 @@ class StepperGraphWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    Timer.periodic(Duration(minutes: 30), (timer) {
+    Timer.periodic(const Duration(minutes: 30), (timer) {
       final stepperRepository = ref.watch(stepperGraphControllerProvider);
       stepperRepository.fecthData();
     });
@@ -35,10 +35,10 @@ class StepperGraphWidget extends ConsumerWidget {
                 ],
               );
             },
-            error: (error, stackTrace) =>
-                SafeArea(child: Center(child: Text("Something went Rong"))),
+            error: (error, stackTrace) => const SafeArea(
+                child: Center(child: Text("Something went wrong"))),
             loading: () {
-              return SafeArea(
+              return const SafeArea(
                   child: Center(child: CircularProgressIndicator()));
             },
           ),

@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import '../../../const/api_error_helper.dart';
 
 class ChartService {
-  Future<List<dynamic>?> chartGraphDataApi() async {
+  Future<List<dynamic>?> chartGraphDataApi(context) async {
     String url =
         'https://biapi.nve.no/magasinstatistikk/api/Magasinstatistikk/HentOffentligDataSisteUke';
 
@@ -17,6 +17,7 @@ class ChartService {
     } on DioException catch (e) {
       ErrorHandlerCode().status401(e);
     }
+
     return null;
   }
 }
