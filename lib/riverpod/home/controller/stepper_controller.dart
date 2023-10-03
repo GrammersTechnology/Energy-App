@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:demo/riverpod/profile/controller/profile_controller.dart';
 import 'package:demo/riverpod/home/model/home_model.dart';
 import 'package:demo/riverpod/home/services/home_services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,7 +14,7 @@ class StepperController {
     final perf = await SharedPreferences.getInstance();
     // await AuthController().fetchZoneIdFromFirestore();
     // final zone = perf.getString("zone");
-    final zone = "1";
+    const zone = "1";
 
     log("--------------------$zone");
 

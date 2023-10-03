@@ -1,6 +1,7 @@
 import 'package:demo/const/space_helper.dart';
 import 'package:demo/const/themes/colors.dart';
 import 'package:demo/riverpod/Saving%20Tips/model/savinr_tips_model.dart';
+
 import 'package:demo/riverpod/auth/controller/auth_controller.dart';
 import 'package:demo/riverpod/auth/screen/loginscreen.dart';
 import 'package:demo/riverpod/home/widgets/stepper_graph.dart';
@@ -20,6 +21,8 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final savingTipsRepository = ref.watch(savingTipsRepositeryProvider);
+
+    final authRepository = ref.watch(authControllerProvider);
 
     return Scaffold(
         appBar: AppBar(
@@ -42,8 +45,8 @@ class HomeScreen extends ConsumerWidget {
                 child: Icon(Icons.logout),
               ),
               onTap: () {
-                AuthController().signout(context);
-                AuthController().clearLocalData();
+                authRepository.signout(context);
+                authRepository.clearLocalData();
                 Routes.pushreplace(screen: const LoginScreen());
               },
             )
@@ -80,9 +83,9 @@ class HomeScreen extends ConsumerWidget {
               initialData: data,
               builder: (context, snapShot) {
                 if (snapShot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 } else if (snapShot.hasError) {
-                  return InternetChecking();
+                  return const InternetChecking();
                 } else if (snapShot.hasData) {
                   data = snapShot.data ?? [];
                   print(data);
@@ -112,9 +115,9 @@ class HomeScreen extends ConsumerWidget {
                                     ),
                                     vSpaceRegular
                                   ])))
-                          : Text("Saving Tips is Empty"));
+                          : const Text("Saving Tips is Empty"));
                 }
-                return SizedBox();
+                return const SizedBox();
               }),
           vSpaceRegular
         ]))));

@@ -1,11 +1,7 @@
 import 'dart:developer';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:demo/model/model.dart';
-import 'package:demo/riverpod/profile/controller/profile_controller.dart';
 import 'package:demo/riverpod/home/model/home_model.dart';
 import 'package:demo/riverpod/home/services/home_services.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,7 +17,7 @@ class ColumnGraphController {
     final perf = await SharedPreferences.getInstance();
 
     // final zone = perf.getString("zone");
-    final zone = "1";
+    const zone = "1";
 
     List result =
         await HomeScreenServicesScreen().columnGraphDataApi(zone.toString());
