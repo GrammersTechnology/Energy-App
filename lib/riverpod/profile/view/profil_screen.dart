@@ -1,21 +1,15 @@
 import 'package:demo/riverpod/profile/controller/profile_controller.dart';
-import 'package:demo/riverpod/provider.dart';
-import 'package:demo/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../../const/themes/colors.dart';
 import '../../../const/themes/text.dart';
-import '../widget/profile_edit_screen.dart';
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      ProfileController().getUserProfileDetails();
-    });
+    final profileRepository = ref.watch(profileControllerProvider);
 
     return Scaffold(
         appBar: AppBar(
@@ -31,85 +25,79 @@ class ProfileScreen extends ConsumerWidget {
           ),
           actions: [
             IconButton(
-              icon: const Icon(
-                Icons.edit,
-                size: 24,
-              ),
-              color: AppColors.blackColor,
-              onPressed: () {
-                // ProfileController()
-                //     .addUserProfileDetails(true, true, true, true, true, true);
-                Routes.push(screen: const ProfileEditScreen());
-              },
-            ),
+                icon: const Icon(
+                  Icons.edit,
+                  size: 24,
+                ),
+                color: AppColors.blackColor,
+                onPressed: () {
+                  ref.read(profileControllerProvider).checkProfileDetails();
+                  // ProfileController()
+                  //     .addUserProfileDetails(true, true, true, true, true, true);
+                }),
             const SizedBox(width: 24),
           ],
         ),
-        body: ref.watch(profileProvider).when(
-          data: (data) {
-            return SafeArea(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 24, left: 24, top: 30),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      _buildImageProfile(),
-                      const SizedBox(height: 16),
-                      const SizedBox(height: 24),
-                      _buildDescription(
-                        data?.powerCompany.toString(),
-                        "Power Company",
-                        data?.pricezone.toString(),
-                        "Price zone",
-                        data?.yearlyCosumption.toString(),
-                        "Yearly cosumption",
-                      ),
-                      const SizedBox(height: 24),
-                      _buildDescription(
-                        data?.hasSensor.toString(),
-                        "Has sensor",
-                        data?.hasElCar.toString(),
-                        "Has el car",
-                        data?.hasEatPump.toString(),
-                        "Has eat pump",
-                      ),
-                      const SizedBox(height: 24),
-                      _buildDescription(
-                        data?.hasSolarPanel.toString(),
-                        "Has solar panel",
-                        data?.numberOfPepole.toString(),
-                        "Number of pepole",
-                        data?.wantPushWarning1.toString(),
-                        "Want PushWarning1",
-                      ),
-                      const SizedBox(height: 24),
-                      _buildDescription(
-                        data?.wantPushWarning2.toString(),
-                        "Want PushWarning2",
-                        data?.powerPoint.toString(),
-                        "PowerPoint",
-                        data?.powerCoins.toString(),
-                        "PowerCoins",
-                      ),
-                      const SizedBox(height: 24),
-                      const SizedBox(height: 24),
-                    ],
-                  ),
-                ),
-              ),
-            );
-          },
-          error: (error, stackTrace) {
-            return Text("data");
-          },
-          loading: () {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          },
-        ));
+        body: FutureBuilder(
+            future: profileRepository.getUserProfileDetails(),
+            builder: (context, snapShot) {
+              if (snapShot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              } else if (snapShot.hasError) {
+                return Text("Something Went Wrong");
+              } else {
+                final data = snapShot.data;
+                return SafeArea(
+                    child: SingleChildScrollView(
+                        child: Padding(
+                            padding: const EdgeInsets.only(
+                                right: 24, left: 24, top: 30),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  _buildImageProfile(),
+                                  const SizedBox(height: 16),
+                                  const SizedBox(height: 24),
+                                  _buildDescription(
+                                    data?.powerCompany.toString(),
+                                    "Power Company",
+                                    data?.pricezone.toString(),
+                                    "Price zone",
+                                    data?.yearlyCosumption.toString(),
+                                    "Yearly cosumption",
+                                  ),
+                                  const SizedBox(height: 24),
+                                  _buildDescription(
+                                    data?.hasSensor.toString(),
+                                    "Has sensor",
+                                    data?.hasElCar.toString(),
+                                    "Has el car",
+                                    data?.hasEatPump.toString(),
+                                    "Has eat pump",
+                                  ),
+                                  const SizedBox(height: 24),
+                                  _buildDescription(
+                                    data?.hasSolarPanel.toString(),
+                                    "Has solar panel",
+                                    data?.numberOfPepole.toString(),
+                                    "Number of pepole",
+                                    data?.wantPushWarning1.toString(),
+                                    "Want PushWarning1",
+                                  ),
+                                  const SizedBox(height: 24),
+                                  _buildDescription(
+                                      data?.wantPushWarning2.toString(),
+                                      "Want PushWarning2",
+                                      data?.powerPoint.toString(),
+                                      "PowerPoint",
+                                      data?.powerCoins.toString(),
+                                      "PowerCoins"),
+                                  const SizedBox(height: 24),
+                                  const SizedBox(height: 24)
+                                ]))));
+              }
+            }));
   }
 
   Container _buildImageProfile() {

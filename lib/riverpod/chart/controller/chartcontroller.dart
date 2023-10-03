@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 final userChartProvider = Provider((ref) => ChartController());
 
-final dropdownListProvider = StateProvider<String>((ref) {
+final chartDropdownListProvider = StateProvider<String>((ref) {
   return 'Select From List';
 });
 
