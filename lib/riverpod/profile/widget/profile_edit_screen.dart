@@ -1,18 +1,30 @@
 import 'package:demo/const/space_helper.dart';
 import 'package:demo/riverpod/profile/controller/profile_controller.dart';
+import 'package:demo/riverpod/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../const/themes/colors.dart';
 import '../../../const/widgets/custom_button.dart';
+import '../../../model/model.dart';
 
-class ProfileEditScreen extends StatelessWidget {
-  const ProfileEditScreen({super.key});
-
+class ProfileEditScreen extends ConsumerWidget {
+  ProfileEditScreen({super.key, required this.data});
+  ProfileModel data;
   @override
-  Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      ProfileController().fetchCSVData();
-    });
+  Widget build(BuildContext context, WidgetRef ref) {
+    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    final profileRepository = ref.watch(profileControllerProvider);
+    //   profileRepository.fetchCSVData();
+    // });
+    ref.watch(profileEditDropdownListProvider);
+    ref.watch(profileEditZoneProvider);
+    ref.watch(hasElCarStateProvider);
+    ref.watch(wantPushWarning2StateProvider);
+    ref.watch(hasSensorStateProvider);
+    ref.watch(wantPushWarning1StateProvider);
+    ref.watch(hasEatPumpStateProvider);
+    ref.watch(hasSolarPanelStateProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -44,44 +56,50 @@ class ProfileEditScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              Container(
-                decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(20))),
-                child: DropdownButton(
-                  iconEnabledColor: const Color.fromARGB(255, 27, 25, 25),
-                  focusColor: const Color.fromARGB(255, 209, 204, 204),
-                  borderRadius: BorderRadius.circular(10),
-                  hint: Text(
-                    (userProfile?.powerCompany.isNotEmpty == true)
-                        ? userProfile!.powerCompany
-                        : (ProfileController().dropDownValue?.isNotEmpty ==
-                                true)
-                            ? ProfileController().dropDownValue!
-                            : "Select From List",
-                    style: const TextStyle(
-                      color: Color.fromARGB(255, 36, 34, 34),
+              ref.watch(profileEditProvider).when(
+                data: (dropdwonData) {
+                  return Container(
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    child: DropdownButton(
+                      iconEnabledColor: const Color.fromARGB(255, 27, 25, 25),
+                      focusColor: const Color.fromARGB(255, 209, 204, 204),
+                      borderRadius: BorderRadius.circular(10),
+                      hint: Text(
+                        profileRepository.dropDownValue ?? data.powerCompany,
+                        style: const TextStyle(
+                          color: Color.fromARGB(255, 36, 34, 34),
+                        ),
+                      ),
+                      underline: const SizedBox(),
+                      isExpanded: true,
+                      items: dropdwonData
+                          .map(
+                              (e) => DropdownMenuItem(value: e, child: Text(e)))
+                          .toList(),
+                      onChanged: (value) {
+                        profileRepository.changeDropDownValue(value);
+                        ref
+                            .read(profileEditDropdownListProvider.notifier)
+                            .state = value.toString();
+                      },
+                      onTap: () {},
                     ),
-                  ),
-                  underline: const SizedBox(),
-                  isExpanded: true,
-                  items: ProfileController()
-                      .dropdwonList
-                      .map((e) => DropdownMenuItem(value: e, child: Text(e)))
-                      .toList(),
-                  onChanged: (value) {
-                    ProfileController().changeDropDownValue(value);
-                  },
-                  onTap: () {},
-                ),
+                  );
+                },
+                error: (error, stackTrace) {
+                  return Text("data");
+                },
+                loading: () {
+                  return CircularProgressIndicator();
+                },
               ),
               vSpaceRegular,
               TextFormField(
-                controller: ProfileController().nameController,
+                controller: profileRepository.nameController,
                 decoration: InputDecoration(
                   label: const Text("Name"),
-                  hintText: (userProfile?.name.isNotEmpty == true)
-                      ? userProfile?.name
-                      : "Name",
+                  hintText: data.name,
                   border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(30)),
                   ),
@@ -94,43 +112,28 @@ class ProfileEditScreen extends StatelessWidget {
                     borderRadius: const BorderRadius.all(Radius.circular(30)),
                     border: Border.all(color: Colors.grey)),
                 child: DropdownButton(
-                  hint: Text(ProfileController().zoneDropdowmValue ??
+                  hint: Text(profileRepository.zoneDropdowmValue ??
                       " Select From List"),
                   underline: const SizedBox(),
                   isExpanded: true,
-                  items: ProfileController()
-                      .zoneDropdwonList
+                  items: profileRepository.zoneDropdwonList
                       .map((e) => DropdownMenuItem(value: e, child: Text(e)))
                       .toList(),
                   onChanged: (value) {
-                    ProfileController().changeZoneDropDownValue(value);
+                    profileRepository.changeZoneDropDownValue(value);
+                    ref.read(profileEditZoneProvider.notifier).state =
+                        value.toString();
                   },
                   onTap: () {},
                 ),
               ),
-              // vSpaceRegular,
-              // TextFormField(
-              //   keyboardType: TextInputType.number,
-              //   controller: ProfileController().zoneController,
-              //   decoration: InputDecoration(
-              //     label: const Text("Zone"),
-              //     hintText: (userProfile?.pricezone.isNotEmpty == true)
-              //         ? userProfile?.pricezone
-              //         : "Zone",
-              //     border: const OutlineInputBorder(
-              //       borderRadius: BorderRadius.all(Radius.circular(30)),
-              //     ),
-              //   ),
-              // ),
               vSpaceRegular,
               TextFormField(
                 keyboardType: TextInputType.number,
-                controller: ProfileController().yearlyCosumptionController,
+                controller: profileRepository.yearlyCosumptionController,
                 decoration: InputDecoration(
                   label: const Text("Yearly Consumption"),
-                  hintText: (userProfile?.yearlyCosumption != "0")
-                      ? userProfile?.yearlyCosumption
-                      : "Yearly Consumption ",
+                  hintText: data.yearlyCosumption,
                   border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(30)),
                   ),
@@ -139,12 +142,10 @@ class ProfileEditScreen extends StatelessWidget {
               vSpaceRegular,
               TextFormField(
                 keyboardType: TextInputType.number,
-                controller: ProfileController().numberOfPepoleControler,
+                controller: profileRepository.numberOfPepoleControler,
                 decoration: InputDecoration(
                   label: const Text("Number Of Pepole"),
-                  hintText: (userProfile?.numberOfPepole != "0")
-                      ? userProfile?.numberOfPepole
-                      : "Number Of Pepole",
+                  hintText: data.numberOfPepole,
                   border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(30)),
                   ),
@@ -153,12 +154,10 @@ class ProfileEditScreen extends StatelessWidget {
               vSpaceRegular,
               TextFormField(
                 keyboardType: TextInputType.number,
-                controller: ProfileController().powerCoinsController,
+                controller: profileRepository.powerCoinsController,
                 decoration: InputDecoration(
                   label: const Text("Power Coins"),
-                  hintText: (userProfile?.powerCoins != "0")
-                      ? userProfile?.powerCoins
-                      : "Power Coins",
+                  hintText: data.powerCoins,
                   border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(30)),
                   ),
@@ -167,12 +166,10 @@ class ProfileEditScreen extends StatelessWidget {
               vSpaceRegular,
               TextFormField(
                 keyboardType: TextInputType.number,
-                controller: ProfileController().powerPointController,
+                controller: profileRepository.powerPointController,
                 decoration: InputDecoration(
                   label: const Text("Power Point"),
-                  hintText: (userProfile?.powerPoint != "0")
-                      ? userProfile?.powerPoint
-                      : "Power Point",
+                  hintText: data.powerPoint,
                   border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(30)),
                   ),
@@ -183,30 +180,17 @@ class ProfileEditScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
                     children: [
-                      // SizedBox(
-                      //   child: Row(
-                      //     children: [
-                      //       Text("All"),
-                      //       Spacer(),
-                      //       Switch(
-                      //         value: ProfileController().allBool,
-                      //         onChanged: (value) {
-                      //           ProfileController().allValueChange(value);
-                      //         },
-                      //       ),
-                      //       hSpaceMedium
-                      //     ],
-                      //   ),
-                      // ),
                       SizedBox(
                         child: Row(
                           children: [
                             const Text("Has El Car"),
                             const Spacer(),
                             Switch(
-                              value: ProfileController().hasElCarBool,
+                              value: profileRepository.hasElCarBool,
                               onChanged: (value) {
-                                ProfileController().hasElCarValueChange(value);
+                                profileRepository.hasElCarValueChange(value);
+                                ref.read(hasElCarStateProvider.notifier).state =
+                                    value;
                               },
                             ),
                             hSpaceMedium
@@ -219,10 +203,14 @@ class ProfileEditScreen extends StatelessWidget {
                             const Text("Want Push Warning2"),
                             const Spacer(),
                             Switch(
-                              value: ProfileController().wantPushWarning2Bool,
+                              value: profileRepository.wantPushWarning2Bool,
                               onChanged: (value) {
-                                ProfileController()
+                                profileRepository
                                     .wantPushWarning2ValueChange(value);
+                                ref
+                                    .read(
+                                        wantPushWarning2StateProvider.notifier)
+                                    .state = value;
                               },
                             ),
                             hSpaceMedium
@@ -235,9 +223,12 @@ class ProfileEditScreen extends StatelessWidget {
                             const Text("hasSensor"),
                             const Spacer(),
                             Switch(
-                              value: ProfileController().hasSensorBool,
+                              value: profileRepository.hasSensorBool,
                               onChanged: (value) {
-                                ProfileController().hasSensorValueChange(value);
+                                profileRepository.hasSensorValueChange(value);
+                                ref
+                                    .read(hasSensorStateProvider.notifier)
+                                    .state = value;
                               },
                             ),
                             hSpaceMedium
@@ -250,10 +241,14 @@ class ProfileEditScreen extends StatelessWidget {
                             const Text("wantPushWarning1"),
                             const Spacer(),
                             Switch(
-                              value: ProfileController().wantPushWarning1Bool,
+                              value: profileRepository.wantPushWarning1Bool,
                               onChanged: (value) {
-                                ProfileController()
+                                profileRepository
                                     .wantPushWarning1ValueChange(value);
+                                ref
+                                    .read(
+                                        wantPushWarning1StateProvider.notifier)
+                                    .state = value;
                               },
                             ),
                             hSpaceMedium
@@ -266,10 +261,12 @@ class ProfileEditScreen extends StatelessWidget {
                             const Text("hasEatPump"),
                             const Spacer(),
                             Switch(
-                              value: ProfileController().hasEatPumpBool,
+                              value: profileRepository.hasEatPumpBool,
                               onChanged: (value) {
-                                ProfileController()
-                                    .hasEatPumpValueChange(value);
+                                profileRepository.hasEatPumpValueChange(value);
+                                ref
+                                    .read(hasEatPumpStateProvider.notifier)
+                                    .state = value;
                               },
                             ),
                             hSpaceMedium
@@ -282,10 +279,13 @@ class ProfileEditScreen extends StatelessWidget {
                             const Text("hasSolarPanel"),
                             const Spacer(),
                             Switch(
-                              value: ProfileController().hasSolarPanelBool,
+                              value: profileRepository.hasSolarPanelBool,
                               onChanged: (value) {
-                                ProfileController()
+                                profileRepository
                                     .hasSolarPanelValueChange(value);
+                                ref
+                                    .read(hasSolarPanelStateProvider.notifier)
+                                    .state = value;
                               },
                             ),
                             hSpaceMedium
@@ -298,7 +298,7 @@ class ProfileEditScreen extends StatelessWidget {
               ),
               LoginButtonWidget(
                 onTap: () {
-                  ProfileController().updateUserProfileDetails(context);
+                  profileRepository.updateUserProfileDetails(context);
                 },
                 title: 'Update  Now',
               )

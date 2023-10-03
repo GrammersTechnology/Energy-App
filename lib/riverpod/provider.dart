@@ -33,11 +33,15 @@ final profileProvider = FutureProvider((ref) {
   return profileRepository.getUserProfileDetails();
 });
 
-//
-final savingTipsProvider = FutureProvider((ref) {
-  final savingTipsRepositary = ref.watch(saningTipsRepositeryProvider);
-  return savingTipsRepositary.getTips();
+final profileEditProvider = FutureProvider((ref) {
+  final profileEditRepository = ref.watch(profileControllerProvider);
+  return profileEditRepository.fetchCSVData();
 });
+//
+// final savingTipsProvider = FutureProvider((ref) {
+//   final savingTipsRepositary = ref.watch(savingTipsRepositeryProvider);
+//   return savingTipsRepositary.getTips();
+// });
 
 final chartProvider = FutureProvider((ref) {
   final chartRepository = ref.watch(userChartProvider);

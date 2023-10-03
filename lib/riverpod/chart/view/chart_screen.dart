@@ -14,7 +14,7 @@ class ChartScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final chartRepository = ref.watch(userChartProvider);
 
-    ref.watch(dropdownListProvider);
+    ref.watch(chartDropdownListProvider);
 
     final size = MediaQuery.of(context).size;
 
@@ -61,8 +61,9 @@ class ChartScreen extends ConsumerWidget {
                             onChanged: (value) {
                               chartRepository.changeDropDownValue(value);
 
-                              ref.read(dropdownListProvider.notifier).state =
-                                  value.toString();
+                              ref
+                                  .read(chartDropdownListProvider.notifier)
+                                  .state = value.toString();
                               // userChartProvider.read(
                               //     chartRepository.changeDropDownValue(value));
                             },

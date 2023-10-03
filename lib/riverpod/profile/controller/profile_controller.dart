@@ -4,20 +4,36 @@ import 'package:csv/csv.dart';
 import 'package:demo/const/api_error_helper.dart';
 import 'package:demo/model/model.dart';
 import 'package:demo/riverpod/Saving%20Tips/model/savinr_tips_model.dart';
+import 'package:demo/riverpod/auth/controller/auth_controller.dart';
+import 'package:demo/riverpod/profile/widget/profile_edit_screen.dart';
 import 'package:demo/riverpod/view/bottom_screen/bottum_navigation_screen.dart';
 import 'package:demo/routes/messenger.dart';
 import 'package:demo/routes/routes.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/widgets.dart';
-import 'package:riverpod/riverpod.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 ProfileModel? userProfile;
-List<SavingTips> savingTips = [];
 final profileControllerProvider = Provider((ref) => ProfileController());
+final hasElCarStateProvider = StateProvider<bool>((ref) => false);
+final wantPushWarning2StateProvider = StateProvider<bool>((ref) => false);
+final hasSensorStateProvider = StateProvider<bool>((ref) => false);
+final wantPushWarning1StateProvider = StateProvider<bool>((ref) => false);
+final hasEatPumpStateProvider = StateProvider<bool>((ref) => false);
+final hasSolarPanelStateProvider = StateProvider<bool>((ref) => false);
+
+final profileEditDropdownListProvider = StateProvider<String>((ref) {
+  return 'Select From List';
+});
+final profileEditZoneProvider = StateProvider<String>((ref) {
+  return 'Select From List';
+});
 
 class ProfileController {
+  List<SavingTips> savingTips = [];
+
   FirebaseAuth fb = FirebaseAuth.instance;
   FirebaseFirestore db = FirebaseFirestore.instance;
   List<dynamic> csvTable = [];
@@ -50,11 +66,17 @@ class ProfileController {
   bool wantPushWarning2Bool = userProfile?.wantPushWarning2 ?? false;
 
   changeDropDownValue(value) {
+    log(value);
+
     dropDownValue = value;
+
+    log(dropDownValue.toString());
   }
 
   changeZoneDropDownValue(value) {
+    print(value);
     zoneDropdowmValue = value;
+    print(zoneDropdowmValue);
   }
 
   hasSensorValueChange(value) {
@@ -85,20 +107,26 @@ class ProfileController {
     wantPushWarning2Bool = value;
   }
 
-  fetchCSVData() async {
-    final ref = FirebaseStorage.instance.ref().child('Stromselskap.csv');
-    final url = await ref.getDownloadURL();
+  Future<List<String>> fetchCSVData() async {
+    try {
+      final ref = FirebaseStorage.instance.ref().child('Stromselskap.csv');
+      final url = await ref.getDownloadURL();
 
-    final response = await Dio().get(url);
-    csvTable = const CsvToListConverter().convert(response.data);
-    if (csvTable.isNotEmpty) {
-      dropdwonList.clear();
+      final response = await Dio().get(url);
+      csvTable = const CsvToListConverter().convert(response.data);
+      if (csvTable.isNotEmpty) {
+        dropdwonList.clear();
 
-      for (var element in csvTable) {
-        final value = element.toString();
-        dropdwonList.add(value);
+        for (var element in csvTable) {
+          final value = element.toString();
+          dropdwonList.add(value);
+        }
       }
+      return dropdwonList;
+    } catch (e) {
+      log(e.toString());
     }
+    return dropdwonList;
   }
 
   updateUserProfileDetails(context) async {
@@ -173,9 +201,9 @@ class ProfileController {
           .collection('profile')
           .doc(fb.currentUser!.uid)
           .update(data.toJson());
-      // await AuthController()
-      //     .updateZoneIdFromFirestore(zone, fb.currentUser!.email.toString());
-      // await AuthController().fetchZoneIdFromFirestore();
+      await AuthController()
+          .updateZoneIdFromFirestore(zone, fb.currentUser!.email.toString());
+      await AuthController().fetchZoneIdFromFirestore();
       Routes.pushreplace(screen: BottumNavigationScreen());
       clearController();
 
@@ -194,6 +222,20 @@ class ProfileController {
     powerPointController.clear();
   }
 
+  checkProfileDetails() async {
+    final data = await getUserProfileDetails();
+    if (data != null) {
+      Routes.push(
+          screen: ProfileEditScreen(
+        data: data,
+      ));
+    } else {
+      SnackBar(
+        content: Text('Try again'),
+      );
+    }
+  }
+
   Future<ProfileModel?> getUserProfileDetails() async {
     loader = true;
     try {
@@ -205,12 +247,12 @@ class ProfileController {
           .get()
           .then((value) {
         userProfile = ProfileModel.fromJson(value.data()!);
-        hasSensorBool = userProfile!.hasSensor;
-        hasElCarBool = userProfile!.hasElCar;
-        hasEatPumpBool = userProfile!.hasEatPump;
-        hasSolarPanelBool = userProfile!.hasSolarPanel;
-        wantPushWarning1Bool = userProfile!.wantPushWarning1;
-        wantPushWarning2Bool = userProfile!.wantPushWarning2;
+        hasSensorBool = userProfile?.hasSensor ?? false;
+        hasElCarBool = userProfile?.hasElCar ?? false;
+        hasEatPumpBool = userProfile?.hasEatPump ?? false;
+        hasSolarPanelBool = userProfile?.hasSolarPanel ?? false;
+        wantPushWarning1Bool = userProfile?.wantPushWarning1 ?? false;
+        wantPushWarning2Bool = userProfile?.wantPushWarning2 ?? false;
         loader = false;
       });
       return userProfile;

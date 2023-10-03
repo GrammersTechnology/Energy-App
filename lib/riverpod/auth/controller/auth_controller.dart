@@ -3,6 +3,7 @@ import 'package:demo/const/api_error_helper.dart';
 import 'package:demo/const/themes/colors.dart';
 
 import 'package:demo/model/model.dart';
+import 'package:demo/riverpod/profile/controller/profile_controller.dart';
 import 'package:demo/riverpod/view/bottom_screen/bottum_navigation_screen.dart';
 import 'package:demo/routes/messenger.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -128,6 +129,7 @@ class AuthController {
     User? user = fb.currentUser;
     if (user != null) {
       Routes.pushreplace(screen: BottumNavigationScreen());
+      ProfileController().getUserProfileDetails();
     } else {
       Routes.pushreplace(screen: const LoginScreen());
     }
