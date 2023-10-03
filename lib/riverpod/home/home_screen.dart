@@ -3,6 +3,7 @@ import 'package:demo/const/themes/colors.dart';
 import 'package:demo/riverpod/auth/screen/loginscreen.dart';
 import 'package:demo/riverpod/home/widgets/stepper_graph.dart';
 import 'package:demo/riverpod/provider.dart';
+import 'package:demo/riverpod/utils/internet_connection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -95,13 +96,13 @@ class HomeScreen extends ConsumerWidget {
                             ),
                             vSpaceRegular
                           ])))
-                  : Text("No Tips");
+                  : const Text("No Tips");
             },
             error: (error, stackTrace) {
-              return Text("Something Wrong");
+              return const SafeArea(child: InternetChecking());
             },
             loading: () {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
             },

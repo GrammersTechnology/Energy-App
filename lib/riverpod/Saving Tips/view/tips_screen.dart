@@ -1,5 +1,6 @@
 import 'package:demo/const/space_helper.dart';
 import 'package:demo/const/themes/colors.dart';
+import 'package:demo/riverpod/utils/internet_connection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -63,15 +64,15 @@ class TipsScreen extends ConsumerWidget {
                             ],
                           ));
                     })
-                : Text(" nodata");
+                : const Text(" nodata");
           },
           error: (error, stackTrace) {
-            return Center(
-              child: Text("Something wrong"),
+            return const Center(
+              child: SafeArea(child: InternetChecking()),
             );
           },
           loading: () {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           },

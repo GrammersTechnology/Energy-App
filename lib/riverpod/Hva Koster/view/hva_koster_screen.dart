@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:demo/const/themes/colors.dart';
 import 'package:demo/riverpod/provider.dart';
+import 'package:demo/riverpod/utils/internet_connection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -26,7 +27,7 @@ class HvaKosterScreen extends ConsumerWidget {
           data: (data) {
             // userRepositeryProvider
             log("message");
-            log(data!.toJson().toString() + "ddddddddddddddddddddddddddd");
+            log("${data!.toJson()}ddddddddddddddddddddddddddd");
 
             return SafeArea(
                 child: Padding(
@@ -108,10 +109,7 @@ class HvaKosterScreen extends ConsumerWidget {
             ));
           },
           error: (error, stackTrace) {
-            return const SafeArea(
-                child: Center(
-              child: Text("Something Went Wrong"),
-            ));
+            return const SafeArea(child: InternetChecking());
           },
           loading: () {
             return const SafeArea(

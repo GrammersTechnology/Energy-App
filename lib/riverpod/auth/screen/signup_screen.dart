@@ -2,17 +2,21 @@ import 'package:demo/const/space_helper.dart';
 import 'package:demo/const/widgets/custom_button.dart';
 import 'package:demo/riverpod/auth/controller/auth_controller.dart';
 import 'package:demo/riverpod/auth/screen/loginscreen.dart';
+import 'package:demo/riverpod/chart/controller/chartcontroller.dart';
 import 'package:demo/routes/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../const/widgets/text_filed_widgets.dart';
 import '../widget/auth_widget.dart';
 
-class SignupScreen extends StatelessWidget {
+class SignupScreen extends ConsumerWidget {
   const SignupScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final authRepository = ref.watch(authControllerProvider);
+    ref.watch(dropdownListProvider);
     final size = MediaQuery.of(context).size;
     return Scaffold(
       body: SingleChildScrollView(
@@ -26,13 +30,13 @@ class SignupScreen extends StatelessWidget {
                   hint: "Email",
                   showPasswordToggle: false,
                   prefixIcon: Icons.email,
-                  controller: AuthController().emailController),
+                  controller: authRepository.emailController),
               vSpaceRegular,
               TextFromFieldWidget(
                   hint: "Password",
                   showPasswordToggle: true,
                   prefixIcon: Icons.key,
-                  controller: AuthController().passwordController),
+                  controller: authRepository.passwordController),
               vSpaceRegular,
               Container(
                 padding: const EdgeInsets.only(left: 15),
@@ -40,29 +44,30 @@ class SignupScreen extends StatelessWidget {
                     borderRadius: const BorderRadius.all(Radius.circular(30)),
                     border: Border.all(color: Colors.grey)),
                 child: DropdownButton(
-                  hint: Text(
-                      AuthController().dropdowmValue ?? " Select From List"),
+                  hint:
+                      Text(authRepository.dropdowmValue ?? " Select From List"),
                   underline: const SizedBox(),
                   isExpanded: true,
-                  items: AuthController()
-                      .dropdwonList
+                  items: authRepository.dropdwonList
                       .map((e) => DropdownMenuItem(value: e, child: Text(e)))
                       .toList(),
                   onChanged: (value) {
-                    AuthController().changeDropDownValue(value);
+                    authRepository.changeDropDownValue(value);
+                    ref.read(dropdownListProvider.notifier).state =
+                        value.toString();
                   },
                   onTap: () {},
                 ),
               ),
               vSpaceXl,
               vSpaceXl,
-              // AuthController().loader
+              // authRepository.loader
               //     ? const CircularProgressIndicator()
               //     :
               LoginButtonWidget(
                 title: "SIGNUP",
                 onTap: () {
-                  AuthController().signup(context);
+                  authRepository.signup(context);
                 },
               ),
               Padding(
@@ -74,8 +79,8 @@ class SignupScreen extends StatelessWidget {
                     TextButton(
                         onPressed: () {
                           Routes.pushreplace(screen: const LoginScreen());
-                          AuthController().emailController.clear();
-                          AuthController().passwordController.clear();
+                          authRepository.emailController.clear();
+                          authRepository.passwordController.clear();
                         },
                         child: const Text("Login"))
                   ],
