@@ -3,7 +3,7 @@ import 'package:demo/const/widgets/custom_button.dart';
 import 'package:demo/riverpod/auth/controller/auth_controller.dart';
 import 'package:demo/riverpod/auth/screen/loginscreen.dart';
 import 'package:demo/riverpod/chart/controller/chartcontroller.dart';
-import 'package:demo/routes/routes.dart';
+import 'package:demo/utils/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

@@ -5,7 +5,7 @@ import 'package:demo/riverpod/auth/screen/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../const/widgets/text_filed_widgets.dart';
-import '../../../routes/routes.dart';
+import '../../../utils/routes/routes.dart';
 import '../widget/auth_widget.dart';
 
 class LoginScreen extends ConsumerWidget {

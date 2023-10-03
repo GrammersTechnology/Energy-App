@@ -1,7 +1,7 @@
 import 'package:demo/const/themes/colors.dart';
 import 'package:demo/riverpod/chart/controller/chartcontroller.dart';
 import 'package:demo/riverpod/provider.dart';
-import 'package:demo/riverpod/utils/internet_connection.dart';
+import 'package:demo/const/widgets/internet_connection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

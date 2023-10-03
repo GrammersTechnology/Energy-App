@@ -1,14 +1,16 @@
 import 'package:demo/const/space_helper.dart';
 import 'package:demo/const/themes/colors.dart';
 import 'package:demo/riverpod/Saving%20Tips/model/savinr_tips_model.dart';
+import 'package:demo/riverpod/auth/controller/auth_controller.dart';
 import 'package:demo/riverpod/auth/screen/loginscreen.dart';
 import 'package:demo/riverpod/home/widgets/stepper_graph.dart';
 import 'package:demo/riverpod/provider.dart';
+import 'package:demo/const/widgets/internet_connection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../routes/routes.dart';
+import '../../utils/routes/routes.dart';
 import '../Saving Tips/controller/saving_tips_controller.dart';
 import 'widgets/column_graphwidget.dart';
 
@@ -40,8 +42,8 @@ class HomeScreen extends ConsumerWidget {
                 child: Icon(Icons.logout),
               ),
               onTap: () {
-                 AuthController().signout(context);
-                 AuthController().clearLocalData();
+                AuthController().signout(context);
+                AuthController().clearLocalData();
                 Routes.pushreplace(screen: const LoginScreen());
               },
             )

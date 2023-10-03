@@ -5,13 +5,13 @@ import 'package:demo/const/themes/colors.dart';
 import 'package:demo/model/model.dart';
 import 'package:demo/riverpod/profile/controller/profile_controller.dart';
 import 'package:demo/riverpod/view/bottom_screen/bottum_navigation_screen.dart';
-import 'package:demo/routes/messenger.dart';
+import 'package:demo/utils/routes/messenger.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../routes/routes.dart';
+import '../../../utils/routes/routes.dart';
 import '../screen/loginscreen.dart';
 
 final authControllerProvider = Provider((ref) => AuthController());
