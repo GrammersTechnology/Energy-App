@@ -9,6 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../utils/routes/routes.dart';
 import '../screen/loginscreen.dart';
@@ -20,6 +21,7 @@ class AuthController {
   FirebaseFirestore db = FirebaseFirestore.instance;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   String? dropdowmValue;
   List<String> dropdwonList = ["NO1", "NO2", "NO3", "NO4", "NO5"];
@@ -100,6 +102,40 @@ class AuthController {
     await pref.remove('email');
     await pref.remove('password');
     await pref.remove('zone');
+  }
+
+  Future<UserCredential?> signInWithGoogle(context) async {
+    try {
+      final GoogleSignInAccount? googleSignInAccount =
+          await _googleSignIn.signIn();
+      final GoogleSignInAuthentication googleAuth =
+          await googleSignInAccount!.authentication;
+      final OAuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+      final UserCredential userCredential =
+          await fb.signInWithCredential(credential);
+      // Redirect to homepage
+      if (userCredential.user != null) {
+        print(
+            "${userCredential.user?.email} ----this is the goole usercredential user email.");
+        final data = UserModel(zone: "NO1", email: userCredential.user?.email);
+        await db
+            .collection("user")
+            .doc(fb.currentUser?.uid)
+            // .collection('auth')
+            .set(data.toJson());
+        await saveAuthLocal();
+        Routes.pushreplace(screen: BottumNavigationScreen());
+      }
+      return userCredential;
+    } catch (e) {
+      log("Error signing in with Google: $e");
+      // Show error message
+      Messenger.pop(msg: 'Failed to sign in with Google', context: context);
+      return null;
+    }
   }
 
   String? userEmail;

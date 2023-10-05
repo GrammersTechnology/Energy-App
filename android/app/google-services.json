@@ -14,7 +14,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "54553344678-errpe4r7mpmjrh7h94vavcfgus1ls3q1.apps.googleusercontent.com",
+          "client_id": "54553344678-tda6hita1lcsvnkevrcruqcuqgga6oci.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.demo",
+            "certificate_hash": "4d8820fa0353127a0a006d430ad4feb2265ff908"
+          }
+        },
+        {
+          "client_id": "54553344678-jlnii8e45j1l0jtkrvo43sec4o0rq1um.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -29,6 +37,13 @@
             {
               "client_id": "54553344678-errpe4r7mpmjrh7h94vavcfgus1ls3q1.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "54553344678-cn8ko588d4km9n64v6oh72mnbms62mac.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.strompris.app"
+              }
             }
           ]
         }

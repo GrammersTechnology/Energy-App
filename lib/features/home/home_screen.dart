@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:demo/utils/const/space_helper.dart';
 import 'package:demo/utils/const/themes/colors.dart';
 import 'package:demo/features/Saving%20Tips/model/savinr_tips_model.dart';

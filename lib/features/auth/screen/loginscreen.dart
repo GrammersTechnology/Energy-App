@@ -47,8 +47,36 @@ class LoginScreen extends ConsumerWidget {
                     hSpaceSmall
                   ],
                 ),
+                Center(
+                    child: GestureDetector(
+                  onTap: () {
+                    controller.signInWithGoogle(context);
+                  },
+                  child: Container(
+                    height: 60,
+                    // width: 300,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.white,
+                        border: Border.all(color: Colors.black)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Image.asset(
+                          'assets/images/google.png',
+                          height: 25,
+                        ),
+                        const Text(
+                          'Sign in with Google',
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.w500),
+                        )
+                      ],
+                    ),
+                  ),
+                )),
                 vSpaceXl,
-                vSpaceXl,
+                vSpaceSmall,
                 LoginButtonWidget(
                   title: "LOGIN",
                   onTap: () {
