@@ -118,22 +118,28 @@ class AuthController {
           await fb.signInWithCredential(credential);
       // Redirect to homepage
       if (userCredential.user != null) {
-        print(
-            "${userCredential.user?.email} ----this is the goole usercredential user email.");
+        log("${userCredential.user?.email} ----this is the goole usercredential user email.");
         final data = UserModel(zone: "NO1", email: userCredential.user?.email);
         await db
             .collection("user")
             .doc(fb.currentUser?.uid)
             // .collection('auth')
             .set(data.toJson());
-        await saveAuthLocal();
-        Routes.pushreplace(screen: BottumNavigationScreen());
+        await addUserProfileDetails(context);
+
+        final pref = await SharedPreferences.getInstance();
+
+        await pref.setString('email', userCredential.user?.email ?? '');
+        await pref.setString('password', "123456");
+        await pref.setString('zone', "NO1");
+        cheackLocalData(context);
       }
       return userCredential;
     } catch (e) {
       log("Error signing in with Google: $e");
       // Show error message
-      Messenger.pop(msg: 'Failed to sign in with Google', context: context);
+      log(e.toString());
+      Messenger.pop(msg: 'Failed to sign in with Google$e', context: context);
       return null;
     }
   }
