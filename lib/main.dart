@@ -1,4 +1,20 @@
 import 'package:demo/utils/const/themes/colors.dart';
+import 'package:demo/utils/const/widgets/byge-design-system/buttons/examples.dart';
+import 'package:demo/utils/const/widgets/byge-design-system/buttons/primary_button.dart';
+import 'package:demo/utils/const/widgets/byge-design-system/buttons/secondary_button.dart';
+import 'package:demo/utils/const/widgets/byge-design-system/buttons/tertiary_button.dart';
+import 'package:demo/utils/const/widgets/byge-design-system/buttons/toggle_button.dart';
+import 'package:demo/utils/const/widgets/byge-design-system/buttons/toggle_examples.dart';
+import 'package:demo/utils/const/widgets/byge-design-system/cards/byge_nav_card.dart';
+import 'package:demo/utils/const/widgets/byge-design-system/cards/byge_nav_card_example.dart';
+import 'package:demo/utils/const/widgets/byge-design-system/cards/expandable_card.dart';
+import 'package:demo/utils/const/widgets/byge-design-system/cards/expandable_card_examples.dart';
+import 'package:demo/utils/const/widgets/byge-design-system/checkbox/checkbox.dart';
+import 'package:demo/utils/const/widgets/byge-design-system/checkbox/checkbox_examples.dart';
+import 'package:demo/utils/const/widgets/byge-design-system/dropdown/byge_dropdown.dart';
+import 'package:demo/utils/const/widgets/byge-design-system/error_message/error_examples.dart';
+import 'package:demo/utils/const/widgets/byge-design-system/nav_bars/byge_tab_bar/byge_tab_bar.dart';
+import 'package:demo/utils/const/widgets/byge-design-system/nav_bars/byge_tabbed/byge_tabbed.dart';
 import 'package:demo/utils/routes/routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +43,49 @@ class MyApp extends StatelessWidget {
       navigatorKey: Routes.navigatorKey,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: AppColors.primaryColor),
-      home: const SplashScreen(),
+      home: Scaffold(
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(children: [
+              // ButtonExamples(),
+              BygePrimaryButton(label: "eee", onPressed: () {}),
+              // BygeSecondaryButton(
+              //   label: "label",
+              //   onPressed: () {},
+              // ),
+              // BygeTertiaryButton(
+              //   label: "label",
+              //   onPressed: () {},
+              // ),
+              // BygeToggleButton(
+              //   toggled: true,
+              //   toggleText: "toggleText",
+              //   onChanged: (value) {},
+              // ),
+              // ToggleExamples()
+              BygeNavCardExample(),
+              BygeNavCard(
+                title: "title",
+                child: Text("data"),
+                destination: Text('f'),
+                iconData: Icons.abc,
+                iconSize: 20,
+              ),
+              ExpandableCardExamples(),
+              BygeExpandableCard(title: "title", child: Text("data")),
+              CheckboxExamples(),
+              BygeCheckbox(
+                initialValue: true,
+                label: "label",
+                onChanged: (value) {},
+              ),
+              // BygeDropdown(dropdownEntry: [], dropdownHint: dropdownHint, onSelected: onSelected)
+              ErrorExamples(),
+              // BygeTabbedWidgets(widgets: [], tabNames: [])
+            ]),
+          ),
+        ),
+      ),
     );
   }
 }
