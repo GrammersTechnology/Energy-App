@@ -7,11 +7,13 @@ class BygePrimaryButton extends StatelessWidget {
   final VoidCallback onPressed;
   final double minWidth;
   final IconData? icon;
+  final Color? color;
 
   const BygePrimaryButton({
     super.key,
     required this.label,
     required this.onPressed,
+    this.color,
     this.minWidth = double.infinity,
     this.icon,
   });
@@ -25,7 +27,7 @@ class BygePrimaryButton extends StatelessWidget {
       constraints: BoxConstraints(minWidth: minWidth),
       child: TextButton(
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(bgColor),
+          backgroundColor: MaterialStateProperty.all(color ?? bgColor),
           overlayColor: MaterialStateProperty.all(
             textColor.withOpacity(0.1),
           ),
