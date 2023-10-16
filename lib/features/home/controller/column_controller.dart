@@ -16,8 +16,8 @@ class ColumnGraphController {
     // await AuthController().fetchZoneIdFromFirestore();
     final perf = await SharedPreferences.getInstance();
 
-    final zone = perf.getString("zone");
-    // const zone = "1";
+    // final zone = perf.getString("zone");
+    const zone = "1";
 
     List result =
         await HomeScreenServicesScreen().columnGraphDataApi(zone.toString());
