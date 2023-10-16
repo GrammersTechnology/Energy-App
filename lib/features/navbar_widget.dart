@@ -1,20 +1,19 @@
+import 'package:demo/features/Hva%20Koster/view/hva_koster_screen.dart';
+import 'package:demo/features/home/home_screen.dart';
+import 'package:demo/features/profile/view/profil_screen.dart';
 import 'package:flutter/material.dart';
 
-class NavBarExample extends StatefulWidget {
-  const NavBarExample({super.key});
+class NavBarWidget extends StatefulWidget {
+  const NavBarWidget({super.key});
 
   @override
-  State<NavBarExample> createState() => _NavBarExampleState();
+  State<NavBarWidget> createState() => _NavBarWidgetState();
 }
 
-class _NavBarExampleState extends State<NavBarExample> {
+class _NavBarWidgetState extends State<NavBarWidget> {
   int _currentIndex = 0;
 
-  final tabs = [
-    const Center(child: Text('Strømpris')),
-    const Center(child: Text('Apparater')),
-    const Center(child: Text('Meg')),
-  ];
+  final tabs = [HomeScreen(), HvaKosterScreen(), ProfileScreen()];
 
   @override
   Widget build(BuildContext context) {

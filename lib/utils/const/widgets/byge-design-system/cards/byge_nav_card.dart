@@ -31,13 +31,13 @@ class BygeNavCard extends StatelessWidget {
         padding: const EdgeInsets.all(AppSpaces.m),
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.surface,
-          border: Border.all(color: Theme.of(context).colorScheme.outline),
+          border: Border.all(color: Colors.grey),
           borderRadius: BorderRadius.circular(AppBorders.borderRadius),
           boxShadow: const [AppShadows.baseShadow],
         ),
         child: ConstrainedBox(
           constraints: const BoxConstraints(
-            minHeight: 150,
+            minHeight: 50,
           ),
           child: IntrinsicHeight(
             child: Column(
