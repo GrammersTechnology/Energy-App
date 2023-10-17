@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class ColumnGraphData {
   DateTime date;
   double dayAveragePrice;
@@ -27,5 +29,6 @@ class ColumnGraphData {
 class GraphData {
   dynamic x;
   dynamic y;
-  GraphData({required this.x, required this.y});
+  Color? color;
+  GraphData({required this.x, required this.y, this.color});
 }

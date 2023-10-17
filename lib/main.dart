@@ -28,8 +28,8 @@ Future<void> main() async {
   await Firebase.initializeApp();
   await NotificationService().initNotification();
   // NotificationService().showNotification();
-  NotificationService().morningNotification();
-  NotificationService().afterNoonNotification();
+  // NotificationService().morningNotification();
+  // NotificationService().afterNoonNotification();
 
   runApp(const ProviderScope(child: MyApp()));
 }

@@ -28,7 +28,8 @@ class HvaKosterScreen extends ConsumerWidget {
                     itemBuilder: (context, index) {
                       return BygeNavCard(
                           title: datas[index]["details"]["front_end_text"],
-                          destination: Container(),
+                          destination: HvaKosterDetailedScreen(
+                              title: datas[index]["details"]["front_end_text"]),
                           child: Container(
                             padding: EdgeInsets.all(10),
                             child: Row(
@@ -88,143 +89,18 @@ class HvaKosterScreen extends ConsumerWidget {
   }
 }
 
-class HvaWidget extends StatelessWidget {
-  const HvaWidget(
-      {super.key,
-      required this.size,
-      required this.title,
-      required this.image,
-      required this.currentCost,
-      required this.mostExpensive,
-      required this.cheapestCost,
-      required this.currentStartHourEndHour,
-      required this.mostExpensiveStartHourEndHour,
-      required this.cheapestStartHourEndHour});
-
-  final Size size;
-  final String title,
-      image,
-      currentCost,
-      mostExpensive,
-      cheapestCost,
-      currentStartHourEndHour,
-      mostExpensiveStartHourEndHour,
-      cheapestStartHourEndHour;
-
+class HvaKosterDetailedScreen extends StatelessWidget {
+  HvaKosterDetailedScreen({super.key, required this.title});
+  String title;
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      const SizedBox(
-        height: 15,
-      ),
-      Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        Text(
-          title,
-          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-        // image
+    return Scaffold(
+      appBar: AppBar(title: Text(title)),
+      body: Column(children: [
+        Row(
+          children: [Text("En runde vaskimeschin"), Text("varghet: 2 timer")],
+        )
       ]),
-      const SizedBox(
-        height: 10,
-      ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            width: size.width / 4,
-            height: 35,
-            color: const Color(0XFFdae1ef),
-            child: const Center(
-                child: Text(
-              "Na",
-              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-            )),
-          ),
-          Container(
-            color: const Color(0XFFdcefe9),
-            width: size.width / 4,
-            height: 35,
-            child: const Center(
-                child: Text("Biligst",
-                    style:
-                        TextStyle(fontSize: 15, fontWeight: FontWeight.w600))),
-          ),
-          Container(
-            color: const Color(0XFFf6d7d3),
-            width: size.width / 4,
-            height: 35,
-            child: const Center(
-                child: Text("Dyrest",
-                    style:
-                        TextStyle(fontSize: 15, fontWeight: FontWeight.w600))),
-          ),
-        ],
-      ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          SizedBox(
-            width: size.width / 4,
-            height: 35,
-            // color: const Color.fromARGB(255, 231, 193, 79),
-            child: Center(
-                child: Text(
-              "$currentCost ${"kr"}",
-              style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
-            )),
-          ),
-          SizedBox(
-            width: size.width / 4,
-            height: 35,
-            // color: const Color.fromARGB(255, 231, 193, 79),
-            child: Center(
-                child: Text("$cheapestCost ${"kr"}",
-                    style: const TextStyle(
-                        fontSize: 17, fontWeight: FontWeight.w500))),
-          ),
-          SizedBox(
-            width: size.width / 4,
-            height: 35,
-            // color: const Color.fromARGB(255, 231, 193, 79),
-            child: Center(
-                child: Text("$mostExpensive ${"kr"}",
-                    style: const TextStyle(
-                        fontSize: 17, fontWeight: FontWeight.w500))),
-          ),
-        ],
-      ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          SizedBox(
-            width: size.width / 4,
-            height: 35,
-            // color: const Color.fromARGB(255, 231, 193, 79),
-            child: Center(
-                child: Text("kl $currentStartHourEndHour",
-                    style: const TextStyle(
-                        fontSize: 15, fontWeight: FontWeight.w500))),
-          ),
-          SizedBox(
-            width: size.width / 4,
-            height: 35,
-            // color: const Color.fromARGB(255, 231, 193, 79),
-            child: Center(
-                child: Text("kl $cheapestStartHourEndHour",
-                    style: const TextStyle(
-                        fontSize: 15, fontWeight: FontWeight.w500))),
-          ),
-          SizedBox(
-            width: size.width / 4,
-            height: 35,
-            // color: const Color.fromARGB(255, 231, 193, 79),
-            child: Center(
-                child: Text("kl $mostExpensiveStartHourEndHour",
-                    style: const TextStyle(
-                        fontSize: 15, fontWeight: FontWeight.w500))),
-          ),
-        ],
-      )
-    ]);
+    );
   }
 }
