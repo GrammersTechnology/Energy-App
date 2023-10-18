@@ -1,3 +1,4 @@
+import 'package:demo/features/auth/controller/auth_controller.dart';
 import 'package:demo/features/home/controller/column_controller.dart';
 
 import 'package:demo/features/chart/controller/chartcontroller.dart';
@@ -44,4 +45,9 @@ final profileEditProvider = FutureProvider((ref) {
 final chartProvider = FutureProvider((ref) {
   final chartRepository = ref.watch(userChartProvider);
   return chartRepository.getChartDetails();
+});
+
+final authenticationProvider = FutureProvider((ref) {
+  final authRepository = ref.watch(authControllerProvider);
+  return authRepository;
 });

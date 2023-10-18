@@ -1,0 +1,273 @@
+[33mcommit 0d5aa00e5d58162629f69ccd89f7da9f2b876cde[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Navaneeth Mukundan <grammerstech@gmail.com>
+Date:   Mon Oct 16 12:39:53 2023 +0400
+
+    [UI Update] Implemented Onboarding Screen
+
+[33mcommit 043b0c7f9e6d05fb4c4bad03609714dda2c5cfdb[m
+Merge: 44b2606 6d36025
+Author: Grammers <136295652+GrammersTechnology@users.noreply.github.com>
+Date:   Sat Oct 14 17:21:34 2023 +0530
+
+    Merge pull request #34 from shellhacker/main
+    
+    widgets added
+
+[33mcommit 6d36025cf5ea3c8223ab2eedeef0ec946bb8da1f[m
+Merge: b6f3254 44b2606
+Author: shabanas <shabanaspb@gmail.com>
+Date:   Tue Oct 10 10:38:34 2023 +0530
+
+    Merge branch 'main' of https://github.com/shellhacker/Energy-App
+
+[33mcommit b6f3254d75bff8b6a3f574e1603a9c0fa36365a4[m
+Author: shabanas <shabanaspb@gmail.com>
+Date:   Tue Oct 10 10:38:25 2023 +0530
+
+    widgets added
+
+[33mcommit 44b2606b285c7fd39b81670db9f80633e0eb8f39[m
+Merge: f6858ad 9b1dc0f
+Author: Grammers <136295652+GrammersTechnology@users.noreply.github.com>
+Date:   Sat Oct 7 10:37:32 2023 +0530
+
+    Merge pull request #33 from shellhacker/main
+    
+    google auth error
+
+[33mcommit 9b1dc0fc7eba56032e96cf5590ad2976fcf1692b[m
+Author: shabanas <shabanaspb@gmail.com>
+Date:   Sat Oct 7 10:28:57 2023 +0530
+
+    google auth error
+
+[33mcommit f6858adcb0e81db9d024d3e530353bbf49d36b55[m
+Author: Navaneeth Mukundan <grammerstech@gmail.com>
+Date:   Thu Oct 5 17:34:11 2023 +0530
+
+    [New Feature] Implemented Google Authentication
+
+[33mcommit 2d60a8291f2c62bf5a66ef968008eeb292c7b938[m
+Merge: d893064 3a51774
+Author: Grammers <136295652+GrammersTechnology@users.noreply.github.com>
+Date:   Wed Oct 4 02:56:45 2023 +0530
+
+    Merge pull request #32 from shellhacker/main
+    
+    folder created
+
+[33mcommit 3a517743539afbdc5ed15580cce8623a59144e39[m
+Author: shabanas <shabanaspb@gmail.com>
+Date:   Wed Oct 4 02:54:32 2023 +0530
+
+    folder created
+
+[33mcommit d8930649a682875c8a281a53b901a8e2304b6835[m
+Author: Navaneeth Mukundan <grammerstech@gmail.com>
+Date:   Wed Oct 4 01:05:32 2023 +0530
+
+    [Update] sign up updated
+
+[33mcommit 99fce1fe22570f154da6c5c025de824fb30593d8[m
+Author: Navaneeth Mukundan <grammerstech@gmail.com>
+Date:   Wed Oct 4 01:00:11 2023 +0530
+
+    [Update] Logout function updated
+
+[33mcommit 216be5ae3d27f4a70ca3e1304d6af13941b7f9cf[m
+Merge: 2bffda9 3e9def1
+Author: Grammers <136295652+GrammersTechnology@users.noreply.github.com>
+Date:   Wed Oct 4 00:59:36 2023 +0530
+
+    Merge pull request #31 from shellhacker/main
+    
+    folder changing
+
+[33mcommit 3e9def1cbe0080126418dbed9aca437e6a953cef[m
+Author: shabanas <shabanaspb@gmail.com>
+Date:   Wed Oct 4 00:56:49 2023 +0530
+
+    folder changing
+
+[33mcommit 2bffda9d4f123d79100b5c49ada7edb9612f4377[m
+Merge: adff3ac 9c63098
+Author: Grammers <136295652+GrammersTechnology@users.noreply.github.com>
+Date:   Wed Oct 4 00:49:41 2023 +0530
+
+    Merge pull request #30 from shellhacker/main
+    
+    changed to riverpod
+
+[33mcommit 9c63098fc41b4113c7a577de5f9e050df6ad7db2[m
+Merge: 2c9e620 adff3ac
+Author: Shabnas <98592872+shellhacker@users.noreply.github.com>
+Date:   Wed Oct 4 00:47:24 2023 +0530
+
+    Merge branch 'main' into main
+
+[33mcommit 2c9e620709b7a7bfdc2bd04e1755cc77f3d09171[m
+Author: shabanas <shabanaspb@gmail.com>
+Date:   Wed Oct 4 00:39:55 2023 +0530
+
+    changed to riverpod
+
+[33mcommit adff3ace8967ce96d4c34e1593de638e1c76b688[m
+Author: Navaneeth Mukundan <grammerstech@gmail.com>
+Date:   Tue Oct 3 22:54:40 2023 +0530
+
+    [Update] Changed the state in chart and sign up. Also created internet connection checker
+
+[33mcommit 7dfaa309fd0d53d67bb147dc1bbadb0629f2e7ac[m
+Merge: eb6f095 78cebc4
+Author: Grammers <136295652+GrammersTechnology@users.noreply.github.com>
+Date:   Sun Oct 1 15:50:38 2023 +0530
+
+    Merge pull request #29 from shellhacker/main
+    
+    provider removed from signup page
+
+[33mcommit 78cebc43f7270dca9d8d1b85353baac11bc77dd6[m
+Author: shabanas <shabanaspb@gmail.com>
+Date:   Sun Oct 1 15:49:58 2023 +0530
+
+    provider removed from signup page
+
+[33mcommit eb6f095ed028aa89188524ed79f6164d8c879516[m
+Merge: d2ac77c 401b420
+Author: Grammers <136295652+GrammersTechnology@users.noreply.github.com>
+Date:   Sun Oct 1 15:47:10 2023 +0530
+
+    Merge pull request #28 from shellhacker/main
+    
+    provider removed
+
+[33mcommit 401b420a5983a155299e05dd850d1c1de6212a51[m
+Author: shabanas <shabanaspb@gmail.com>
+Date:   Sun Oct 1 15:45:00 2023 +0530
+
+    provider removed
+
+[33mcommit d2ac77ce0c190c772ca04e8b940785851e284211[m
+Merge: f25501c b662195
+Author: Grammers <136295652+GrammersTechnology@users.noreply.github.com>
+Date:   Sun Oct 1 15:17:37 2023 +0530
+
+    Merge pull request #27 from shellhacker/main
+    
+    riverpod on working
+
+[33mcommit b66219558bf60f791fba1acb70cb7913902c2185[m
+Merge: a647cfa f25501c
+Author: Grammers <136295652+GrammersTechnology@users.noreply.github.com>
+Date:   Sun Oct 1 15:17:30 2023 +0530
+
+    Merge branch 'main' into main
+
+[33mcommit f25501c893437f0c64db0037ff9fa614964d0790[m
+Author: Navaneeth Mukundan <grammerstech@gmail.com>
+Date:   Sun Oct 1 15:13:02 2023 +0530
+
+    [State Changing] Changing State of Chart is Completed
+
+[33mcommit a647cfab2f002e20fca15a1928fa9fc57ba78ce8[m
+Author: shabanas <shabanaspb@gmail.com>
+Date:   Sun Oct 1 15:11:53 2023 +0530
+
+    riverpod on working
+
+[33mcommit 3ee060a046a5d50fa644812f5285e76e940bbe4f[m
+Merge: 463714c fa6261f
+Author: Grammers <136295652+GrammersTechnology@users.noreply.github.com>
+Date:   Fri Sep 29 23:08:50 2023 +0530
+
+    Merge pull request #26 from shellhacker/main
+    
+    hva koster completed
+
+[33mcommit fa6261fac7c90b79a0cc31295ae471146c04d0b9[m
+Author: shabanas <shabanaspb@gmail.com>
+Date:   Fri Sep 29 23:06:27 2023 +0530
+
+    hva koster completed
+
+[33mcommit 463714c05a3be88b08c3cd50c952f2549b796279[m
+Merge: 8582a19 f7bb548
+Author: Grammers <136295652+GrammersTechnology@users.noreply.github.com>
+Date:   Fri Sep 29 22:29:33 2023 +0530
+
+    Merge pull request #25 from shellhacker/main
+    
+    hva koster done
+
+[33mcommit f7bb5483bec191bd2ef05247a9593878f7ee3121[m
+Author: shabanas <shabanaspb@gmail.com>
+Date:   Fri Sep 29 22:27:32 2023 +0530
+
+    hva koster
+
+[33mcommit 8582a19ba0307b6a1ac9372fd8bec7b4b14ce970[m
+Merge: 4437f53 57b297d
+Author: Grammers <136295652+GrammersTechnology@users.noreply.github.com>
+Date:   Fri Sep 29 22:17:55 2023 +0530
+
+    Merge pull request #24 from shellhacker/main
+    
+    riverpod started
+
+[33mcommit 57b297de6787605061ef7114af6cb13c8997fbd5[m
+Author: shabanas <shabanaspb@gmail.com>
+Date:   Fri Sep 29 19:29:11 2023 +0530
+
+    riverpod started
+
+[33mcommit 4437f5323aff3bbdbdbf902ad13a0473c262b844[m
+Merge: ae23de5 4d2a0f1
+Author: Grammers <136295652+GrammersTechnology@users.noreply.github.com>
+Date:   Mon Sep 4 15:05:25 2023 +0530
+
+    Merge pull request #23 from shellhacker/main
+    
+    code cleaned
+
+[33mcommit 4d2a0f12121fffa0ce982203093ce0a01974e3ef[m
+Author: shabanas <shabanaspb@gmail.com>
+Date:   Mon Sep 4 14:18:32 2023 +0530
+
+    code cleaned
+
+[33mcommit ae23de53ac936fe5fa7de407dee8aea49732270a[m
+Author: Navaneeth Mukundan <grammerstech@gmail.com>
+Date:   Tue Aug 29 00:22:16 2023 +0530
+
+    minor changes
+
+[33mcommit 1080d4fce4e55cdb9ac7cbe21150f9e0d95dd5af[m
+Merge: d79ba99 21d4bfb
+Author: Grammers <136295652+GrammersTechnology@users.noreply.github.com>
+Date:   Sun Aug 27 00:24:49 2023 +0530
+
+    Merge pull request #22 from shellhacker/main
+    
+    cleared changes
+
+[33mcommit 21d4bfb26924d15278d861bee8e26de530f1bb18[m
+Author: shabanas <shabanaspb@gmail.com>
+Date:   Sat Aug 26 17:55:19 2023 +0530
+
+    cleared changes
+
+[33mcommit d79ba99612ef698076c3f8b42e4e2c8df613b48c[m
+Author: Navaneeth Mukundan <grammerstech@gmail.com>
+Date:   Sat Aug 26 16:32:14 2023 +0530
+
+    Changed Report Screen
+
+[33mcommit 51679ed3a21908c7e66af9563ec3a179a31ebf07[m
+Author: Navaneeth Mukundan <grammerstech@gmail.com>
+Date:   Wed Aug 23 18:40:27 2023 +0530
+
+    bug fix
+
+[33mcommit 805ec8919fcf02a903e3ad3e336b5b3385cf54f2[m
+Merge: 20c3635 cc24a66
+Author: Grammers <136295652+GrammersTechnology@users.noreply.github.com

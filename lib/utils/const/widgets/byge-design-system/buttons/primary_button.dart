@@ -8,11 +8,15 @@ class BygePrimaryButton extends StatelessWidget {
   final double minWidth;
   final IconData? icon;
   final Color? color;
+  final Color? borderColor;
+  final Color? labelColor;
 
   const BygePrimaryButton({
     super.key,
     required this.label,
     required this.onPressed,
+    this.labelColor,
+    this.borderColor,
     this.color,
     this.minWidth = double.infinity,
     this.icon,
@@ -32,7 +36,8 @@ class BygePrimaryButton extends StatelessWidget {
             textColor.withOpacity(0.1),
           ),
           side: MaterialStateProperty.all(
-            BorderSide(width: AppBorders.borderWidth, color: textColor),
+            BorderSide(
+                width: AppBorders.borderWidth, color: borderColor ?? textColor),
           ),
           padding: MaterialStateProperty.all(
             const EdgeInsets.symmetric(
@@ -61,7 +66,7 @@ class BygePrimaryButton extends StatelessWidget {
               child: Text(
                 label,
                 style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                      color: textColor,
+                      color: labelColor ?? textColor,
                     ),
               ),
             ),
