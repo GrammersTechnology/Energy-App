@@ -16,39 +16,57 @@ class AuthenticationFinished extends ConsumerWidget {
     return Expanded(
         child: ref.watch(authenticationProvider).when(
       data: (datas) {
-        return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          if (datas.authProcessCompleted == false) ...[
-            const Spacer(),
-            const Text(
-              'Registerering\nfullført',
-              style: TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
-            ),
-            vSpaceSmall,
-            const Text(
-              'Opprettelsen av profilen var vellykket. ',
-              style: TextStyle(fontSize: 16),
-            ),
-            vSpaceMedium,
-            BygePrimaryButton(
-              label: "RTilpass profil",
-              onPressed: () {
-                datas.isProcessCompleted();
-                ref.read(stateUpdateProvider.notifier).state =
-                    datas.authProcessCompleted;
-              },
-              color: const Color(0XFF404040),
-            ),
-            vSpaceMedium,
-            const Center(
-              child: Text(
-                'Gjør dette senere, ta meg til forsiden',
-                style: TextStyle(fontSize: 16),
-              ),
-            ),
-          ] else ...[
-            const ProfilePage()
-          ]
-        ]);
+        return Column(
+            //  mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              if (datas.authProcessCompleted == false) ...[
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Registerering\nfullført',
+                        style: TextStyle(
+                            fontSize: 48, fontWeight: FontWeight.bold),
+                      ),
+                      vSpaceSmall,
+                      const Text(
+                        'Opprettelsen av profilen var vellykket. ',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      vSpaceMedium,
+                      BygePrimaryButton(
+                        label: "RTilpass profil",
+                        onPressed: () {
+                          datas.isProcessCompleted();
+                          ref.read(stateUpdateProvider.notifier).state =
+                              datas.authProcessCompleted;
+                        },
+                        color: const Color(0XFF404040),
+                      ),
+                      vSpaceMedium,
+                      const Center(
+                        child: Text(
+                          'Gjør dette senere, ta meg til forsiden',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ] else ...[
+                const Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        ProfilePage(),
+                      ],
+                    ),
+                  ),
+                )
+              ]
+            ]);
       },
       error: (error, stackTrace) {
         return const SafeArea(child: InternetChecking());

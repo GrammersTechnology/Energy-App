@@ -16,7 +16,8 @@ class ProfileAuthentication extends ConsumerWidget {
     final controller = ref.watch(authControllerProvider);
     ref.watch(stateUpdateProvider);
     return Scaffold(
-        appBar: controller.loginCompleted == false
+        appBar: controller.loginCompleted == false &&
+                controller.showLoginContent == false
             ? AppBar(
                 backgroundColor: Colors.transparent,
                 elevation: 0,
@@ -47,85 +48,101 @@ class ProfileAuthentication extends ConsumerWidget {
               child: Padding(
                 padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     if (controller.showLoginContent) ...[
-                      const Text(
-                        'Registerer\nbruker',
-                        style: TextStyle(
-                            fontSize: 48, fontWeight: FontWeight.bold),
-                      ),
-                      vSpaceSmall,
-                      const Text(
-                        'Register bruker for å lage en tilpasse din\nprofil.',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      vSpaceMedium,
-                      BygePrimaryButton(
-                        label: "Register deg med Goolge",
-                        onPressed: () {
-                          // Replace the current content with the "hello" content
-                        },
-                        color: const Color(0XFF404040),
-                      ),
-                      vSpaceSmall,
-                      BygePrimaryButton(
-                        label: "Register deg med Epost",
-                        labelColor: Colors.black,
-                        onPressed: () {
-                          controller.toggleContent();
-                          ref.read(stateUpdateProvider.notifier).state =
-                              controller.showLoginContent;
-                        },
-                        color: Colors.white,
-                        borderColor: Colors.black,
-                      ),
-                      vSpaceMin,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text('Har du allerede bruker?'),
-                          TextButton(
-                            onPressed: () {},
-                            child: const Text(
-                              ' Logg inn',
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Registerer\nbruker',
                               style: TextStyle(
-                                  color: Color.fromARGB(181, 0, 0, 0)),
+                                  fontSize: 48, fontWeight: FontWeight.bold),
                             ),
-                          )
-                        ],
-                      ),
+                            vSpaceSmall,
+                            const Text(
+                              'Register bruker for å lage en tilpasse din\nprofil.',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            vSpaceMedium,
+                            BygePrimaryButton(
+                              label: "Register deg med Goolge",
+                              onPressed: () {
+                                // Replace the current content with the "hello" content
+                              },
+                              color: const Color(0XFF404040),
+                            ),
+                            vSpaceSmall,
+                            BygePrimaryButton(
+                              label: "Register deg med Epost",
+                              labelColor: Colors.black,
+                              onPressed: () {
+                                controller.toggleContent();
+                                ref.read(stateUpdateProvider.notifier).state =
+                                    controller.showLoginContent;
+                              },
+                              color: Colors.white,
+                              borderColor: Colors.black,
+                            ),
+                            vSpaceMin,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text('Har du allerede bruker?'),
+                                TextButton(
+                                  onPressed: () {},
+                                  child: const Text(
+                                    ' Logg inn',
+                                    style: TextStyle(
+                                        color: Color.fromARGB(181, 0, 0, 0)),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      )
                     ] else ...[
                       if (controller.loginCompleted == false) ...[
-                        const Text(
-                          'Registerer\nbruker',
-                          style: TextStyle(
-                              fontSize: 48, fontWeight: FontWeight.bold),
-                        ),
-                        vSpaceMedium,
-                        const Text('Epost'),
-                        vSpaceSmall,
-                        const BygeInputField(
-                          placeholder: 'Epost',
-                          placeholderColor: Color.fromARGB(255, 124, 123, 123),
-                        ),
-                        vSpaceMedium,
-                        const Text('Passord'),
-                        vSpaceSmall,
-                        const BygeInputField(
-                          placeholder: 'Passord',
-                          placeholderColor: Color.fromARGB(255, 124, 123, 123),
-                        ),
-                        vSpaceRegular,
-                        BygePrimaryButton(
-                          label: "Register deg med Goolge",
-                          onPressed: () {
-                            controller.finishLogin();
-                            ref.read(stateUpdateProvider.notifier).state =
-                                controller.loginCompleted;
-                          },
-                          color: const Color(0XFF404040),
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Registerer\nbruker',
+                                style: TextStyle(
+                                    fontSize: 48, fontWeight: FontWeight.bold),
+                              ),
+                              vSpaceMedium,
+                              const Text('Epost'),
+                              vSpaceSmall,
+                              const BygeInputField(
+                                placeholder: 'Epost',
+                                placeholderColor:
+                                    Color.fromARGB(255, 124, 123, 123),
+                              ),
+                              vSpaceMedium,
+                              const Text('Passord'),
+                              vSpaceSmall,
+                              const BygeInputField(
+                                placeholder: 'Passord',
+                                placeholderColor:
+                                    Color.fromARGB(255, 124, 123, 123),
+                              ),
+                              vSpaceRegular,
+                              BygePrimaryButton(
+                                label: "Register deg med Goolge",
+                                onPressed: () {
+                                  controller.finishLogin();
+                                  ref.read(stateUpdateProvider.notifier).state =
+                                      controller.loginCompleted;
+                                },
+                                color: const Color(0XFF404040),
+                              ),
+                            ],
+                          ),
                         ),
                       ] else ...[
                         const AuthenticationFinished()
