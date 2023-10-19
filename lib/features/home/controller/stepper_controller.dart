@@ -8,15 +8,23 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../auth/controller/auth_controller.dart';
 
 final stepperGraphControllerProvider = Provider((ref) => StepperController());
+final showStepperBarBoolStateProvider = StateProvider<bool>((ref) => false);
 
 class StepperController {
+  bool showStepparBool = false;
+
+  changeStepperBarBool() {
+    showStepparBool = !showStepparBool;
+    print("object$showStepparBool");
+  }
+
   List<GraphData> stepLineGraph = [];
   Future<List<GraphData>> fecthData() async {
     GraphData temp = GraphData(x: 0, y: 0);
     final perf = await SharedPreferences.getInstance();
     await AuthController().fetchZoneIdFromFirestore();
-    final zone = perf.getString("zone");
-    // const zone = "1";
+    // final zone = perf.getString("zone");
+    const zone = "1";
 
     log("--------------------$zone");
 
