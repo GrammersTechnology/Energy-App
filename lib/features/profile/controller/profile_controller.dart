@@ -31,9 +31,14 @@ final profileEditZoneProvider = StateProvider<String>((ref) {
   return 'Select From List';
 });
 
+final mememberDropdownListProvider = StateProvider<String>((ref) {
+  return 'Størrelse på boligen';
+});
+
 class ProfileController {
   List<SavingTips> savingTips = [];
-
+  List<String> numberOfMembers = ['No1'];
+  String? membersValue;
   FirebaseAuth fb = FirebaseAuth.instance;
   FirebaseFirestore db = FirebaseFirestore.instance;
   List<dynamic> csvTable = [];
@@ -71,6 +76,10 @@ class ProfileController {
     dropDownValue = value;
 
     log(dropDownValue.toString());
+  }
+
+  houseMemberValue(value) {
+    membersValue = value;
   }
 
   changeZoneDropDownValue(value) {

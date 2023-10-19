@@ -91,24 +91,6 @@ class OnboardZone extends ConsumerWidget {
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               vSpaceMedium,
-              // const BygeExpandableCard(
-              //     title: "Velg strømsone",
-              //     child: Column(
-              //       crossAxisAlignment: CrossAxisAlignment.start,
-              //       children: [
-              //         Text('No1'),
-              //         Divider(),
-              //         Text('NO1'),
-              //         Divider(),
-              //         Text('NO2'),
-              //         Divider(),
-              //         Text('NO3'),
-              //         Divider(),
-              //         Text('NO4'),
-              //         Divider(),
-              //         Text('NO5'),
-              //       ],
-              //     )),
               Container(
                 padding: const EdgeInsets.only(left: 15, right: 15),
                 decoration: BoxDecoration(

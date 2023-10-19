@@ -42,8 +42,8 @@ class _BygeCheckbox extends State<BygeCheckbox> {
           splashColor: Colors.transparent,
         ),
         // InkWell to allow borders to be unaffected by the onpressed color
-        child: InkWell(
-          splashColor: theme.colorScheme.secondary,
+        child: SizedBox(
+          height: 60,
           child: CheckboxListTile(
             tileColor: theme.colorScheme.surface,
             activeColor: onSurface,
@@ -58,7 +58,7 @@ class _BygeCheckbox extends State<BygeCheckbox> {
             value: widget.initialValue,
             onChanged: widget.onChanged,
             contentPadding: const EdgeInsets.symmetric(
-              vertical: AppSpaces.s,
+              // vertical: AppSpaces.s,
               horizontal: AppSpaces.m,
             ),
 
