@@ -8,20 +8,20 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 final columnGraphControllerProvider =
     Provider((ref) => ColumnGraphController());
+final showColumnBarBoolStateProvider = StateProvider<bool>((ref) => false);
 
 class ColumnGraphController {
   List result = [];
-
+  bool showColumnBool = false;
   List<GraphData> columnGraphData = [];
+
+  changeColumnBarBool() {
+    showColumnBool = !showColumnBool;
+  }
+
   Future<List<GraphData>> feacthColumnGraphData() async {
-    log("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-    print("tttttttttttttttttttttttttt");
-    final de = getMaxValue();
-    final le = (getMinValue());
-    print(de.toString() + "Vvvvvvvvvvvvvvvvvvvvvvvvvvvv");
-    print(le.toString() + "ppppppppppppppppppppppppppp");
     // await AuthController().fetchZoneIdFromFirestore();
-    final perf = await SharedPreferences.getInstance();
+    // final perf = await SharedPreferences.getInstance();
 
     // final zone = perf.getString("zone");
     const zone = "1";
@@ -55,36 +55,15 @@ class ColumnGraphController {
           }
         }
       }
+      for (var element in columnGraphData) {
+        // log(element.x.toString() + "__________________");
+
+        log(element.y.toString() + "__________________");
+      }
       return columnGraphData;
     } else {
       log("mot available now");
     }
     return columnGraphData;
-  }
-
-  // Function to get the maximum value in the dataSource
-  int getMaxValue() {
-    if (columnGraphData.isNotEmpty) {
-      return columnGraphData
-          .reduce((value, element) => value.y > element.y ? value : element)
-          .y;
-    } else {
-      return 0;
-    }
-  }
-
-// Function to get the minimum value in the dataSource
-  int getMinValue() {
-    final List<int> dataSource = [
-      15,
-      30,
-      50,
-      10,
-      80,
-      15,
-      20,
-    ];
-    return dataSource
-        .reduce((value, element) => value < element ? value : element);
   }
 }

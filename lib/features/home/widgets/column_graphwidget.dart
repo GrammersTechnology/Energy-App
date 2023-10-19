@@ -15,15 +15,34 @@ class ColumnGraphWidget extends ConsumerWidget {
               data: (columnData) {
                 return columnData.isNotEmpty
                     ? SfCartesianChart(
-                        primaryXAxis: CategoryAxis(title: AxisTitle(text: "")),
+                        primaryYAxis: NumericAxis(
+                            isVisible: false,
+                            //Hide the gridlines of y-axis
+                            majorGridLines: const MajorGridLines(width: 0),
+                            //Hide the axis line of y-axis
+                            axisLine: const AxisLine(width: 0)),
+                        plotAreaBorderWidth: 0,
+                        borderColor: Colors.transparent,
+                        backgroundColor: Colors.white,
+                        enableSideBySideSeriesPlacement: false,
+                        primaryXAxis: CategoryAxis(
+                            title: AxisTitle(
+                              text: "",
+                            ),
+                            majorGridLines: const MajorGridLines(width: 0),
+                            axisLine: const AxisLine(width: 0)),
                         series: <ChartSeries>[
                             ColumnSeries<GraphData, String>(
-                                dataSource: columnData,
-                                xValueMapper: (GraphData data, _) =>
-                                    data.x.toString(),
-                                yValueMapper: (GraphData data, _) => data.y,
-                                dataLabelSettings:
-                                    const DataLabelSettings(isVisible: true))
+                              // spacing: 150,
+                              borderRadius: BorderRadius.circular(6),
+                              dataLabelSettings:
+                                  const DataLabelSettings(isVisible: true),
+                              color: Colors.amber,
+                              dataSource: columnData,
+                              xValueMapper: (GraphData data, _) => data.x,
+                              yValueMapper: (GraphData data, _) => data.y,
+                              pointColorMapper: (datum, index) => datum.color,
+                            )
                           ])
                     : const Text("Data is Empty");
               },
