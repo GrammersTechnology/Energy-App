@@ -1,19 +1,4 @@
 import 'package:demo/utils/const/themes/colors.dart';
-import 'package:demo/utils/const/widgets/byge-design-system/buttons/examples.dart';
-import 'package:demo/utils/const/widgets/byge-design-system/buttons/primary_button.dart';
-import 'package:demo/utils/const/widgets/byge-design-system/buttons/secondary_button.dart';
-import 'package:demo/utils/const/widgets/byge-design-system/buttons/tertiary_button.dart';
-import 'package:demo/utils/const/widgets/byge-design-system/buttons/toggle_button.dart';
-import 'package:demo/utils/const/widgets/byge-design-system/buttons/toggle_examples.dart';
-import 'package:demo/utils/const/widgets/byge-design-system/cards/byge_nav_card.dart';
-import 'package:demo/utils/const/widgets/byge-design-system/cards/expandable_card.dart';
-import 'package:demo/utils/const/widgets/byge-design-system/cards/expandable_card_examples.dart';
-import 'package:demo/utils/const/widgets/byge-design-system/checkbox/checkbox.dart';
-import 'package:demo/utils/const/widgets/byge-design-system/checkbox/checkbox_examples.dart';
-import 'package:demo/utils/const/widgets/byge-design-system/dropdown/byge_dropdown.dart';
-import 'package:demo/utils/const/widgets/byge-design-system/error_message/error_examples.dart';
-import 'package:demo/utils/const/widgets/byge-design-system/nav_bars/byge_tab_bar/byge_tab_bar.dart';
-import 'package:demo/utils/const/widgets/byge-design-system/nav_bars/byge_tabbed/byge_tabbed.dart';
 import 'package:demo/features/navbar_widget.dart';
 import 'package:demo/utils/routes/routes.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -21,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'utils/controller/local_notification.dart';
-import 'features/auth/screen/splash_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,7 +27,7 @@ class MyApp extends StatelessWidget {
       navigatorKey: Routes.navigatorKey,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: AppColors.primaryColor),
-      home: Scaffold(
+      home: const Scaffold(
         body: NavBarWidget(
             // child: SingleChildScrollView(
             //   child: Column(children: [
@@ -57,11 +41,11 @@ class MyApp extends StatelessWidget {
             //     //   label: "label",
             //     //   onPressed: () {},
             //     // ),
-            //     // BygeToggleButton(
-            //     //   toggled: true,
-            //     //   toggleText: "toggleText",
-            //     //   onChanged: (value) {},
-            //     // ),
+            // BygeToggleButton(
+            //   toggled: true,
+            //   toggleText: "toggleText",
+            //   onChanged: (value) {},
+            // ),
             //     // ToggleExamples()
             //     BygeNavCardExample(),
             //     BygeNavCard(

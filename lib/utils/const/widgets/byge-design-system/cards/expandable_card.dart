@@ -54,6 +54,7 @@ class _BygeExpandableCardState extends State<BygeExpandableCard> {
             borderRadius: BorderRadius.circular(AppBorders.borderRadius),
           ),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               InkWell(
                 splashColor: Colors.transparent,
@@ -70,6 +71,7 @@ class _BygeExpandableCardState extends State<BygeExpandableCard> {
                     isExpanded ? AppSpaces.s : AppSpaces.m,
                   ),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
                         width: double.infinity,

@@ -15,6 +15,7 @@ import '../../../utils/routes/routes.dart';
 import '../screen/loginscreen.dart';
 
 final authControllerProvider = Provider((ref) => AuthController());
+final stateUpdateProvider = StateProvider<bool>((ref) => false);
 
 class AuthController {
   FirebaseAuth fb = FirebaseAuth.instance;
@@ -28,6 +29,24 @@ class AuthController {
 
   changeDropDownValue(value) {
     dropdowmValue = value;
+  }
+
+  bool showLoginContent = true; // Initially, show the authentication content
+
+  void toggleContent() {
+    showLoginContent = !showLoginContent;
+  }
+
+  bool loginCompleted = false;
+
+  void finishLogin() {
+    loginCompleted = !loginCompleted;
+  }
+
+  bool authProcessCompleted = false;
+
+  void isProcessCompleted() {
+    authProcessCompleted = !authProcessCompleted;
   }
 
   bool loader = false;

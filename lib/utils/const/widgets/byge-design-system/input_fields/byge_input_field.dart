@@ -10,10 +10,12 @@ class BygeInputField extends StatefulWidget {
   final TextInputType keyboardType;
   final TextEditingController? controller;
   final bool enabled;
+  final Color? placeholderColor;
 
   const BygeInputField({
     Key? key,
     required this.placeholder,
+    this.placeholderColor,
     this.initialValue,
     this.suffix = '',
     this.onEditingComplete,
@@ -89,8 +91,10 @@ class _BygeInputFieldState extends State<BygeInputField> {
           borderSide: BorderSide(color: onSurface),
         ), // your color
         hintText: widget.placeholder,
+
         prefixStyle: textStyle,
-        hintStyle: hintStyle?.copyWith(color: onSurfaceVariant),
+        hintStyle: hintStyle?.copyWith(
+            color: widget.placeholderColor ?? onSurfaceVariant),
         suffix: Text(widget.suffix),
         suffixStyle: suffixStyle?.copyWith(color: onSurfaceVariant),
       ),
