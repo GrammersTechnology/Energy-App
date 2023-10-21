@@ -1,8 +1,6 @@
 import 'package:demo/features/auth/controller/auth_controller.dart';
 import 'package:demo/features/home/controller/column_controller.dart';
 
-import 'package:demo/features/chart/controller/chartcontroller.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../features/Hva Koster/controller/hva_kaster.dart';
@@ -41,11 +39,6 @@ final profileEditProvider = FutureProvider((ref) {
 //   final savingTipsRepositary = ref.watch(savingTipsRepositeryProvider);
 //   return savingTipsRepositary.getTips();
 // });
-
-final chartProvider = FutureProvider((ref) {
-  final chartRepository = ref.watch(userChartProvider);
-  return chartRepository.getChartDetails();
-});
 
 final authenticationProvider = FutureProvider((ref) {
   final authRepository = ref.watch(authControllerProvider);

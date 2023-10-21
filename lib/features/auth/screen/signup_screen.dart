@@ -2,7 +2,6 @@ import 'package:demo/utils/const/space_helper.dart';
 import 'package:demo/utils/const/widgets/custom_button.dart';
 import 'package:demo/features/auth/controller/auth_controller.dart';
 import 'package:demo/features/auth/screen/loginscreen.dart';
-import 'package:demo/features/chart/controller/chartcontroller.dart';
 import 'package:demo/utils/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

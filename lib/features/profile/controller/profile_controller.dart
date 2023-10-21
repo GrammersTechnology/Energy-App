@@ -5,8 +5,6 @@ import 'package:demo/features/profile/model/profile_model.dart';
 import 'package:demo/utils/const/api_error_helper.dart';
 import 'package:demo/features/Saving%20Tips/model/savinr_tips_model.dart';
 import 'package:demo/features/auth/controller/auth_controller.dart';
-import 'package:demo/features/profile/widget/profile_edit_screen.dart';
-import 'package:demo/features/bottum_navigation_screen.dart';
 import 'package:demo/utils/routes/messenger.dart';
 import 'package:demo/utils/routes/routes.dart';
 import 'package:dio/dio.dart';
@@ -24,7 +22,7 @@ final wantPushWarning1StateProvider = StateProvider<bool>((ref) => false);
 final hasEatPumpStateProvider = StateProvider<bool>((ref) => false);
 final hasSolarPanelStateProvider = StateProvider<bool>((ref) => false);
 
-final profileEditDropdownListProvider = StateProvider<String>((ref) {
+final profileCompanyDropdownListProvider = StateProvider<String>((ref) {
   return 'Select From List';
 });
 final profileEditZoneProvider = StateProvider<String>((ref) {
@@ -136,6 +134,8 @@ class ProfileController {
     return dropdwonList;
   }
 
+// update save saveStrom details
+  saveStrom() {}
   updateUserProfileDetails(context) async {
     loader = true;
     String name;
@@ -211,7 +211,7 @@ class ProfileController {
       await AuthController()
           .updateZoneIdFromFirestore(zone, fb.currentUser!.email.toString());
       await AuthController().fetchZoneIdFromFirestore();
-      Routes.pushreplace(screen: BottumNavigationScreen());
+      // Routes.pushreplace(screen: BottumNavigationScreen());
       clearController();
 
       loader = false;
@@ -232,10 +232,10 @@ class ProfileController {
   checkProfileDetails() async {
     final data = await getUserProfileDetails();
     if (data != null) {
-      Routes.push(
-          screen: ProfileEditScreen(
-        data: data,
-      ));
+      // Routes.push(
+      //     screen: ProfileEditScreen(
+      //   data: data,
+      // ));
     } else {
       const SnackBar(
         content: Text('Try again'),
