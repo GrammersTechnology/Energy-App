@@ -27,7 +27,6 @@ class AuthController {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final GoogleSignIn _googleSignIn = GoogleSignIn();
-  bool isOnboardingCompleted = false;
 
   String? dropdowmValue;
   List<String> dropdwonList = ["NO1", "NO2", "NO3", "NO4", "NO5"];
@@ -44,6 +43,14 @@ class AuthController {
 
   void toggleContent() {
     showLoginContent = !showLoginContent;
+  }
+
+  bool isOnboardingCompleted = false;
+
+  void finishOnboarding() async {
+    final pref = await SharedPreferences.getInstance();
+    isOnboardingCompleted = true;
+    await pref.setBool('finishedOnboarding', isOnboardingCompleted);
   }
 
   bool loginCompleted = false;

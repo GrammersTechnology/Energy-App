@@ -112,12 +112,8 @@ class OnboardZone extends ConsumerWidget {
                           .toList(),
                       onChanged: (value) {
                         authRepository.changeDropDownValue(value);
-                        authRepository.isOnboardingCompleted = true;
-
                         ref.read(zoneDropdownListProvider.notifier).state =
                             value.toString();
-                        ref.read(stateUpdateProvider.notifier).state =
-                            authRepository.isOnboardingCompleted;
                       },
                       onTap: () {},
                     ),
@@ -128,6 +124,9 @@ class OnboardZone extends ConsumerWidget {
               BygePrimaryButton(
                 label: "Lagre og gå videre",
                 onPressed: () {
+                  authRepository.finishOnboarding();
+                  ref.read(stateUpdateProvider.notifier).state =
+                      authRepository.isOnboardingCompleted;
                   Routes.pushRemoveUntil(screen: const NavBarWidget());
                 },
                 color: const Color(0XFF404040),
