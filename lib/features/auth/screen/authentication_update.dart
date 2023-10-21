@@ -56,7 +56,7 @@ class AuthenticationFinished extends ConsumerWidget {
                   ),
                 )
               ] else ...[
-                const Expanded(
+                Expanded(
                   child: SingleChildScrollView(
                     child: Column(
                       children: [

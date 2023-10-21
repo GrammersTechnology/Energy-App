@@ -1,4 +1,3 @@
-import 'package:demo/features/auth/controller/auth_controller.dart';
 import 'package:demo/features/profile/controller/profile_controller.dart';
 import 'package:demo/utils/const/space_helper.dart';
 import 'package:demo/utils/const/widgets/byge-design-system/buttons/primary_button.dart';
@@ -10,15 +9,17 @@ import 'package:demo/utils/const/widgets/byge-design-system/theme/text_styles.da
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ProfilePage extends ConsumerWidget {
-  const ProfilePage({super.key});
+import '../../../utils/controller/provider.dart';
 
+class ProfilePage extends ConsumerWidget {
+  ProfilePage({super.key});
+  List<String> dropdwonList = [];
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(mememberDropdownListProvider);
     final profileRepository = ref.watch(profileControllerProvider);
-    final authRepository = ref.watch(authControllerProvider);
-    ref.watch(zoneDropdownListProvider);
+    ref.watch(profileCompanyDropdownListProvider);
+    ref.watch(profileEditZoneProvider);
     return SafeArea(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,14 +57,13 @@ class ProfilePage extends ConsumerWidget {
                 ),
                 vSpaceSmall,
                 BygePrimaryButton(
-                  label: "Slett konto",
-                  labelColor: Colors.black,
-                  onPressed: () {
-                    // Replace the current content with the "hello" content
-                  },
-                  color: Colors.white,
-                  borderColor: const Color(0XFF404040),
-                ),
+                    label: "Slett konto",
+                    labelColor: Colors.black,
+                    onPressed: () {
+                      // Replace the current content with the "hello" content
+                    },
+                    color: Colors.white,
+                    borderColor: const Color(0XFF404040)),
                 vSpaceSmall,
                 BygePrimaryButton(
                   label: "Lagre endringer",
@@ -213,18 +213,19 @@ class ProfilePage extends ConsumerWidget {
                         child: DropdownButton(
                           icon: const Icon(Icons.keyboard_arrow_down_rounded),
                           hint: Text(
-                            authRepository.dropdowmValue ?? "Velg strømsone",
+                            profileRepository.zoneDropdowmValue ??
+                                "Velg strømsone",
                             style: labelLarge,
                           ),
                           underline: const SizedBox(),
                           isExpanded: true,
-                          items: authRepository.dropdwonList
+                          items: profileRepository.zoneDropdwonList
                               .map((e) =>
                                   DropdownMenuItem(value: e, child: Text(e)))
                               .toList(),
                           onChanged: (value) {
-                            authRepository.changeDropDownValue(value);
-                            ref.read(zoneDropdownListProvider.notifier).state =
+                            profileRepository.changeZoneDropDownValue(value);
+                            ref.read(profileEditZoneProvider.notifier).state =
                                 value.toString();
                           },
                           onTap: () {},
@@ -238,42 +239,53 @@ class ProfilePage extends ConsumerWidget {
                     style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
                   ),
                   vSpaceSmall,
-                  Container(
-                    padding: const EdgeInsets.only(left: 15, right: 15),
-                    decoration: BoxDecoration(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10)),
-                        border: Border.all(color: Colors.black)),
-                    child: SizedBox(
-                      height: 55,
-                      child: Center(
-                        child: DropdownButton(
-                          icon: const Icon(Icons.keyboard_arrow_down_rounded),
-                          hint: Text(
-                            authRepository.dropdowmValue ??
-                                "Din strømlevrandør",
-                            style: labelLarge,
+                  FutureBuilder(
+                      future: profileRepository.fetchCSVData(),
+                      builder: (context, snaphot) {
+                        if (snaphot.hasData) {
+                          dropdwonList = snaphot.data ?? [];
+                        }
+                        return Container(
+                          padding: const EdgeInsets.only(left: 15, right: 15),
+                          decoration: BoxDecoration(
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(10)),
+                              border: Border.all(color: Colors.black)),
+                          child: SizedBox(
+                            height: 55,
+                            child: Center(
+                              child: DropdownButton(
+                                icon: const Icon(
+                                    Icons.keyboard_arrow_down_rounded),
+                                hint: Text(
+                                  profileRepository.dropDownValue ??
+                                      "Din strømlevrandør",
+                                  style: labelLarge,
+                                ),
+                                underline: const SizedBox(),
+                                isExpanded: true,
+                                items: dropdwonList
+                                    .map((e) => DropdownMenuItem(
+                                        value: e, child: Text(e)))
+                                    .toList(),
+                                onChanged: (value) {
+                                  profileRepository.changeDropDownValue(value);
+                                  ref
+                                      .read(profileCompanyDropdownListProvider
+                                          .notifier)
+                                      .state = value.toString();
+                                },
+                                onTap: () {},
+                              ),
+                            ),
                           ),
-                          underline: const SizedBox(),
-                          isExpanded: true,
-                          items: authRepository.dropdwonList
-                              .map((e) =>
-                                  DropdownMenuItem(value: e, child: Text(e)))
-                              .toList(),
-                          onChanged: (value) {
-                            authRepository.changeDropDownValue(value);
-                            ref.read(zoneDropdownListProvider.notifier).state =
-                                value.toString();
-                          },
-                          onTap: () {},
-                        ),
-                      ),
-                    ),
-                  ),
+                        );
+                      }),
                   vSpaceRegular,
                   BygePrimaryButton(
                     label: "Lagre endringer",
                     onPressed: () {
+                      profileRepository.saveStrom();
                       // Replace the current content with the "hello" content
                     },
                     color: const Color(0XFF404040),
