@@ -1,5 +1,4 @@
 import 'package:demo/features/auth/controller/auth_controller.dart';
-import 'package:demo/features/chart/controller/chartcontroller.dart';
 import 'package:demo/features/profile/controller/profile_controller.dart';
 import 'package:demo/utils/const/space_helper.dart';
 import 'package:demo/utils/const/widgets/byge-design-system/buttons/primary_button.dart';
@@ -19,7 +18,7 @@ class ProfilePage extends ConsumerWidget {
     ref.watch(mememberDropdownListProvider);
     final profileRepository = ref.watch(profileControllerProvider);
     final authRepository = ref.watch(authControllerProvider);
-    ref.watch(chartDropdownListProvider);
+    ref.watch(zoneDropdownListProvider);
     return SafeArea(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -225,7 +224,7 @@ class ProfilePage extends ConsumerWidget {
                               .toList(),
                           onChanged: (value) {
                             authRepository.changeDropDownValue(value);
-                            ref.read(chartDropdownListProvider.notifier).state =
+                            ref.read(zoneDropdownListProvider.notifier).state =
                                 value.toString();
                           },
                           onTap: () {},
@@ -263,7 +262,7 @@ class ProfilePage extends ConsumerWidget {
                               .toList(),
                           onChanged: (value) {
                             authRepository.changeDropDownValue(value);
-                            ref.read(chartDropdownListProvider.notifier).state =
+                            ref.read(zoneDropdownListProvider.notifier).state =
                                 value.toString();
                           },
                           onTap: () {},

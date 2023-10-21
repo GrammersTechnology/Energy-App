@@ -1,12 +1,12 @@
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csv/csv.dart';
+import 'package:demo/features/navbar_widget.dart';
 import 'package:demo/features/profile/model/profile_model.dart';
 import 'package:demo/utils/const/api_error_helper.dart';
 import 'package:demo/features/Saving%20Tips/model/savinr_tips_model.dart';
 import 'package:demo/features/auth/controller/auth_controller.dart';
 import 'package:demo/features/profile/widget/profile_edit_screen.dart';
-import 'package:demo/features/bottum_navigation_screen.dart';
 import 'package:demo/utils/routes/messenger.dart';
 import 'package:demo/utils/routes/routes.dart';
 import 'package:dio/dio.dart';
@@ -211,7 +211,7 @@ class ProfileController {
       await AuthController()
           .updateZoneIdFromFirestore(zone, fb.currentUser!.email.toString());
       await AuthController().fetchZoneIdFromFirestore();
-      Routes.pushreplace(screen: BottumNavigationScreen());
+      Routes.pushreplace(screen: const NavBarWidget());
       clearController();
 
       loader = false;

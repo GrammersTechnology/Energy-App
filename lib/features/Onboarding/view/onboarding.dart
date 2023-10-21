@@ -1,6 +1,5 @@
 import 'package:demo/features/auth/controller/auth_controller.dart';
-import 'package:demo/features/bottum_navigation_screen.dart';
-import 'package:demo/features/chart/controller/chartcontroller.dart';
+import 'package:demo/features/navbar_widget.dart';
 import 'package:demo/utils/const/space_helper.dart';
 import 'package:demo/utils/const/widgets/byge-design-system/buttons/primary_button.dart';
 import 'package:demo/utils/const/widgets/byge-design-system/theme/text_styles.dart';
@@ -65,7 +64,7 @@ class OnboardZone extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final authRepository = ref.watch(authControllerProvider);
-    ref.watch(chartDropdownListProvider);
+    ref.watch(zoneDropdownListProvider);
     return Scaffold(
       body: SafeArea(
           child: Padding(
@@ -113,8 +112,12 @@ class OnboardZone extends ConsumerWidget {
                           .toList(),
                       onChanged: (value) {
                         authRepository.changeDropDownValue(value);
-                        ref.read(chartDropdownListProvider.notifier).state =
+                        authRepository.isOnboardingCompleted = true;
+
+                        ref.read(zoneDropdownListProvider.notifier).state =
                             value.toString();
+                        ref.read(stateUpdateProvider.notifier).state =
+                            authRepository.isOnboardingCompleted;
                       },
                       onTap: () {},
                     ),
@@ -125,7 +128,7 @@ class OnboardZone extends ConsumerWidget {
               BygePrimaryButton(
                 label: "Lagre og gå videre",
                 onPressed: () {
-                  Routes.pushRemoveUntil(screen: BottumNavigationScreen());
+                  Routes.pushRemoveUntil(screen: const NavBarWidget());
                 },
                 color: const Color(0XFF404040),
               ),

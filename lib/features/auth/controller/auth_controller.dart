@@ -1,9 +1,9 @@
 import 'dart:developer';
+import 'package:demo/features/navbar_widget.dart';
 import 'package:demo/features/profile/model/profile_model.dart';
 import 'package:demo/utils/const/api_error_helper.dart';
 import 'package:demo/utils/const/themes/colors.dart';
 import 'package:demo/features/profile/controller/profile_controller.dart';
-import 'package:demo/features/bottum_navigation_screen.dart';
 import 'package:demo/utils/routes/messenger.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -17,18 +17,27 @@ import '../screen/loginscreen.dart';
 final authControllerProvider = Provider((ref) => AuthController());
 final stateUpdateProvider = StateProvider<bool>((ref) => false);
 
+final zoneDropdownListProvider = StateProvider<String>((ref) {
+  return 'Select From List';
+});
+
 class AuthController {
   FirebaseAuth fb = FirebaseAuth.instance;
   FirebaseFirestore db = FirebaseFirestore.instance;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+  bool isOnboardingCompleted = false;
 
   String? dropdowmValue;
   List<String> dropdwonList = ["NO1", "NO2", "NO3", "NO4", "NO5"];
 
-  changeDropDownValue(value) {
+  changeDropDownValue(value) async {
+    final pref = await SharedPreferences.getInstance();
     dropdowmValue = value;
+    await pref.setString('zone', dropdowmValue.toString().toUpperCase());
+
+    log('${pref.getString('zone')}-----');
   }
 
   bool showLoginContent = true; // Initially, show the authentication content
@@ -65,7 +74,7 @@ class AuthController {
           .set(data.toJson());
       await addUserProfileDetails(context);
       await saveAuthLocal();
-      Routes.pushreplace(screen: BottumNavigationScreen());
+      Routes.pushreplace(screen: const NavBarWidget());
       loader = false;
     } catch (e) {
       clearLocalData();
@@ -188,7 +197,7 @@ class AuthController {
   Future<void> checkCurrentUser(context) async {
     User? user = fb.currentUser;
     if (user != null) {
-      Routes.pushreplace(screen: BottumNavigationScreen());
+      Routes.pushreplace(screen: const NavBarWidget());
       ProfileController().getUserProfileDetails();
     } else {
       Routes.pushreplace(screen: const LoginScreen());
