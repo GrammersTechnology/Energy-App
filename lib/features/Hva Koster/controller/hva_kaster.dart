@@ -16,7 +16,6 @@ class HvaController {
     String? zone = "1";
     final response = await HvaKasterServices().getHavKasterDetails(zone);
     // print(response);
-    print(response.runtimeType);
     List firstLevelValues = [];
     if (response != null) {
       firstLevelValues.clear();
@@ -24,14 +23,15 @@ class HvaController {
       // List<String> firstLevelKeys = response.keys.toList();
       firstLevelValues = response.values.toList();
 
-      print('Values: $firstLevelValues');
+      // log('Values: $firstLevelValues');
       // print('key: $firstLevelKeys');
-
+      firstLevelValues = firstLevelValues.first;
+      // log(firstLevelValues.runtimeType.toString());
       // Map<String,dynamic>demo=
       // List<String> firstElements =
       //     firstLevelKeys.map((key) => response[key].toString()).toList();
       for (var element in firstLevelValues) {
-        final value = element['details']['front_end_text'];
+        final value = element['details']['front_end'];
         final split = value.toString().split(' ');
         element['details']['front_end_text'] = split.first;
         log(element['details']['front_end_text'].toString());

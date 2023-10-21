@@ -9,7 +9,6 @@ class BygeNavCard extends StatelessWidget {
   final Widget destination;
   final IconData iconData;
   final double iconSize;
-
   const BygeNavCard({
     Key? key,
     required this.title,

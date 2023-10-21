@@ -9,8 +9,8 @@ class HvaKasterServices {
     // HavKasterModel? data;
     try {
       // log('https://predictor-tdg24xwvka-ew.a.run.app/appliances_cost?price_area=NO$zone');
-      Response response = await Dio().get(
-          'https://predictor-tdg24xwvka-ew.a.run.app/appliances_cost?price_area=NO$zone');
+      Response response = await Dio()
+          .get('https://api.byge.dev/device-costs/v1?priceArea=NO$zone');
       if (response.statusCode == 200) {
         // log(response.data.runtimeType.toString());
 
