@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:demo/features/Hva%20Koster/view/detailed_hva_koster.dart';
 import 'package:demo/utils/const/space_helper.dart';
 import 'package:demo/utils/const/themes/colors.dart';
 import 'package:demo/utils/controller/provider.dart';
@@ -27,9 +28,11 @@ class HvaKosterScreen extends ConsumerWidget {
                     itemCount: datas.length,
                     itemBuilder: (context, index) {
                       return BygeNavCard(
-                          title: datas[index]["details"]["front_end_text"],
+                          title: datas[index]["details"]["front_end"],
                           destination: HvaKosterDetailedScreen(
-                              title: datas[index]["details"]["front_end_text"]),
+                            data: datas ?? [],
+                            index: index,
+                          ),
                           child: Container(
                             padding: EdgeInsets.all(10),
                             child: Row(
@@ -47,8 +50,7 @@ class HvaKosterScreen extends ConsumerWidget {
                                   Column(
                                     children: [
                                       Spacer(),
-                                      datas[index]["details"]
-                                                  ["front_end_text"] ==
+                                      datas[index]["details"]["front_end"] ==
                                               "Dusj"
                                           ? Image.asset(
                                               width: 70,
@@ -56,7 +58,7 @@ class HvaKosterScreen extends ConsumerWidget {
                                               fit: BoxFit.fill,
                                               "assets/images/showerpng.png")
                                           : datas[index]["details"]
-                                                      ["front_end_text"] ==
+                                                      ["front_end"] ==
                                                   "Elbil"
                                               ? Image.asset(
                                                   width: 70,
@@ -86,21 +88,5 @@ class HvaKosterScreen extends ConsumerWidget {
         ));
       },
     ));
-  }
-}
-
-class HvaKosterDetailedScreen extends StatelessWidget {
-  HvaKosterDetailedScreen({super.key, required this.title});
-  String title;
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: Column(children: [
-        Row(
-          children: [Text("En runde vaskimeschin"), Text("varghet: 2 timer")],
-        )
-      ]),
-    );
   }
 }
