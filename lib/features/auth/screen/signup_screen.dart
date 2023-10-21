@@ -15,7 +15,7 @@ class SignupScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final authRepository = ref.watch(authControllerProvider);
-    ref.watch(chartDropdownListProvider);
+    ref.watch(zoneDropdownListProvider);
     final size = MediaQuery.of(context).size;
     return Scaffold(
       body: SingleChildScrollView(
@@ -52,7 +52,7 @@ class SignupScreen extends ConsumerWidget {
                       .toList(),
                   onChanged: (value) {
                     authRepository.changeDropDownValue(value);
-                    ref.read(chartDropdownListProvider.notifier).state =
+                    ref.read(zoneDropdownListProvider.notifier).state =
                         value.toString();
                   },
                   onTap: () {},

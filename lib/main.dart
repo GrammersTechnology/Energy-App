@@ -1,5 +1,5 @@
+import 'package:demo/features/auth/screen/splash_screen.dart';
 import 'package:demo/utils/const/themes/colors.dart';
-import 'package:demo/features/navbar_widget.dart';
 import 'package:demo/utils/routes/routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -28,47 +28,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: AppColors.primaryColor),
       home: const Scaffold(
-        body: NavBarWidget(
-            // child: SingleChildScrollView(
-            //   child: Column(children: [
-            //     // ButtonExamples(),
-            //     BygePrimaryButton(label: "eee", onPressed: () {}),
-            //     // BygeSecondaryButton(
-            //     //   label: "label",
-            //     //   onPressed: () {},
-            //     // ),
-            //     // BygeTertiaryButton(
-            //     //   label: "label",
-            //     //   onPressed: () {},
-            //     // ),
-            // BygeToggleButton(
-            //   toggled: true,
-            //   toggleText: "toggleText",
-            //   onChanged: (value) {},
-            // ),
-            //     // ToggleExamples()
-            //     BygeNavCardExample(),
-            //     BygeNavCard(
-            //       title: "title",
-            //       child: Text("data"),
-            //       destination: Text('f'),
-            //       iconData: Icons.abc,
-            //       iconSize: 20,
-            //     ),
-            //     ExpandableCardExamples(),
-            //     BygeExpandableCard(title: "title", child: Text("data")),
-            //     CheckboxExamples(),
-            // BygeCheckbox(
-            //   initialValue: true,
-            //   label: "label",
-            //   onChanged: (value) {},
-            // ),
-            //     // BygeDropdown(dropdownEntry: [], dropdownHint: dropdownHint, onSelected: onSelected)
-            //     ErrorExamples(),
-            //     // BygeTabbedWidgets(widgets: [], tabNames: [])
-            //   ]),
-            // ),
-            ),
+        body: SplashScreen(),
       ),
     );
   }
