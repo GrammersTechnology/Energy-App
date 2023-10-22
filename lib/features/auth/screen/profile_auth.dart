@@ -195,9 +195,7 @@ class ProfileAuthentication extends ConsumerWidget {
                                 // controller.login(context);
                                 // ref.read(stateUpdateProvider.notifier).state =
                                 //     controller.isLogin;
-                                controller.showLoginContent = false;
-                                controller.isRegister = false;
-                                controller.isLogin = false;
+                                controller.signup(context);
                                 ref.read(stateUpdateProvider.notifier).state =
                                     controller.showLoginContent;
                                 ref.read(stateUpdateProvider.notifier).state =

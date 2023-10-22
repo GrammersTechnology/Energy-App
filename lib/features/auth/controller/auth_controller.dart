@@ -97,7 +97,10 @@ class AuthController {
           .set(data.toJson());
       await addUserProfileDetails(context);
       await saveAuthLocal();
-      Routes.pushreplace(screen: const NavBarWidget());
+
+      showLoginContent = false;
+      isLogin = false;
+      isRegister = false;
       loader = false;
     } catch (e) {
       clearLocalData();
@@ -140,12 +143,15 @@ class AuthController {
   }
 
   saveAuthLocal() async {
+    final pref = await SharedPreferences.getInstance();
+
+    final zoneData = pref.getString('zone');
     final email = fb.currentUser?.email;
     final password = passwordController.text;
-    final pref = await SharedPreferences.getInstance();
+
     await pref.setString('email', email.toString());
     await pref.setString('password', password.toString());
-    await pref.setString('zone', dropdowmValue.toString().toUpperCase());
+    await pref.setString('zone', zoneData.toString().toUpperCase());
   }
 
   clearLocalData() async {
