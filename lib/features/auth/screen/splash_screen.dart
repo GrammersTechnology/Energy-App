@@ -14,8 +14,8 @@ class SplashScreen extends ConsumerWidget {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       final pref = await SharedPreferences.getInstance();
       if (pref.getBool('finishedOnboarding') == false) {
-        Future.delayed(const Duration(seconds: 2)).then((value) =>
-            Routes.pushRemoveUntil(screen: const OnboardingScreen()));
+        Future.delayed(const Duration(seconds: 2)).then(
+            (value) => Routes.pushRemoveUntil(screen: OnboardingScreen()));
       } else {
         Future.delayed(const Duration(seconds: 2)).then(
             (value) => Routes.pushRemoveUntil(screen: const NavBarWidget()));

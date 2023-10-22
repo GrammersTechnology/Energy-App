@@ -9,8 +9,6 @@ import 'package:demo/utils/const/widgets/byge-design-system/theme/text_styles.da
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../utils/controller/provider.dart';
-
 class ProfilePage extends ConsumerWidget {
   ProfilePage({super.key});
   List<String> dropdwonList = [];
@@ -20,6 +18,14 @@ class ProfilePage extends ConsumerWidget {
     final profileRepository = ref.watch(profileControllerProvider);
     ref.watch(profileCompanyDropdownListProvider);
     ref.watch(profileEditZoneProvider);
+    ref.watch(hasElCarStateProvider);
+    ref.watch(hasSolarPanelStateProvider);
+    ref.watch(oppvaskmaskinStateProvider);
+    ref.watch(torketrommelStateProvider);
+    ref.watch(vaskemaskinStateProvider);
+    ref.watch(hasHeatPumpStateProvider);
+    ref.watch(hasSensorStateProvider);
+    ref.watch(wantPushWarning1StateProvider);
     return SafeArea(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,7 +104,7 @@ class ProfilePage extends ConsumerWidget {
                       child: DropdownButton(
                         icon: const Icon(Icons.keyboard_arrow_down_rounded),
                         hint: Text(
-                          profileRepository.membersValue ??
+                          profileRepository.membersDropdownValue ??
                               "Størrelse på boligen",
                           style: labelLarge,
                         ),
@@ -109,7 +115,7 @@ class ProfilePage extends ConsumerWidget {
                                 DropdownMenuItem(value: e, child: Text(e)))
                             .toList(),
                         onChanged: (value) {
-                          profileRepository.houseMemberValue(value);
+                          profileRepository.houseMemberDropdownValue(value);
                           ref
                               .read(mememberDropdownListProvider.notifier)
                               .state = value.toString();
@@ -125,9 +131,10 @@ class ProfilePage extends ConsumerWidget {
                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                 ),
                 vSpaceSmall,
-                const SizedBox(
+                SizedBox(
                   width: 100,
                   child: BygeInputField(
+                    controller: profileRepository.countController,
                     placeholder: 'Count',
                     placeholderColor: Color.fromARGB(255, 124, 123, 123),
                   ),
@@ -139,50 +146,80 @@ class ProfilePage extends ConsumerWidget {
                 ),
                 vSpaceSmall,
                 BygeCheckbox(
-                  initialValue: true,
+                  initialValue: profileRepository.hasElCarBool,
                   label: "Elbil",
-                  onChanged: (value) {},
+                  onChanged: (value) {
+                    profileRepository.hasElCarValueChange(value);
+                    ref.read(hasElCarStateProvider.notifier).state =
+                        value ?? true;
+                  },
                 ),
                 vSpaceSmall,
                 BygeCheckbox(
-                  initialValue: true,
+                  initialValue: profileRepository.hasSolarPanelBool,
                   label: "Solceller",
-                  onChanged: (value) {},
+                  onChanged: (value) {
+                    profileRepository.hasSolarPanelValueChange(value);
+                    ref.read(hasSolarPanelStateProvider.notifier).state =
+                        value ?? false;
+                  },
                 ),
                 vSpaceSmall,
                 BygeCheckbox(
-                  initialValue: true,
+                  initialValue: profileRepository.oppvaskmaskin,
                   label: "Oppvaskmaskin",
-                  onChanged: (value) {},
+                  onChanged: (value) {
+                    profileRepository.oppvaskmakinChange(value);
+                    ref.read(oppvaskmaskinStateProvider.notifier).state =
+                        value ?? false;
+                  },
                 ),
                 vSpaceSmall,
                 BygeCheckbox(
-                  initialValue: true,
+                  initialValue: profileRepository.torketrommel,
                   label: "Tørketrommel",
-                  onChanged: (value) {},
+                  onChanged: (value) {
+                    profileRepository.torketommelChange(value);
+                    ref.read(torketrommelStateProvider.notifier).state =
+                        value ?? false;
+                  },
                 ),
                 vSpaceSmall,
                 BygeCheckbox(
-                  initialValue: true,
+                  initialValue: profileRepository.vaskemaskin,
                   label: "Vaskemaskin",
-                  onChanged: (value) {},
+                  onChanged: (value) {
+                    profileRepository.vaskemaskinChange(value);
+                    ref.read(vaskemaskinStateProvider.notifier).state =
+                        value ?? false;
+                  },
                 ),
                 vSpaceSmall,
                 BygeCheckbox(
-                  initialValue: true,
+                  initialValue: profileRepository.hasHeatPumpBool,
                   label: "Varmepumpe",
-                  onChanged: (value) {},
+                  onChanged: (value) {
+                    profileRepository.vaskemaskinChange(value);
+                    ref.read(vaskemaskinStateProvider.notifier).state =
+                        value ?? false;
+                  },
                 ),
                 vSpaceSmall,
                 BygeCheckbox(
-                  initialValue: true,
+                  initialValue: profileRepository.hasSensorBool,
                   label: "HAN-sensor",
-                  onChanged: (value) {},
+                  onChanged: (value) {
+                    profileRepository.hasSensorValueChange(value);
+                    ref.read(hasSensorStateProvider.notifier).state =
+                        value ?? false;
+                  },
                 ),
                 vSpaceRegular,
                 BygePrimaryButton(
                   label: "Lagre endringer",
                   onPressed: () {
+                    profileRepository
+                        .updateUserProfiledittHjemSaveDetails(context);
                     // Replace the current content with the "hello" content
                   },
                   color: const Color(0XFF404040),
@@ -228,7 +265,9 @@ class ProfilePage extends ConsumerWidget {
                             ref.read(profileEditZoneProvider.notifier).state =
                                 value.toString();
                           },
-                          onTap: () {},
+                          onTap: () {
+                            profileRepository.saveStrom();
+                          },
                         ),
                       ),
                     ),
@@ -306,9 +345,14 @@ class ProfilePage extends ConsumerWidget {
                         style: TextStyle(fontSize: 14),
                       ),
                       BygeToggleButton(
-                        toggled: false,
+                        toggled: profileRepository.wantPushWarning1Bool,
                         toggleText: "",
-                        onChanged: (value) {},
+                        onChanged: (value) {
+                          profileRepository.wantPushWarning1ValueChange(value);
+                          ref
+                              .read(wantPushWarning1StateProvider.notifier)
+                              .state = value ?? false;
+                        },
                       ),
                     ],
                   ),

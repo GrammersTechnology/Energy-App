@@ -35,7 +35,7 @@ class SavingTipsController {
         if (tempData.isNotEmpty) {
           // print("not empty temp");
           if (ProfileController().hasElCarBool &&
-              ProfileController().hasEatPumpBool &&
+              ProfileController().hasHeatPumpBool &&
               ProfileController().hasSolarPanelBool) {
             // log("hasElCarBool+hasEatPumpBool+hasSolarPanelBool");
             for (var element in tempData) {
@@ -54,7 +54,7 @@ class SavingTipsController {
                 log(savingTipsList.first.savingstips.toString());
               }
             }
-          } else if (ProfileController().hasEatPumpBool) {
+          } else if (ProfileController().hasHeatPumpBool) {
             log("hasEatPumpBool");
 
             for (var element in tempData) {
