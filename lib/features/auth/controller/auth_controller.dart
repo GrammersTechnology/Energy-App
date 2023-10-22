@@ -267,11 +267,13 @@ class AuthController {
 
   addUserProfileDetails(context) async {
     loader = true;
+    final pref = await SharedPreferences.getInstance();
+    final zone = pref.get("zone");
     ProfileModel data = ProfileModel(
         email: fb.currentUser!.email.toString(),
         count: '',
         powerCompany: "",
-        pricezone: dropdowmValue.toString(),
+        pricezone: zone.toString(),
         storreise: '',
         hasSensor: false,
         hasElCar: false,
