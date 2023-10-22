@@ -287,20 +287,24 @@ class AuthController {
     loader = true;
     ProfileModel data = ProfileModel(
         email: fb.currentUser!.email.toString(),
-        name: '',
+        count: '',
         powerCompany: "",
+        storreise: '',
         pricezone: zone.toString(),
         yearlyCosumption: "0",
         numberOfPepole: "0",
         powerCoins: "0",
         powerPoint: "0",
+
         hasSensor: false,
         hasElCar: false,
         hasEatPump: false,
         hasSolarPanel: false,
-        wantPushWarning1: false,
-        wantPushWarning2: false,
-        all: false);
+        wantPushWarning: false,
+        all: false,
+        oppvaskmaskin: false,
+        torketrommel: false,
+        vaskemaskin: false);
 
     try {
       await db

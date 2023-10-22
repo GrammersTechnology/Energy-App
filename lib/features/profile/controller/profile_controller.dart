@@ -14,14 +14,18 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../utils/controller/local_notification.dart';
+
 ProfileModel? userProfile;
 final profileControllerProvider = Provider((ref) => ProfileController());
 final hasElCarStateProvider = StateProvider<bool>((ref) => false);
-final wantPushWarning2StateProvider = StateProvider<bool>((ref) => false);
+final hasSolarPanelStateProvider = StateProvider<bool>((ref) => false);
+final oppvaskmaskinStateProvider = StateProvider<bool>((ref) => false);
+final torketrommelStateProvider = StateProvider<bool>((ref) => false);
+final vaskemaskinStateProvider = StateProvider<bool>((ref) => false);
+final hasHeatPumpStateProvider = StateProvider<bool>((ref) => false);
 final hasSensorStateProvider = StateProvider<bool>((ref) => false);
 final wantPushWarning1StateProvider = StateProvider<bool>((ref) => false);
-final hasEatPumpStateProvider = StateProvider<bool>((ref) => false);
-final hasSolarPanelStateProvider = StateProvider<bool>((ref) => false);
 
 final profileCompanyDropdownListProvider = StateProvider<String>((ref) {
   return 'Select From List';
@@ -36,14 +40,21 @@ final mememberDropdownListProvider = StateProvider<String>((ref) {
 
 class ProfileController {
   List<SavingTips> savingTips = [];
-  List<String> numberOfMembers = ['No1'];
-  String? membersValue;
+  List<String> numberOfMembers = [
+    'Under 50 kvm',
+    '51 - 100 kvm',
+    "101 - 150 kvm",
+    "151 - 200 kvm",
+    "over 200 kvm"
+  ];
+  String? membersDropdownValue;
   FirebaseAuth fb = FirebaseAuth.instance;
   FirebaseFirestore db = FirebaseFirestore.instance;
   List<dynamic> csvTable = [];
   List<String> dropdwonList = [];
   String? dropDownValue;
   String? zoneDropdowmValue;
+  String? storreiseDropdownValue;
   List<String> zoneDropdwonList = [
     "NO1",
     "NO2",
@@ -53,7 +64,7 @@ class ProfileController {
   ];
 
   bool loader = false;
-  final nameController = TextEditingController();
+  final countController = TextEditingController();
   final zoneController = TextEditingController();
 
   final yearlyCosumptionController = TextEditingController();
@@ -64,53 +75,68 @@ class ProfileController {
   bool allBool = userProfile?.all ?? false;
   bool hasSensorBool = userProfile?.hasSensor ?? false;
   bool hasElCarBool = userProfile?.hasElCar ?? false;
-  bool hasEatPumpBool = userProfile?.hasEatPump ?? false;
+  bool hasHeatPumpBool = userProfile?.hasEatPump ?? false;
   bool hasSolarPanelBool = userProfile?.hasSolarPanel ?? false;
-  bool wantPushWarning1Bool = userProfile?.wantPushWarning1 ?? false;
-  bool wantPushWarning2Bool = userProfile?.wantPushWarning2 ?? false;
+  bool wantPushWarning1Bool = userProfile?.wantPushWarning ?? false;
+  bool oppvaskmaskin = userProfile?.oppvaskmaskin ?? false;
+  bool torketrommel = userProfile?.torketrommel ?? false;
+  bool vaskemaskin = userProfile?.vaskemaskin ?? false;
 
+// dropdawon list
   changeDropDownValue(value) {
-    log(value);
-
     dropDownValue = value;
-
-    log(dropDownValue.toString());
   }
 
-  houseMemberValue(value) {
-    membersValue = value;
+  houseMemberDropdownValue(value) {
+    membersDropdownValue = value;
   }
 
   changeZoneDropDownValue(value) {
     zoneDropdowmValue = value;
   }
 
-  hasSensorValueChange(value) {
-    hasSensorBool = value;
-  }
+// dropdawon list end
 
+// check box list
   hasElCarValueChange(value) {
     hasElCarBool = value;
-  }
-
-  allValueChange(value) {
-    allBool = value;
-  }
-
-  hasEatPumpValueChange(value) {
-    hasEatPumpBool = value;
   }
 
   hasSolarPanelValueChange(value) {
     hasSolarPanelBool = value;
   }
 
-  wantPushWarning1ValueChange(value) {
-    wantPushWarning1Bool = value;
+  oppvaskmakinChange(value) {
+    oppvaskmaskin = value;
   }
 
-  wantPushWarning2ValueChange(value) {
-    wantPushWarning2Bool = value;
+  torketommelChange(value) {
+    torketrommel = value;
+  }
+
+  vaskemaskinChange(value) {
+    vaskemaskin = value;
+  }
+
+  hasHeatPumpValueChange(value) {
+    hasHeatPumpBool = value;
+  }
+
+  hasSensorValueChange(value) {
+    hasSensorBool = value;
+  }
+
+  wantPushWarning1ValueChange(value) async {
+    wantPushWarning1Bool = value;
+    if (wantPushWarning1Bool) {
+      await NotificationService().initNotification();
+      NotificationService().morningNotification();
+      NotificationService().afterNoonNotification();
+    }
+  }
+
+  allValueChange(value) {
+    allBool = value;
   }
 
   Future<List<String>> fetchCSVData() async {
@@ -136,72 +162,83 @@ class ProfileController {
   }
 
 // update save saveStrom details
-  saveStrom() {}
-  updateUserProfileDetails(context) async {
+  saveStrom() async {
     loader = true;
-    String name;
-    String yearlyConsmtn;
-    String numberOfPepole;
-    String powerCoins;
-    String powerPoint;
+    if (dropDownValue.toString().isEmpty &&
+        zoneDropdowmValue.toString().isEmpty) {
+      const SnackBar(
+        content: Text(' Select your values'),
+      );
+    } else {
+      if (userProfile == null) {
+        log("nulll");
+        log(dropDownValue.toString() + zoneDropdowmValue.toString());
+      } else {
+        ProfileModel data = ProfileModel(
+            count: countController.text,
+            storreise: storreiseDropdownValue ?? userProfile?.storreise ?? "",
+            all: userProfile!.all,
+            email: fb.currentUser!.email.toString(),
+            powerCompany: dropDownValue ?? userProfile!.powerCompany,
+            pricezone: zoneDropdowmValue ?? userProfile!.pricezone,
+            hasSensor: userProfile!.hasSensor,
+            hasElCar: userProfile!.hasElCar,
+            hasEatPump: userProfile!.hasEatPump,
+            hasSolarPanel: userProfile!.hasSolarPanel,
+            wantPushWarning: userProfile!.wantPushWarning,
+            oppvaskmaskin: userProfile!.oppvaskmaskin,
+            torketrommel: userProfile!.torketrommel,
+            vaskemaskin: userProfile!.vaskemaskin);
+        log(data.toString());
+      }
 
-    String zone;
+      // try {
+      //   await db
+      //       .collection('user')
+      //       .doc(fb.currentUser!.uid)
+      //       .collection('profile')
+      //       .doc(fb.currentUser!.uid)
+      //       .update(data.toJson());
+      //   await AuthController().updateZoneIdFromFirestore(
+      //       data.pricezone, fb.currentUser!.email.toString());
+      //   await AuthController().fetchZoneIdFromFirestore();
 
-    if (nameController.text.isEmpty) {
-      name = userProfile!.name;
-    } else {
-      name = nameController.text;
-    }
-    zone = zoneDropdowmValue ?? userProfile!.pricezone;
+      //   Routes.pushreplace(screen: const NavBarWidget());
 
-    if (yearlyCosumptionController.text.isEmpty) {
-      yearlyConsmtn = userProfile!.yearlyCosumption;
-    } else {
-      yearlyConsmtn = yearlyCosumptionController.text;
-    }
-    if (numberOfPepoleControler.text.isEmpty) {
-      numberOfPepole = userProfile!.numberOfPepole;
-    } else {
-      numberOfPepole = numberOfPepoleControler.text;
-    }
-    if (powerCoinsController.text.isEmpty) {
-      powerCoins = userProfile!.powerCoins;
-    } else {
-      powerCoins = powerCoinsController.text;
-    }
-    if (powerPointController.text.isEmpty) {
-      powerPoint = userProfile!.powerPoint;
-    } else {
-      powerPoint = powerPointController.text;
-    }
+      //   clearController();
 
-    log(name.toString());
-    log(zone);
-    log(yearlyConsmtn.toString());
-    log(numberOfPepole);
-    log(powerCoins);
-    log(powerPoint);
+      //   loader = false;
+      // } catch (e) {
+      //   // Messenger.pop(msg: e.toString(), context: context);
+      //   loader = false;
+      // }
+    }
+  }
+
+  // Diit hjem saving
+
+  dittHjemSave() {}
+
+  updateUserProfiledittHjemSaveDetails(context) async {
+    loader = true;
+
     ProfileModel data = ProfileModel(
-        all: hasElCarBool && hasSolarPanelBool && hasEatPumpBool ? true : false,
+        count: countController.text,
+        storreise: storreiseDropdownValue ?? userProfile!.storreise,
+        all:
+            hasElCarBool && hasSolarPanelBool && hasHeatPumpBool ? true : false,
         email: fb.currentUser!.email.toString(),
-        name: name.toString(),
-        powerCompany: dropDownValue ?? userProfile!.powerCompany.toString(),
-        pricezone: zone.toString(),
-        yearlyCosumption: yearlyConsmtn,
-        numberOfPepole: numberOfPepole,
-        powerCoins: powerCoins,
-        powerPoint: powerPoint,
+        powerCompany: userProfile!.powerCompany.toString(),
+        pricezone: userProfile!.pricezone,
         hasSensor: hasSensorBool,
         hasElCar: hasElCarBool,
-        hasEatPump: hasEatPumpBool,
+        hasEatPump: hasHeatPumpBool,
         hasSolarPanel: hasSolarPanelBool,
-        wantPushWarning1: wantPushWarning1Bool,
-        wantPushWarning2: wantPushWarning2Bool);
-    if (allBool) {
-      hasElCarBool = true;
-      hasEatPumpBool = true;
-      hasSolarPanelBool = true;
-    }
+        wantPushWarning: userProfile!.wantPushWarning,
+        oppvaskmaskin: oppvaskmaskin,
+        torketrommel: torketrommel,
+        vaskemaskin: vaskemaskin);
+
     try {
       await db
           .collection('user')
@@ -209,8 +246,8 @@ class ProfileController {
           .collection('profile')
           .doc(fb.currentUser!.uid)
           .update(data.toJson());
-      await AuthController()
-          .updateZoneIdFromFirestore(zone, fb.currentUser!.email.toString());
+      await AuthController().updateZoneIdFromFirestore(
+          userProfile!.pricezone, fb.currentUser!.email.toString());
       await AuthController().fetchZoneIdFromFirestore();
 
       Routes.pushreplace(screen: const NavBarWidget());
@@ -225,7 +262,7 @@ class ProfileController {
   }
 
   clearController() {
-    nameController.clear();
+    countController.clear();
     yearlyCosumptionController.clear();
     numberOfPepoleControler.clear();
     powerCoinsController.clear();
@@ -259,10 +296,9 @@ class ProfileController {
         userProfile = ProfileModel.fromJson(value.data()!);
         hasSensorBool = userProfile?.hasSensor ?? false;
         hasElCarBool = userProfile?.hasElCar ?? false;
-        hasEatPumpBool = userProfile?.hasEatPump ?? false;
+        hasHeatPumpBool = userProfile?.hasEatPump ?? false;
         hasSolarPanelBool = userProfile?.hasSolarPanel ?? false;
-        wantPushWarning1Bool = userProfile?.wantPushWarning1 ?? false;
-        wantPushWarning2Bool = userProfile?.wantPushWarning2 ?? false;
+        wantPushWarning1Bool = userProfile?.wantPushWarning ?? false;
         loader = false;
       });
       return userProfile;
