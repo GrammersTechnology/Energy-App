@@ -39,30 +39,43 @@ class AuthController {
     log('${pref.getString('zone')}-----');
   }
 
-  bool showLoginContent = true; // Initially, show the authentication content
+  bool showLoginContent = true;
 
-  void toggleContent() {
+  void toggleRegisterContent() {
     showLoginContent = !showLoginContent;
+    finishRegister();
   }
 
-  bool isOnboardingCompleted = false;
-
-  void finishOnboarding() async {
-    final pref = await SharedPreferences.getInstance();
-    isOnboardingCompleted = true;
-    await pref.setBool('finishedOnboarding', isOnboardingCompleted);
+  void toggleLoginContent() {
+    showLoginContent = !showLoginContent;
+    finishLogin();
   }
 
-  bool loginCompleted = false;
+  bool isLogin = false;
 
   void finishLogin() {
-    loginCompleted = !loginCompleted;
+    isLogin = !isLogin;
+  }
+
+  bool isRegister = false;
+
+  void finishRegister() {
+    isRegister = !isRegister;
   }
 
   bool authProcessCompleted = false;
 
   void isProcessCompleted() {
     authProcessCompleted = !authProcessCompleted;
+  }
+
+  bool isOnboardingCompleted = false;
+
+  void finishOnboarding() async {
+    final pref = await SharedPreferences.getInstance();
+
+    isOnboardingCompleted = true;
+    await pref.setBool('finishedOnboarding', isOnboardingCompleted);
   }
 
   bool loader = false;
