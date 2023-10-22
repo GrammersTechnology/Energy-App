@@ -81,12 +81,15 @@ class AuthController {
   bool loader = false;
 
   signup(context) async {
+    final pref = await SharedPreferences.getInstance();
+
+    final zoneData = pref.getString('zone');
     loader = true;
     try {
       await fb.createUserWithEmailAndPassword(
           email: emailController.text.trim(),
           password: passwordController.text.trim());
-      final data = UserModel(zone: dropdowmValue, email: fb.currentUser?.email);
+      final data = UserModel(zone: zoneData, email: fb.currentUser?.email);
       await db
           .collection("user")
           .doc(fb.currentUser?.uid)
