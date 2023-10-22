@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'package:demo/features/auth/screen/profile_auth.dart';
 import 'package:demo/features/navbar_widget.dart';
 import 'package:demo/features/profile/model/profile_model.dart';
 import 'package:demo/utils/const/api_error_helper.dart';
@@ -28,7 +27,7 @@ class AuthController {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final GoogleSignIn _googleSignIn = GoogleSignIn();
-  bool loader = false;
+
   String? dropdowmValue;
   List<String> dropdwonList = ["NO1", "NO2", "NO3", "NO4", "NO5"];
 
@@ -40,28 +39,24 @@ class AuthController {
     log('${pref.getString('zone')}-----');
   }
 
-  bool showLoginContent = true;
+  bool showLoginContent = true; // Initially, show the authentication content
 
-  void toggleRegisterContent() {
+  void toggleContent() {
     showLoginContent = !showLoginContent;
-    finishRegister();
   }
 
-  void toggleLoginContent() {
-    showLoginContent = !showLoginContent;
-    finishLogin();
+  bool isOnboardingCompleted = false;
+
+  void finishOnboarding() async {
+    final pref = await SharedPreferences.getInstance();
+    isOnboardingCompleted = true;
+    await pref.setBool('finishedOnboarding', isOnboardingCompleted);
   }
 
-  bool isLogin = false;
+  bool loginCompleted = false;
 
   void finishLogin() {
-    isLogin = !isLogin;
-  }
-
-  bool isRegister = false;
-
-  void finishRegister() {
-    isRegister = !isRegister;
+    loginCompleted = !loginCompleted;
   }
 
   bool authProcessCompleted = false;
@@ -70,24 +65,15 @@ class AuthController {
     authProcessCompleted = !authProcessCompleted;
   }
 
-  bool isOnboardingCompleted = false;
-
-  void finishOnboarding() async {
-    final pref = await SharedPreferences.getInstance();
-
-    isOnboardingCompleted = true;
-    await pref.setBool('finishedOnboarding', isOnboardingCompleted);
-  }
+  bool loader = false;
 
   signup(context) async {
     loader = true;
-    final pref = await SharedPreferences.getInstance();
-    final zoneData = pref.getString('zone');
     try {
       await fb.createUserWithEmailAndPassword(
           email: emailController.text.trim(),
           password: passwordController.text.trim());
-      final data = UserModel(zone: zoneData, email: fb.currentUser?.email);
+      final data = UserModel(zone: dropdowmValue, email: fb.currentUser?.email);
       await db
           .collection("user")
           .doc(fb.currentUser?.uid)
@@ -138,13 +124,12 @@ class AuthController {
   }
 
   saveAuthLocal() async {
-    final pref = await SharedPreferences.getInstance();
-    final zoneData = pref.getString('zone');
     final email = fb.currentUser?.email;
     final password = passwordController.text;
+    final pref = await SharedPreferences.getInstance();
     await pref.setString('email', email.toString());
     await pref.setString('password', password.toString());
-    await pref.setString('zone', zoneData.toString().toUpperCase());
+    await pref.setString('zone', dropdowmValue.toString().toUpperCase());
   }
 
   clearLocalData() async {
@@ -222,7 +207,7 @@ class AuthController {
       Routes.pushreplace(screen: const NavBarWidget());
       ProfileController().getUserProfileDetails();
     } else {
-      Routes.pushreplace(screen: const ProfileAuthentication());
+      Routes.pushreplace(screen: const LoginScreen());
     }
   }
 
@@ -243,7 +228,6 @@ class AuthController {
         await pref.setString('password', password.toString());
         await fetchZoneIdFromFirestore();
         loader = false;
-        finishLogin();
         checkCurrentUser(context);
       } catch (e) {
         loader = false;
@@ -282,20 +266,15 @@ class AuthController {
   }
 
   addUserProfileDetails(context) async {
-    final pref = await SharedPreferences.getInstance();
-    final zone = pref.getBool('zone');
     loader = true;
+    final pref = await SharedPreferences.getInstance();
+    final zone = pref.get("zone");
     ProfileModel data = ProfileModel(
         email: fb.currentUser!.email.toString(),
         count: '',
         powerCompany: "",
-        storreise: '',
         pricezone: zone.toString(),
-        yearlyCosumption: "0",
-        numberOfPepole: "0",
-        powerCoins: "0",
-        powerPoint: "0",
-
+        storreise: '',
         hasSensor: false,
         hasElCar: false,
         hasEatPump: false,
