@@ -16,7 +16,7 @@ class ProfileAuthentication extends ConsumerWidget {
     final controller = ref.watch(authControllerProvider);
     ref.watch(stateUpdateProvider);
     return Scaffold(
-        appBar: controller.loginCompleted == false &&
+        appBar: (controller.isRegister == true || controller.isLogin == true) &&
                 controller.showLoginContent == false
             ? AppBar(
                 backgroundColor: Colors.transparent,
@@ -24,8 +24,14 @@ class ProfileAuthentication extends ConsumerWidget {
                 leading: IconButton(
                     onPressed: () {
                       controller.showLoginContent = true;
+                      controller.isRegister = false;
+                      controller.isLogin = false;
                       ref.read(stateUpdateProvider.notifier).state =
                           controller.showLoginContent;
+                      ref.read(stateUpdateProvider.notifier).state =
+                          controller.isRegister;
+                      ref.read(stateUpdateProvider.notifier).state =
+                          controller.isLogin;
                     },
                     icon: const Icon(
                       Icons.arrow_back_ios_new_rounded,
@@ -78,9 +84,11 @@ class ProfileAuthentication extends ConsumerWidget {
                               label: "Register deg med Epost",
                               labelColor: Colors.black,
                               onPressed: () {
-                                controller.toggleContent();
+                                controller.toggleRegisterContent();
                                 ref.read(stateUpdateProvider.notifier).state =
                                     controller.showLoginContent;
+                                ref.read(stateUpdateProvider.notifier).state =
+                                    controller.isRegister;
                               },
                               color: Colors.white,
                               borderColor: Colors.black,
@@ -91,7 +99,15 @@ class ProfileAuthentication extends ConsumerWidget {
                               children: [
                                 const Text('Har du allerede bruker?'),
                                 TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    controller.toggleLoginContent();
+                                    ref
+                                        .read(stateUpdateProvider.notifier)
+                                        .state = controller.showLoginContent;
+                                    ref
+                                        .read(stateUpdateProvider.notifier)
+                                        .state = controller.isLogin;
+                                  },
                                   child: const Text(
                                     ' Logg inn',
                                     style: TextStyle(
@@ -103,50 +119,99 @@ class ProfileAuthentication extends ConsumerWidget {
                           ],
                         ),
                       )
-                    ] else ...[
-                      if (controller.loginCompleted == false) ...[
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Registerer\nbruker',
-                                style: TextStyle(
-                                    fontSize: 48, fontWeight: FontWeight.bold),
-                              ),
-                              vSpaceMedium,
-                              const Text('Epost'),
-                              vSpaceSmall,
-                              const BygeInputField(
-                                placeholder: 'Epost',
-                                placeholderColor:
-                                    Color.fromARGB(255, 124, 123, 123),
-                              ),
-                              vSpaceMedium,
-                              const Text('Passord'),
-                              vSpaceSmall,
-                              const BygeInputField(
-                                placeholder: 'Passord',
-                                placeholderColor:
-                                    Color.fromARGB(255, 124, 123, 123),
-                              ),
-                              vSpaceRegular,
-                              BygePrimaryButton(
-                                label: "Register deg med Goolge",
-                                onPressed: () {
-                                  controller.finishLogin();
-                                  ref.read(stateUpdateProvider.notifier).state =
-                                      controller.loginCompleted;
-                                },
-                                color: const Color(0XFF404040),
-                              ),
-                            ],
-                          ),
+                    ] else if (controller.showLoginContent == false &&
+                        controller.isLogin == true) ...[
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Logg inn',
+                              style: TextStyle(
+                                  fontSize: 48, fontWeight: FontWeight.bold),
+                            ),
+                            vSpaceMedium,
+                            const Text('Epost'),
+                            vSpaceSmall,
+                            BygeInputField(
+                              controller: controller.emailController,
+                              placeholder: 'Epost',
+                              placeholderColor:
+                                  const Color.fromARGB(255, 124, 123, 123),
+                            ),
+                            vSpaceMedium,
+                            const Text('Passord'),
+                            vSpaceSmall,
+                            BygeInputField(
+                              controller: controller.passwordController,
+                              placeholder: 'Passord',
+                              placeholderColor:
+                                  const Color.fromARGB(255, 124, 123, 123),
+                            ),
+                            vSpaceRegular,
+                            BygePrimaryButton(
+                              label: "Logg inn",
+                              onPressed: () {},
+                              color: const Color(0XFF404040),
+                            ),
+                          ],
                         ),
-                      ] else ...[
-                        const AuthenticationFinished()
-                      ]
+                      ),
+                    ] else if (controller.showLoginContent == false &&
+                        controller.isRegister == true) ...[
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Registerer\nbruker',
+                              style: TextStyle(
+                                  fontSize: 48, fontWeight: FontWeight.bold),
+                            ),
+                            vSpaceMedium,
+                            const Text('Epost'),
+                            vSpaceSmall,
+                            BygeInputField(
+                              controller: controller.emailController,
+                              placeholder: 'Epost',
+                              placeholderColor:
+                                  const Color.fromARGB(255, 124, 123, 123),
+                            ),
+                            vSpaceMedium,
+                            const Text('Passord'),
+                            vSpaceSmall,
+                            BygeInputField(
+                              controller: controller.passwordController,
+                              placeholder: 'Passord',
+                              placeholderColor:
+                                  const Color.fromARGB(255, 124, 123, 123),
+                            ),
+                            vSpaceRegular,
+                            BygePrimaryButton(
+                              label: "Opprett bruker",
+                              onPressed: () {
+                                // controller.login(context);
+                                // ref.read(stateUpdateProvider.notifier).state =
+                                //     controller.isLogin;
+                                controller.showLoginContent = false;
+                                controller.isRegister = false;
+                                controller.isLogin = false;
+                                ref.read(stateUpdateProvider.notifier).state =
+                                    controller.showLoginContent;
+                                ref.read(stateUpdateProvider.notifier).state =
+                                    controller.isRegister;
+                                ref.read(stateUpdateProvider.notifier).state =
+                                    controller.isLogin;
+                              },
+                              color: const Color(0XFF404040),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ] else ...[
+                      const AuthenticationFinished()
                     ],
                   ],
                 ),
