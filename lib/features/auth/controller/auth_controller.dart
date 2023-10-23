@@ -91,6 +91,13 @@ class AuthController {
             screen: NavBarWidget(
           profile: cheackData,
         ));
+        final email = pref.getString("email");
+        final password = pref.getString("password");
+        if (email != null && password != null) {
+          if (email.isNotEmpty && password.isNotEmpty) {
+            pref.setBool('authProcessCompleted', true);
+          }
+        }
       } else {
         print("oooooooooobject");
 
@@ -172,6 +179,7 @@ class AuthController {
             // .collection('auth')
             .set(data.toJson());
         await addUserProfileDetails(context);
+        await saveAuthLocal();
 
         registerFinished = true;
         loader = false;
@@ -219,13 +227,12 @@ class AuthController {
   saveAuthLocal() async {
     final pref = await SharedPreferences.getInstance();
 
-    final zoneData = pref.getString('zone');
     final email = fb.currentUser?.email;
     final password = passwordController.text;
 
     await pref.setString('email', email.toString());
     await pref.setString('password', password.toString());
-    await pref.setString('zone', zoneData.toString().toUpperCase());
+    pref.setBool("Onboarding", true);
   }
 
   clearLocalData() async {
@@ -239,6 +246,8 @@ class AuthController {
   }
 
   Future<UserCredential?> signInWithGoogle(context) async {
+    final pref = await SharedPreferences.getInstance();
+    final zone = await pref.getString("zone");
     try {
       final GoogleSignInAccount? googleSignInAccount =
           await _googleSignIn.signIn();
@@ -253,7 +262,7 @@ class AuthController {
       // Redirect to homepage
       if (userCredential.user != null) {
         log("${userCredential.user?.email} ----this is the goole usercredential user email.");
-        final data = UserModel(zone: "NO1", email: userCredential.user?.email);
+        final data = UserModel(zone: zone, email: userCredential.user?.email);
         await db
             .collection("user")
             .doc(fb.currentUser?.uid)
@@ -261,11 +270,8 @@ class AuthController {
             .set(data.toJson());
         await addUserProfileDetails(context);
 
-        final pref = await SharedPreferences.getInstance();
-
         await pref.setString('email', userCredential.user?.email ?? '');
         await pref.setString('password', "123456");
-        await pref.setString('zone', "NO1");
         cheackLocalData(context);
       }
       return userCredential;
@@ -357,7 +363,7 @@ class AuthController {
         // Access the zone ID field
         String zoneId = data.pricezone.toString();
 
-        zoneId = zoneId.substring(zoneId.length - 1);
+        // zoneId = zoneId.substring(zoneId.length - 1);
         pref.setString('zone', zoneId.toString());
 
         loader = false;
@@ -381,7 +387,7 @@ class AuthController {
         storreise: '',
         hasSensor: false,
         hasElCar: false,
-        hasEatPump: false,
+        hasHeatPump: false,
         hasSolarPanel: false,
         wantPushWarning: false,
         all: false,

@@ -71,7 +71,7 @@ class ProfileController {
   bool allBool = userProfile?.all ?? false;
   bool hasSensorBool = userProfile?.hasSensor ?? false;
   bool hasElCarBool = userProfile?.hasElCar ?? false;
-  bool hasHeatPumpBool = userProfile?.hasEatPump ?? false;
+  bool hasHeatPumpBool = userProfile?.hasHeatPump ?? false;
   bool hasSolarPanelBool = userProfile?.hasSolarPanel ?? false;
   bool wantPushWarning1Bool = userProfile?.wantPushWarning ?? false;
   bool oppvaskmaskin = userProfile?.oppvaskmaskin ?? false;
@@ -182,7 +182,7 @@ class ProfileController {
             pricezone: userProfile?.pricezone ?? zone ?? "",
             hasSensor: userProfile?.hasSensor ?? false,
             hasElCar: userProfile?.hasElCar ?? false,
-            hasEatPump: userProfile?.hasEatPump ?? false,
+            hasHeatPump: userProfile?.hasHeatPump ?? false,
             hasSolarPanel: userProfile?.hasSolarPanel ?? false,
             wantPushWarning: userProfile?.wantPushWarning ?? false,
             oppvaskmaskin: userProfile?.oppvaskmaskin ?? false,
@@ -228,7 +228,7 @@ class ProfileController {
         pricezone: userProfile?.pricezone ?? zone ?? "NO1",
         hasSensor: hasSensorBool,
         hasElCar: hasElCarBool,
-        hasEatPump: hasHeatPumpBool,
+        hasHeatPump: hasHeatPumpBool,
         hasSolarPanel: hasSolarPanelBool,
         wantPushWarning: userProfile?.wantPushWarning ?? false,
         oppvaskmaskin: oppvaskmaskin,
@@ -279,7 +279,7 @@ class ProfileController {
           pricezone: userProfile?.pricezone ?? zone ?? "",
           hasSensor: userProfile?.hasSensor ?? false,
           hasElCar: userProfile?.hasElCar ?? false,
-          hasEatPump: userProfile?.hasEatPump ?? false,
+          hasHeatPump: userProfile?.hasHeatPump ?? false,
           hasSolarPanel: userProfile?.hasSolarPanel ?? false,
           wantPushWarning: wantPushWarning1Bool,
           oppvaskmaskin: userProfile?.oppvaskmaskin ?? false,
@@ -311,21 +311,8 @@ class ProfileController {
     countController.clear();
   }
 
-  checkProfileDetails() async {
-    final data = await getUserProfileDetails();
-    if (data != null) {
-      // Routes.push(
-      //     screen: ProfileEditScreen(
-      //   data: data,
-      // ));
-    } else {
-      const SnackBar(
-        content: Text('Try again'),
-      );
-    }
-  }
-
   Future<ProfileModel?> getUserProfileDetails() async {
+    log("profile function");
     loader = true;
     try {
       await db
@@ -338,13 +325,19 @@ class ProfileController {
         userProfile = ProfileModel.fromJson(value.data()!);
         hasSensorBool = userProfile?.hasSensor ?? false;
         hasElCarBool = userProfile?.hasElCar ?? false;
-        hasHeatPumpBool = userProfile?.hasEatPump ?? false;
+        hasHeatPumpBool = userProfile?.hasHeatPump ?? false;
         hasSolarPanelBool = userProfile?.hasSolarPanel ?? false;
         wantPushWarning1Bool = userProfile?.wantPushWarning ?? false;
+        vaskemaskin = userProfile?.vaskemaskin ?? false;
+        oppvaskmaskin = userProfile?.oppvaskmaskin ?? false;
+        torketrommel = userProfile?.torketrommel ?? false;
+
         loader = false;
       });
       return userProfile;
     } catch (e) {
+      log(e.toString());
+      log(fb.currentUser!.uid);
       ErrorHandlerCode().status401(e);
       loader = false;
       return userProfile;

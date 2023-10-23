@@ -3,7 +3,7 @@ class ProfileModel {
   String powerCompany, pricezone, count, storreise;
   bool hasSensor,
       hasElCar,
-      hasEatPump,
+      hasHeatPump,
       hasSolarPanel,
       wantPushWarning,
       all,
@@ -19,7 +19,7 @@ class ProfileModel {
       required this.pricezone,
       required this.hasSensor,
       required this.hasElCar,
-      required this.hasEatPump,
+      required this.hasHeatPump,
       required this.hasSolarPanel,
       required this.wantPushWarning,
       required this.all,
@@ -35,7 +35,7 @@ class ProfileModel {
       hasSensor: json['hasSensor'],
       hasElCar: json['hasElCar'],
       all: json['all'],
-      hasEatPump: json['hasEatPump'],
+      hasHeatPump: json['hasHeatPump'],
       hasSolarPanel: json['hasSolarPanel'],
       wantPushWarning: json['wantPushWarning'],
       oppvaskmaskin: json['oppvaskmaskin'],
@@ -49,9 +49,12 @@ class ProfileModel {
         "pricezone": pricezone,
         "hasSensor": hasSensor,
         "hasElCar": hasElCar,
-        "hasEatPump": hasEatPump,
+        "hasHeatPump": hasHeatPump,
         "hasSolarPanel": hasSolarPanel,
         "wantPushWarning": wantPushWarning,
+        "oppvaskmaskin": oppvaskmaskin,
+        "torketrommel": torketrommel,
+        "vaskemaskin": vaskemaskin,
         'all': all
       };
 }
