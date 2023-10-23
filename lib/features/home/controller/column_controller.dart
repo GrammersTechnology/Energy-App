@@ -20,11 +20,9 @@ class ColumnGraphController {
   }
 
   Future<List<GraphData>> feacthColumnGraphData() async {
-    // await AuthController().fetchZoneIdFromFirestore();
-    // final perf = await SharedPreferences.getInstance();
+    final perf = await SharedPreferences.getInstance();
 
-    // final zone = perf.getString("zone");
-    const zone = "1";
+    final zone = perf.getString("zone");
 
     List result =
         await HomeScreenServicesScreen().columnGraphDataApi(zone.toString());
@@ -33,13 +31,12 @@ class ColumnGraphController {
       for (var element in result) {
         final x = element['date'];
         final y = element['day_average_price'];
-        // log(y.toString());
         GraphData columnGraphDataelement = GraphData(
-            x: x.toString(), y: y, color: Color.fromARGB(255, 212, 211, 211));
+            x: x.toString(),
+            y: y,
+            color: const Color.fromARGB(255, 212, 211, 211));
         columnGraphData.add(columnGraphDataelement);
-        // log(columnGraphData.toString());
       }
-      // log(columnGraphData.toString());
       if (columnGraphData.isNotEmpty) {
         final maxValue = columnGraphData
             .reduce((value, element) => value.y > element.y ? value : element)
@@ -58,7 +55,7 @@ class ColumnGraphController {
       for (var element in columnGraphData) {
         // log(element.x.toString() + "__________________");
 
-        log(element.y.toString() + "__________________");
+        log("${element.y}__________________");
       }
       return columnGraphData;
     } else {

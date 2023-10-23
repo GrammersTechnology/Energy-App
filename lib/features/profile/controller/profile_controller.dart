@@ -13,6 +13,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../utils/controller/local_notification.dart';
 
@@ -66,11 +67,6 @@ class ProfileController {
   bool loader = false;
   final countController = TextEditingController();
   final zoneController = TextEditingController();
-
-  final yearlyCosumptionController = TextEditingController();
-  final numberOfPepoleControler = TextEditingController();
-  final powerCoinsController = TextEditingController();
-  final powerPointController = TextEditingController();
 
   bool allBool = userProfile?.all ?? false;
   bool hasSensorBool = userProfile?.hasSensor ?? false;
@@ -174,71 +170,71 @@ class ProfileController {
         log("nulll");
         log(dropDownValue.toString() + zoneDropdowmValue.toString());
       } else {
+        final pref = await SharedPreferences.getInstance();
+
+        final zone = pref.getString('zone');
         ProfileModel data = ProfileModel(
-            count: countController.text,
+            count: userProfile?.count ?? "",
             storreise: storreiseDropdownValue ?? userProfile?.storreise ?? "",
-            all: userProfile!.all,
+            all: userProfile?.all ?? false,
             email: fb.currentUser!.email.toString(),
-            powerCompany: dropDownValue ?? userProfile!.powerCompany,
-            pricezone: zoneDropdowmValue ?? userProfile!.pricezone,
-            hasSensor: userProfile!.hasSensor,
-            hasElCar: userProfile!.hasElCar,
-            hasEatPump: userProfile!.hasEatPump,
-            hasSolarPanel: userProfile!.hasSolarPanel,
-            wantPushWarning: userProfile!.wantPushWarning,
-            oppvaskmaskin: userProfile!.oppvaskmaskin,
-            torketrommel: userProfile!.torketrommel,
-            vaskemaskin: userProfile!.vaskemaskin);
+            powerCompany: dropDownValue ?? userProfile?.powerCompany ?? "",
+            pricezone: userProfile?.pricezone ?? zone ?? "",
+            hasSensor: userProfile?.hasSensor ?? false,
+            hasElCar: userProfile?.hasElCar ?? false,
+            hasEatPump: userProfile?.hasEatPump ?? false,
+            hasSolarPanel: userProfile?.hasSolarPanel ?? false,
+            wantPushWarning: userProfile?.wantPushWarning ?? false,
+            oppvaskmaskin: userProfile?.oppvaskmaskin ?? false,
+            torketrommel: userProfile?.torketrommel ?? false,
+            vaskemaskin: userProfile?.vaskemaskin ?? false);
         log(data.toString());
+        try {
+          await db
+              .collection('user')
+              .doc(fb.currentUser!.uid)
+              .collection('profile')
+              .doc(fb.currentUser!.uid)
+              .update(data.toJson());
+          await AuthController().updateZoneIdFromFirestore(
+              data.pricezone, fb.currentUser!.email.toString());
+          await AuthController().fetchZoneIdFromFirestore();
+
+          clearController();
+
+          loader = false;
+        } catch (e) {
+          // Messenger.pop(msg: e.toString(), context: context);
+          loader = false;
+        }
       }
-
-      // try {
-      //   await db
-      //       .collection('user')
-      //       .doc(fb.currentUser!.uid)
-      //       .collection('profile')
-      //       .doc(fb.currentUser!.uid)
-      //       .update(data.toJson());
-      //   await AuthController().updateZoneIdFromFirestore(
-      //       data.pricezone, fb.currentUser!.email.toString());
-      //   await AuthController().fetchZoneIdFromFirestore();
-
-      //   Routes.pushreplace(screen: const NavBarWidget());
-
-      //   clearController();
-
-      //   loader = false;
-      // } catch (e) {
-      //   // Messenger.pop(msg: e.toString(), context: context);
-      //   loader = false;
-      // }
     }
   }
 
   // Diit hjem saving
 
-  dittHjemSave() {}
-
   updateUserProfiledittHjemSaveDetails(context) async {
     loader = true;
+    final pref = await SharedPreferences.getInstance();
 
+    final zone = pref.getString('zone');
     ProfileModel data = ProfileModel(
         count: countController.text,
-        storreise: storreiseDropdownValue ?? userProfile!.storreise,
+        storreise: storreiseDropdownValue ?? userProfile?.storreise ?? "",
         all:
             hasElCarBool && hasSolarPanelBool && hasHeatPumpBool ? true : false,
         email: fb.currentUser!.email.toString(),
-        powerCompany: userProfile!.powerCompany.toString(),
-        pricezone: userProfile!.pricezone,
+        powerCompany: userProfile?.powerCompany ?? "",
+        pricezone: userProfile?.pricezone ?? zone ?? "NO1",
         hasSensor: hasSensorBool,
         hasElCar: hasElCarBool,
         hasEatPump: hasHeatPumpBool,
         hasSolarPanel: hasSolarPanelBool,
-        wantPushWarning: userProfile!.wantPushWarning,
+        wantPushWarning: userProfile?.wantPushWarning ?? false,
         oppvaskmaskin: oppvaskmaskin,
         torketrommel: torketrommel,
         vaskemaskin: vaskemaskin);
-
+    log(data.toJson().toString());
     try {
       await db
           .collection('user')
@@ -249,24 +245,70 @@ class ProfileController {
       await AuthController().updateZoneIdFromFirestore(
           userProfile!.pricezone, fb.currentUser!.email.toString());
       await AuthController().fetchZoneIdFromFirestore();
-
-      Routes.pushreplace(screen: const NavBarWidget());
+      final bool = await AuthController().cheackProssCompleted();
+      Routes.pushreplace(
+          screen: NavBarWidget(
+        profile: bool,
+      ));
 
       clearController();
 
       loader = false;
     } catch (e) {
+      log(e.toString());
       Messenger.pop(msg: e.toString(), context: context);
       loader = false;
     }
   }
 
+  /// pushVarSinger
+  pushVars() async {
+    loader = true;
+
+    if (userProfile == null) {
+    } else {
+      final pref = await SharedPreferences.getInstance();
+
+      final zone = pref.getString('zone');
+      ProfileModel data = ProfileModel(
+          count: userProfile?.count ?? "",
+          storreise: userProfile?.storreise ?? "",
+          all: userProfile?.all ?? false,
+          email: fb.currentUser!.email.toString(),
+          powerCompany: userProfile?.powerCompany ?? "",
+          pricezone: userProfile?.pricezone ?? zone ?? "",
+          hasSensor: userProfile?.hasSensor ?? false,
+          hasElCar: userProfile?.hasElCar ?? false,
+          hasEatPump: userProfile?.hasEatPump ?? false,
+          hasSolarPanel: userProfile?.hasSolarPanel ?? false,
+          wantPushWarning: wantPushWarning1Bool,
+          oppvaskmaskin: userProfile?.oppvaskmaskin ?? false,
+          torketrommel: userProfile?.torketrommel ?? false,
+          vaskemaskin: userProfile?.vaskemaskin ?? false);
+      log(data.toString());
+      try {
+        await db
+            .collection('user')
+            .doc(fb.currentUser!.uid)
+            .collection('profile')
+            .doc(fb.currentUser!.uid)
+            .update(data.toJson());
+        await AuthController().updateZoneIdFromFirestore(
+            data.pricezone, fb.currentUser!.email.toString());
+        await AuthController().fetchZoneIdFromFirestore();
+
+        clearController();
+
+        loader = false;
+      } catch (e) {
+        // Messenger.pop(msg: e.toString(), context: context);
+        loader = false;
+      }
+    }
+  }
+
   clearController() {
     countController.clear();
-    yearlyCosumptionController.clear();
-    numberOfPepoleControler.clear();
-    powerCoinsController.clear();
-    powerPointController.clear();
   }
 
   checkProfileDetails() async {

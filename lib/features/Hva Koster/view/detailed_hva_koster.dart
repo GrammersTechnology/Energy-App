@@ -13,7 +13,8 @@ class HvaKosterDetailedScreen extends StatelessWidget {
         child: Column(children: [
           Row(children: [
             IconButton(
-                onPressed: () {}, icon: Icon(Icons.arrow_back_ios_new_rounded)),
+                onPressed: () {},
+                icon: const Icon(Icons.arrow_back_ios_new_rounded)),
             Text(data[index]["details"]["front_end"])
           ]),
           vSpaceLarge,
@@ -21,7 +22,7 @@ class HvaKosterDetailedScreen extends StatelessWidget {
               padding: const EdgeInsets.all(15),
               child: Row(children: [
                 Text(data[index]['details']["description"].toString()),
-                Spacer(),
+                const Spacer(),
                 Text(
                     "varghet: ${data[index]["details"]["duration_hours"].toString()} timer")
               ])),
@@ -32,41 +33,40 @@ class HvaKosterDetailedScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  data[index]["cost"]['cheapest']["cost"].toString() + "Kr",
-                  style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                  "${data[index]["cost"]['cheapest']["cost"]}Kr",
+                  style: const TextStyle(
+                      fontSize: 40, fontWeight: FontWeight.bold),
                 ),
                 vSpaceMedium,
                 Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.arrow_circle_up_rounded,
                       color: Colors.red,
                     ),
                     hSpaceSmall,
                     Text(
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.black,
                           fontSize: 15,
                           fontWeight: FontWeight.bold),
-                      data[index]['cost']['most_expensive']['cost'].toString() +
-                          "kr ",
+                      "${data[index]['cost']['most_expensive']['cost']}kr ",
                     ),
                     Text(
                       "(kl. ${data[index]['cost']['most_expensive']['start_hour'].toString()}-${data[index]['cost']['most_expensive']['end_hour'].toString()})",
                     ),
                     hSpaceSmall,
-                    Icon(
+                    const Icon(
                       Icons.arrow_circle_down_rounded,
                       color: Colors.green,
                     ),
                     hSpaceSmall,
                     Text(
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Colors.black,
                             fontSize: 15,
                             fontWeight: FontWeight.bold),
-                        data[index]['cost']['cheapest']['cost'].toString() +
-                            "kr "),
+                        "${data[index]['cost']['cheapest']['cost']}kr "),
                     Text(
                         "(kl. ${data[index]['cost']['cheapest']['start_hour'].toString()}-${data[index]['cost']['cheapest']['end_hour'].toString()})"),
                   ],

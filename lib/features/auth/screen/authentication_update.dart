@@ -39,6 +39,8 @@ class AuthenticationFinished extends ConsumerWidget {
                       BygePrimaryButton(
                         label: "RTilpass profil",
                         onPressed: () {
+                          AuthController().saveAuthLocal();
+
                           datas.isProcessCompleted();
                           ref.read(stateUpdateProvider.notifier).state =
                               datas.authProcessCompleted;

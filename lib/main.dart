@@ -11,9 +11,6 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await NotificationService().initNotification();
-  // NotificationService().showNotification();
-  // NotificationService().morningNotification();
-  // NotificationService().afterNoonNotification();
 
   runApp(const ProviderScope(child: MyApp()));
 }

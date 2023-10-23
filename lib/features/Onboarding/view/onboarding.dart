@@ -1,5 +1,4 @@
 import 'package:demo/features/auth/controller/auth_controller.dart';
-import 'package:demo/features/navbar_widget.dart';
 import 'package:demo/utils/const/space_helper.dart';
 import 'package:demo/utils/const/widgets/byge-design-system/buttons/primary_button.dart';
 import 'package:demo/utils/const/widgets/byge-design-system/theme/text_styles.dart';
@@ -46,7 +45,7 @@ class OnboardingScreen extends StatelessWidget {
               child: BygePrimaryButton(
                 label: "Ta meg videre",
                 onPressed: () {
-                  Routes.pushRemoveUntil(screen: const OnboardZone());
+                  Routes.pushreplace(screen: const OnboardZone());
                 },
                 color: const Color(0XFF404040),
               ),
@@ -124,10 +123,7 @@ class OnboardZone extends ConsumerWidget {
               BygePrimaryButton(
                 label: "Lagre og gå videre",
                 onPressed: () {
-                  authRepository.finishOnboarding();
-                  ref.read(stateUpdateProvider.notifier).state =
-                      authRepository.isOnboardingCompleted;
-                  Routes.pushRemoveUntil(screen: const NavBarWidget());
+                  authRepository.saveOnboarding(context);
                 },
                 color: const Color(0XFF404040),
               ),

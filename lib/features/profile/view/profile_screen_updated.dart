@@ -1,3 +1,4 @@
+import 'package:demo/features/auth/controller/auth_controller.dart';
 import 'package:demo/features/profile/controller/profile_controller.dart';
 import 'package:demo/utils/const/space_helper.dart';
 import 'package:demo/utils/const/widgets/byge-design-system/buttons/primary_button.dart';
@@ -55,6 +56,7 @@ class ProfilePage extends ConsumerWidget {
                 BygePrimaryButton(
                   label: "Logg ut",
                   onPressed: () {
+                    AuthController().clearLocalData();
                     // Replace the current content with the "hello" content
                   },
                   labelColor: Colors.black,
@@ -136,7 +138,7 @@ class ProfilePage extends ConsumerWidget {
                   child: BygeInputField(
                     controller: profileRepository.countController,
                     placeholder: 'Count',
-                    placeholderColor: Color.fromARGB(255, 124, 123, 123),
+                    placeholderColor: const Color.fromARGB(255, 124, 123, 123),
                   ),
                 ),
                 vSpaceRegular,
@@ -360,6 +362,7 @@ class ProfilePage extends ConsumerWidget {
                   BygePrimaryButton(
                     label: "Lagre endringer",
                     onPressed: () {
+                      profileRepository.pushVars();
                       // Replace the current content with the "hello" content
                     },
                     color: const Color(0XFF404040),

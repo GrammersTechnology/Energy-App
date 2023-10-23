@@ -12,8 +12,7 @@ class HvaController {
   Future<List<dynamic>> getHvaDetails() async {
     final pref = await SharedPreferences.getInstance();
 
-    // String? zone = pref.getString('zone');
-    String? zone = "1";
+    String? zone = pref.getString('zone');
     final response = await HvaKasterServices().getHavKasterDetails(zone);
     // print(response);
     List firstLevelValues = [];

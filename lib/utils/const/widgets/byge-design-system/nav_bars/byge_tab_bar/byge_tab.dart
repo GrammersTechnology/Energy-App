@@ -18,7 +18,7 @@ class BygeTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: Tab(
         text: text,

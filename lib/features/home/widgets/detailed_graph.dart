@@ -6,21 +6,22 @@ class DetailedGraph extends StatelessWidget {
       {super.key,
       required this.child,
       required this.title,
-      required this.IconDetails,
+      required this.iconDetails,
       required this.details,
       required this.onPress});
   Widget child;
   String title;
   String details;
-  String IconDetails;
+  String iconDetails;
   void Function() onPress;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Column(children: [
         Row(children: [
-          IconButton(onPressed: onPress, icon: Icon(Icons.arrow_back_ios)),
-          Text('Tilbake'),
+          IconButton(
+              onPressed: onPress, icon: const Icon(Icons.arrow_back_ios)),
+          const Text('Tilbake'),
           hSpaceMedium,
           Text(title)
         ]),
@@ -28,7 +29,10 @@ class DetailedGraph extends StatelessWidget {
         Text(details),
         vSpaceLarge,
         Row(
-          children: [Text(IconDetails), Icon(Icons.question_mark_rounded)],
+          children: [
+            Text(iconDetails),
+            const Icon(Icons.question_mark_rounded)
+          ],
         ),
         vSpaceLarge,
         child,
@@ -37,8 +41,8 @@ class DetailedGraph extends StatelessWidget {
             borderColor: Colors.black,
             selectedColor: Colors.black,
             borderRadius: BorderRadius.circular(30),
-            children: [Text("data"), Text("data"), Text("data")],
-            isSelected: [true, true, false])
+            isSelected: const [true, true, false],
+            children: const [Text("data"), Text("data"), Text("data")])
       ]),
     );
   }

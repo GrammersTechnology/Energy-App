@@ -1,11 +1,12 @@
 import 'package:demo/features/Hva%20Koster/view/hva_koster_screen.dart';
 import 'package:demo/features/auth/screen/profile_auth.dart';
 import 'package:demo/features/home/home_screen.dart';
+import 'package:demo/features/profile/view/profile_screen_updated.dart';
 import 'package:flutter/material.dart';
 
 class NavBarWidget extends StatefulWidget {
-  const NavBarWidget({super.key});
-
+  const NavBarWidget({super.key, required this.profile});
+  final bool profile;
   @override
   State<NavBarWidget> createState() => _NavBarWidgetState();
 }
@@ -13,14 +14,25 @@ class NavBarWidget extends StatefulWidget {
 class _NavBarWidgetState extends State<NavBarWidget> {
   int _currentIndex = 0;
 
-  final tabs = [
-    HomeScreen(),
-    const HvaKosterScreen(),
-    const ProfileAuthentication()
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final tabs = [
+      HomeScreen(),
+      const HvaKosterScreen(),
+      if (widget.profile == true)
+        SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              children: [
+                ProfilePage(),
+              ],
+            ),
+          ),
+        )
+      else
+        const ProfileAuthentication()
+    ];
     return Scaffold(
       body: tabs[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -40,6 +52,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
           ),
         ],
         onTap: (index) {
+          widget.profile;
           setState(() {
             _currentIndex = index;
           });
