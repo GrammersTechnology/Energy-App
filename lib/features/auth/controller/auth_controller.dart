@@ -63,6 +63,8 @@ class AuthController {
     isRegister = !isRegister;
   }
 
+  bool registerFinished = false;
+
   bool authProcessCompleted = false;
 
   void isProcessCompleted() {
@@ -90,17 +92,17 @@ class AuthController {
           email: emailController.text.trim(),
           password: passwordController.text.trim());
       final data = UserModel(zone: zoneData, email: fb.currentUser?.email);
+      log('line 95');
       await db
           .collection("user")
           .doc(fb.currentUser?.uid)
           // .collection('auth')
           .set(data.toJson());
+      log('line 101');
       await addUserProfileDetails(context);
+      log('line 103');
       await saveAuthLocal();
-
-      showLoginContent = false;
-      isLogin = false;
-      isRegister = false;
+      registerFinished = true;
       loader = false;
     } catch (e) {
       clearLocalData();

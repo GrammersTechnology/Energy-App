@@ -189,22 +189,35 @@ class ProfileAuthentication extends ConsumerWidget {
                                   const Color.fromARGB(255, 124, 123, 123),
                             ),
                             vSpaceRegular,
-                            BygePrimaryButton(
-                              label: "Opprett bruker",
-                              onPressed: () {
-                                // controller.login(context);
-                                // ref.read(stateUpdateProvider.notifier).state =
-                                //     controller.isLogin;
-                                controller.signup(context);
-                                ref.read(stateUpdateProvider.notifier).state =
-                                    controller.showLoginContent;
-                                ref.read(stateUpdateProvider.notifier).state =
-                                    controller.isRegister;
-                                ref.read(stateUpdateProvider.notifier).state =
-                                    controller.isLogin;
-                              },
-                              color: const Color(0XFF404040),
-                            ),
+                            controller.loader == true
+                                ? const Center(
+                                    child: CircularProgressIndicator(
+                                    color: Colors.black,
+                                  ))
+                                : BygePrimaryButton(
+                                    label: "Opprett bruker",
+                                    onPressed: () {
+                                      controller.signup(context);
+                                      ref
+                                          .read(stateUpdateProvider.notifier)
+                                          .state = controller.registerFinished;
+                                      if (controller.registerFinished == true) {
+                                        controller.isLogin = false;
+                                        controller.isRegister = false;
+                                        controller.showLoginContent = false;
+                                        ref
+                                            .read(stateUpdateProvider.notifier)
+                                            .state = controller.showLoginContent;
+                                        ref
+                                            .read(stateUpdateProvider.notifier)
+                                            .state = controller.isRegister;
+                                        ref
+                                            .read(stateUpdateProvider.notifier)
+                                            .state = controller.isLogin;
+                                      }
+                                    },
+                                    color: const Color(0XFF404040),
+                                  ),
                           ],
                         ),
                       ),
