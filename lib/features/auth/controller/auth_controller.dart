@@ -64,7 +64,6 @@ class AuthController {
   }
 
   bool registerFinished = false;
-
   bool authProcessCompleted = false;
 
   void isProcessCompleted() {
