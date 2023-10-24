@@ -12,14 +12,13 @@ class HomeScreenServicesScreen {
     final date = DateTime.now();
     final currentDate =
         "${date.year}/${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}";
-    // log('${"$url${currentDate}_" + zone}.json');
+    log('${"$url${currentDate}_" + zone}.json');
     try {
-      Response response = await Dio().get(
-          "${"$url${currentDate}_NO" + zone}.json"
-          // 'https://www.hvakosterstrommen.no/api/v1/prices/2023/06-12_NO5.json',
-          );
+      Response response =
+          await Dio().get("${"$url${currentDate}_" + zone}.json");
+      print(response.data);
+
       if (response.statusCode == 200) {
-        // print(response.data);
         // print(response.statusCode);
         final result = response.data;
         //  List<DataModel>.from(
@@ -37,7 +36,7 @@ class HomeScreenServicesScreen {
 
   Future<dynamic> columnGraphDataApi(zone) async {
     String url =
-        'https://predictor-tdg24xwvka-ew.a.run.app/predict_spotprice_seven_days?price_area=NO';
+        'https://predictor-tdg24xwvka-ew.a.run.app/predict_spotprice_seven_days?price_area=';
 
     try {
       Response response = await Dio().get(url + zone);

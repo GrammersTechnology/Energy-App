@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:demo/features/Onboarding/view/onboarding.dart';
 import 'package:demo/features/navbar_widget.dart';
 import 'package:demo/features/profile/model/profile_model.dart';
 import 'package:demo/utils/const/api_error_helper.dart';
@@ -27,19 +28,20 @@ class AuthController {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final GoogleSignIn _googleSignIn = GoogleSignIn();
-
+  String? userEmail;
+  String? userPassword;
   String? dropdowmValue;
   List<String> dropdwonList = ["NO1", "NO2", "NO3", "NO4", "NO5"];
+  bool registerFinished = false;
+  bool isRegister = false;
+  bool isLogin = false;
+  bool showLoginContent = true;
+  bool authProcessCompleted = false;
+  bool loader = false;
 
   changeDropDownValue(value) async {
-    final pref = await SharedPreferences.getInstance();
     dropdowmValue = value;
-    await pref.setString('zone', dropdowmValue.toString().toUpperCase());
-
-    log('${pref.getString('zone')}-----');
   }
-
-  bool showLoginContent = true;
 
   void toggleRegisterContent() {
     showLoginContent = !showLoginContent;
@@ -51,68 +53,69 @@ class AuthController {
     finishLogin();
   }
 
-  bool isLogin = false;
-
   void finishLogin() {
     isLogin = !isLogin;
   }
-
-  bool isRegister = false;
 
   void finishRegister() {
     isRegister = !isRegister;
   }
 
-  bool registerFinished = false;
-  bool authProcessCompleted = false;
-
-  void isProcessCompleted() {
+  void isProcessCompleted() async {
     authProcessCompleted = !authProcessCompleted;
+    final pref = await SharedPreferences.getInstance();
+    pref.setBool('authProcessCompleted', true);
   }
 
-  bool isOnboardingCompleted = false;
-
-  void finishOnboarding() async {
+  Future<bool> cheackProssCompleted() async {
+    authProcessCompleted = !authProcessCompleted;
     final pref = await SharedPreferences.getInstance();
-
-    isOnboardingCompleted = true;
-    await pref.setBool('finishedOnboarding', isOnboardingCompleted);
+    final data = pref.getBool('authProcessCompleted');
+    return data ?? false;
   }
 
-  bool loader = false;
-
-  signup(context) async {
+// onboard Cheaking
+  checkOnboard() async {
     final pref = await SharedPreferences.getInstance();
+    final data = pref.getBool('Onboarding') ?? false;
+    final zone = pref.getString('zone') ?? "null";
+    print(zone);
+    if (data) {
+      print("object");
+      if (zone != "null") {
+        print("objecttttttttttt");
 
-    final zoneData = pref.getString('zone');
-    loader = true;
-    try {
-      await fb.createUserWithEmailAndPassword(
-          email: emailController.text.trim(),
-          password: passwordController.text.trim());
-      final data = UserModel(zone: zoneData, email: fb.currentUser?.email);
-      log('line 95');
-      await db
-          .collection("user")
-          .doc(fb.currentUser?.uid)
-          // .collection('auth')
-          .set(data.toJson());
-      log('line 101');
-      await addUserProfileDetails(context);
-      log('line 103');
-      await saveAuthLocal();
-      registerFinished = true;
-      loader = false;
-    } catch (e) {
-      clearLocalData();
-      loader = false;
+        print(data);
+        final cheackData = await cheackProssCompleted();
+        Routes.pushreplace(
+            screen: NavBarWidget(
+          profile: cheackData,
+        ));
+        final email = pref.getString("email");
+        final password = pref.getString("password");
+        if (email != null && password != null) {
+          if (email.isNotEmpty && password.isNotEmpty) {
+            pref.setBool('authProcessCompleted', true);
+          }
+        }
+      } else {
+        print("oooooooooobject");
+
+        Routes.pushreplace(screen: const OnboardingScreen());
+      }
+      print("objjjjjjjjjjjjject");
+    } else {
+      Routes.pushreplace(screen: const OnboardingScreen());
+    }
+  }
+
+  void saveOnboarding(context) async {
+    if (dropdowmValue == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Row(
             children: [
-              const Expanded(
-                  child: Text(
-                      'The email address is already in use by another account.')),
+              const Expanded(child: Text('Please Select From Dropdawon')),
               TextButton(
                 onPressed: () {
                   ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -129,6 +132,84 @@ class AuthController {
           behavior: SnackBarBehavior.floating,
         ),
       );
+    } else {
+      final pref = await SharedPreferences.getInstance();
+      await pref.setBool('Onboarding', true);
+      await pref.setString("zone", dropdowmValue ?? "NO1");
+      checkOnboard();
+    }
+  }
+
+  signup(context) async {
+    final pref = await SharedPreferences.getInstance();
+    if (emailController.text.trim().isEmpty ||
+        passwordController.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Row(
+            children: [
+              const Expanded(child: Text('Please Enter your valied Details')),
+              TextButton(
+                onPressed: () {
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                },
+                child: const Text(
+                  'Close',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
+          ),
+          backgroundColor: AppColors.primaryColor,
+          duration: const Duration(seconds: 3),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+    } else {
+      final zoneData = pref.getString('zone');
+      loader = true;
+      try {
+        await fb.createUserWithEmailAndPassword(
+            email: emailController.text.trim(),
+            password: passwordController.text.trim());
+        final data = UserModel(zone: zoneData, email: fb.currentUser?.email);
+        await db
+            .collection("user")
+            .doc(fb.currentUser?.uid)
+            // .collection('auth')
+            .set(data.toJson());
+        await addUserProfileDetails(context);
+        await saveAuthLocal();
+
+        registerFinished = true;
+        loader = false;
+      } catch (e) {
+        clearLocalData();
+        loader = false;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Row(
+              children: [
+                const Expanded(
+                    child: Text(
+                        'The email address is already in use by another account.')),
+                TextButton(
+                  onPressed: () {
+                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                  },
+                  child: const Text(
+                    'Close',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ],
+            ),
+            backgroundColor: AppColors.primaryColor,
+            duration: const Duration(seconds: 3),
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      }
     }
   }
 
@@ -146,23 +227,27 @@ class AuthController {
   saveAuthLocal() async {
     final pref = await SharedPreferences.getInstance();
 
-    final zoneData = pref.getString('zone');
     final email = fb.currentUser?.email;
     final password = passwordController.text;
 
     await pref.setString('email', email.toString());
     await pref.setString('password', password.toString());
-    await pref.setString('zone', zoneData.toString().toUpperCase());
+    pref.setBool("Onboarding", true);
   }
 
   clearLocalData() async {
     final pref = await SharedPreferences.getInstance();
     await pref.remove('email');
     await pref.remove('password');
-    await pref.remove('zone');
+    pref.setBool('authProcessCompleted', false);
+    showLoginContent = true;
+    isLogin = false;
+    isRegister = false;
   }
 
   Future<UserCredential?> signInWithGoogle(context) async {
+    final pref = await SharedPreferences.getInstance();
+    final zone = await pref.getString("zone");
     try {
       final GoogleSignInAccount? googleSignInAccount =
           await _googleSignIn.signIn();
@@ -177,7 +262,7 @@ class AuthController {
       // Redirect to homepage
       if (userCredential.user != null) {
         log("${userCredential.user?.email} ----this is the goole usercredential user email.");
-        final data = UserModel(zone: "NO1", email: userCredential.user?.email);
+        final data = UserModel(zone: zone, email: userCredential.user?.email);
         await db
             .collection("user")
             .doc(fb.currentUser?.uid)
@@ -185,11 +270,8 @@ class AuthController {
             .set(data.toJson());
         await addUserProfileDetails(context);
 
-        final pref = await SharedPreferences.getInstance();
-
         await pref.setString('email', userCredential.user?.email ?? '');
         await pref.setString('password', "123456");
-        await pref.setString('zone', "NO1");
         cheackLocalData(context);
       }
       return userCredential;
@@ -201,9 +283,6 @@ class AuthController {
       return null;
     }
   }
-
-  String? userEmail;
-  String? userPassword;
 
   getLocalData() async {
     final pref = await SharedPreferences.getInstance();
@@ -227,7 +306,9 @@ class AuthController {
   Future<void> checkCurrentUser(context) async {
     User? user = fb.currentUser;
     if (user != null) {
-      Routes.pushreplace(screen: const NavBarWidget());
+      final cheackData = await cheackProssCompleted();
+
+      Routes.pushreplace(screen: NavBarWidget(profile: cheackData));
       ProfileController().getUserProfileDetails();
     } else {
       Routes.pushreplace(screen: const LoginScreen());
@@ -236,6 +317,8 @@ class AuthController {
 
   login(context) async {
     loader = true;
+    log(emailController.text);
+    log(passwordController.text);
     if (emailController.text.isEmpty || passwordController.text.isEmpty) {
       Messenger.pop(msg: "Please Fill your Details", context: context);
     } else {
@@ -251,7 +334,11 @@ class AuthController {
         await pref.setString('password', password.toString());
         await fetchZoneIdFromFirestore();
         loader = false;
+        pref.setBool("Onboarding", true);
         checkCurrentUser(context);
+        isRegister = false;
+        isLogin = false;
+        showLoginContent = false;
       } catch (e) {
         loader = false;
         Messenger.pop(msg: e.toString(), context: context);
@@ -276,7 +363,7 @@ class AuthController {
         // Access the zone ID field
         String zoneId = data.pricezone.toString();
 
-        zoneId = zoneId.substring(zoneId.length - 1);
+        // zoneId = zoneId.substring(zoneId.length - 1);
         pref.setString('zone', zoneId.toString());
 
         loader = false;
@@ -300,21 +387,23 @@ class AuthController {
         storreise: '',
         hasSensor: false,
         hasElCar: false,
-        hasEatPump: false,
+        hasHeatPump: false,
         hasSolarPanel: false,
         wantPushWarning: false,
         all: false,
         oppvaskmaskin: false,
         torketrommel: false,
         vaskemaskin: false);
-
+    log(data.toJson().toString());
     try {
+      log("message");
       await db
           .collection('user')
           .doc(fb.currentUser!.uid)
           .collection('profile')
           .doc(fb.currentUser!.uid)
           .set(data.toJson());
+
       loader = false;
     } catch (e) {
       loader = false;

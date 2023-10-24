@@ -152,7 +152,9 @@ class ProfileAuthentication extends ConsumerWidget {
                             vSpaceRegular,
                             BygePrimaryButton(
                               label: "Logg inn",
-                              onPressed: () {},
+                              onPressed: () {
+                                controller.login(context);
+                              },
                               color: const Color(0XFF404040),
                             ),
                           ],
@@ -189,35 +191,26 @@ class ProfileAuthentication extends ConsumerWidget {
                                   const Color.fromARGB(255, 124, 123, 123),
                             ),
                             vSpaceRegular,
-                            controller.loader == true
-                                ? const Center(
-                                    child: CircularProgressIndicator(
-                                    color: Colors.black,
-                                  ))
-                                : BygePrimaryButton(
-                                    label: "Opprett bruker",
-                                    onPressed: () {
-                                      controller.signup(context);
-                                      ref
-                                          .read(stateUpdateProvider.notifier)
-                                          .state = controller.registerFinished;
-                                      if (controller.registerFinished == true) {
-                                        controller.isLogin = false;
-                                        controller.isRegister = false;
-                                        controller.showLoginContent = false;
-                                        ref
-                                            .read(stateUpdateProvider.notifier)
-                                            .state = controller.showLoginContent;
-                                        ref
-                                            .read(stateUpdateProvider.notifier)
-                                            .state = controller.isRegister;
-                                        ref
-                                            .read(stateUpdateProvider.notifier)
-                                            .state = controller.isLogin;
-                                      }
-                                    },
-                                    color: const Color(0XFF404040),
-                                  ),
+                            BygePrimaryButton(
+                              label: "Opprett bruker",
+                              onPressed: () {
+                                controller.signup(context);
+                                ref.read(stateUpdateProvider.notifier).state =
+                                    controller.registerFinished;
+                                if (controller.registerFinished == true) {
+                                  controller.isLogin = false;
+                                  controller.isRegister = false;
+                                  controller.showLoginContent = false;
+                                  ref.read(stateUpdateProvider.notifier).state =
+                                      controller.showLoginContent;
+                                  ref.read(stateUpdateProvider.notifier).state =
+                                      controller.isRegister;
+                                  ref.read(stateUpdateProvider.notifier).state =
+                                      controller.isLogin;
+                                }
+                              },
+                              color: const Color(0XFF404040),
+                            ),
                           ],
                         ),
                       ),

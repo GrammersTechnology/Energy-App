@@ -12,7 +12,7 @@ class InputFieldExamples extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(AppSpaces.m),
+      padding: const EdgeInsets.all(AppSpaces.m),
       child: Center(
         child: ListView(
           children: [

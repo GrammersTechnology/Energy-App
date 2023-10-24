@@ -42,7 +42,7 @@ class HomeScreen extends ConsumerWidget {
                       !columnBarState;
                 },
                 details: "Hoy pris og mye variasjon gejennom dagen",
-                IconDetails: "Spotpris 1 dag ",
+                iconDetails: "Spotpris 1 dag ",
                 title: "Strømpris",
                 child: const ColumnGraphWidget())
           else if (stepperRepository.showStepparBool)
@@ -52,7 +52,7 @@ class HomeScreen extends ConsumerWidget {
                   ref.read(showStepperBarBoolStateProvider.notifier).state =
                       !stepperBarState;
                 },
-                IconDetails: "Estimert gj.snittspris neste 7 dager",
+                iconDetails: "Estimert gj.snittspris neste 7 dager",
                 details: "",
                 title: "Strømprisvarrsel",
                 child: const StepperGraphWidget())
@@ -88,8 +88,11 @@ class HomeScreen extends ConsumerWidget {
                           if (snapShot.hasData) {
                             stepprData = snapShot.data ?? [];
                           } else if (snapShot.hasError) {
-                            return const Center(
-                              child: Text("Somthing Wrong"),
+                            return const NewBox(
+                              child: SizedBox(
+                                height: 250,
+                                child: Center(child: Text("Somthing Wrong")),
+                              ),
                             );
                           } else if (snapShot.connectionState ==
                               ConnectionState.waiting) {
@@ -153,8 +156,14 @@ class HomeScreen extends ConsumerWidget {
                           if (snapShot.hasData) {
                             columnData = snapShot.data ?? [];
                           } else if (snapShot.hasError) {
-                            return const Center(
-                              child: Text("Somthing Wrong"),
+                            return const Padding(
+                              padding: EdgeInsets.only(top: 10),
+                              child: NewBox(
+                                child: SizedBox(
+                                  height: 250,
+                                  child: Center(child: Text("Somthing Wrong")),
+                                ),
+                              ),
                             );
                           } else if (snapShot.connectionState ==
                               ConnectionState.waiting) {
