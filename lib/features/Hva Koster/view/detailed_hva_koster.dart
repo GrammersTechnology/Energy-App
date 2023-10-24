@@ -39,7 +39,7 @@ class HvaKosterDetailedScreen extends StatelessWidget {
                 ),
                 const Spacer(),
                 Text(
-                  "varghet: ${data[index]["details"]["duration_hours"].toString().substring(0, 4)} timer",
+                  "varghet: ${data[index]["details"]["duration_hours"].toString().substring(0, 3)} timer",
                   style: const TextStyle(
                       fontSize: 16, fontWeight: FontWeight.w500),
                 )
