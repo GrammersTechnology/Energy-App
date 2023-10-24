@@ -38,9 +38,10 @@ class AuthContents extends ConsumerWidget {
             label: "Register deg med Epost",
             labelColor: Colors.black,
             onPressed: () {
+              controller.toggleShowContent();
               controller.toggleRegisterContent();
               ref.read(stateUpdateProvider.notifier).state =
-                  controller.showLoginContent;
+                  controller.showContent;
               ref.read(stateUpdateProvider.notifier).state =
                   controller.isRegister;
             },
@@ -54,9 +55,11 @@ class AuthContents extends ConsumerWidget {
               const Text('Har du allerede bruker?'),
               TextButton(
                 onPressed: () {
-                  controller.toggleLoginContent();
+                  controller.toggleShowContent();
+
+                  controller.toggleLogin();
                   ref.read(stateUpdateProvider.notifier).state =
-                      controller.showLoginContent;
+                      controller.showContent;
                   ref.read(stateUpdateProvider.notifier).state =
                       controller.isLogin;
                 },

@@ -44,3 +44,8 @@ final authenticationProvider = FutureProvider((ref) {
   final authRepository = ref.watch(authControllerProvider);
   return authRepository;
 });
+
+final authCheackProvider = FutureProvider((ref) {
+  final authRepository = ref.watch(authControllerProvider);
+  authRepository.profileCheack();
+});

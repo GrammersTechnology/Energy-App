@@ -42,19 +42,12 @@ class RegisterScreen extends ConsumerWidget {
             label: "Opprett bruker",
             onPressed: () {
               controller.signup(context);
+              controller.toggleRegisterContent();
+              controller.toggelRegisterFinished();
               ref.read(stateUpdateProvider.notifier).state =
                   controller.registerFinished;
-              if (controller.registerFinished == true) {
-                controller.isLogin = false;
-                controller.isRegister = false;
-                controller.showLoginContent = false;
-                ref.read(stateUpdateProvider.notifier).state =
-                    controller.showLoginContent;
-                ref.read(stateUpdateProvider.notifier).state =
-                    controller.isRegister;
-                ref.read(stateUpdateProvider.notifier).state =
-                    controller.isLogin;
-              }
+              ref.read(stateUpdateProvider.notifier).state =
+                  controller.isRegister;
             },
             color: const Color(0XFF404040),
           ),

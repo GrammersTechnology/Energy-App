@@ -34,44 +34,39 @@ class AuthController {
   bool registerFinished = false;
   bool isRegister = false;
   bool isLogin = false;
-  bool showLoginContent = true;
-  bool authProcessCompleted = false;
+  bool showContent = true;
   bool loader = false;
+  bool profileverify = false;
 
   changeDropDownValue(value) async {
     dropdowmValue = value;
   }
 
   void toggleRegisterContent() {
-    showLoginContent = !showLoginContent;
-    finishRegister();
-  }
-
-  void toggleLoginContent() {
-    showLoginContent = !showLoginContent;
-    finishLogin();
-  }
-
-  void finishLogin() {
-    isLogin = !isLogin;
-  }
-
-  void finishRegister() {
     isRegister = !isRegister;
   }
 
-  void isProcessCompleted() async {
-    authProcessCompleted = !authProcessCompleted;
-    final pref = await SharedPreferences.getInstance();
-    pref.setBool('authProcessCompleted', true);
+  void toggleShowContent() {
+    showContent = !showContent;
   }
 
-  Future<bool> cheackProssCompleted() async {
-    authProcessCompleted = !authProcessCompleted;
-    final pref = await SharedPreferences.getInstance();
-    final data = pref.getBool('authProcessCompleted');
-    return data ?? false;
+  void toggleLogin() {
+    isLogin = !isLogin;
   }
+
+  void toggelRegisterFinished() {
+    registerFinished = !registerFinished;
+  }
+
+  void toggelProfileVerify() {
+    profileverify = !profileverify;
+  }
+
+  // void isProcessCompleted() async {
+  //   authProcessCompleted = !authProcessCompleted;
+  //   final pref = await SharedPreferences.getInstance();
+  //   pref.setBool('authProcessCompleted', true);
+  // }
 
 // onboard Cheaking
   checkOnboard() async {
@@ -85,14 +80,34 @@ class AuthController {
         email.isNotEmpty &&
         password != null &&
         password.isNotEmpty) {
-      Routes.pushreplace(screen: const NavBarWidget(profile: true));
+      Routes.pushreplace(screen: const NavBarWidget());
     } else {
       final data = pref.getBool('Onboarding') ?? false;
       if (data && zone != "null") {
-        Routes.pushreplace(screen: const NavBarWidget(profile: false));
+        Routes.pushreplace(screen: const NavBarWidget());
       } else {
         Routes.pushreplace(screen: const OnboardingScreen());
       }
+    }
+  }
+
+  Future<bool> profileCheack() async {
+    final pref = await SharedPreferences.getInstance();
+    final zone = pref.getString('zone') ?? "null";
+
+    final email = pref.getString("email");
+    final password = pref.getString("password");
+    if (email != null &&
+        email.isNotEmpty &&
+        password != null &&
+        password.isNotEmpty &&
+        zone != "null") {
+      log("valewwwww hereer");
+      return true;
+    } else {
+      log("valewwwww false");
+
+      return false;
     }
   }
 
@@ -227,9 +242,21 @@ class AuthController {
     await pref.remove('email');
     await pref.remove('password');
     pref.setBool('authProcessCompleted', false);
-    showLoginContent = true;
-    isLogin = false;
+    registerFinished = false;
     isRegister = false;
+    isLogin = false;
+    profileverify = false;
+    showContent = true;
+    // toggleShowContent();
+    showContent = true;
+    print(registerFinished.toString() +
+        "666" +
+        isRegister.toString() +
+        "5555" +
+        isLogin.toString() +
+        "22" +
+        showContent.toString() +
+        "333");
   }
 
   Future<UserCredential?> signInWithGoogle(context) async {
@@ -293,9 +320,7 @@ class AuthController {
   Future<void> checkCurrentUser(context) async {
     User? user = fb.currentUser;
     if (user != null) {
-      final cheackData = await cheackProssCompleted();
-
-      Routes.pushreplace(screen: NavBarWidget(profile: cheackData));
+      Routes.pushreplace(screen: NavBarWidget());
       ProfileController().getUserProfileDetails();
     } else {
       // Routes.pushreplace(screen:  NavBarWidget(profile: checkData,));
@@ -325,7 +350,7 @@ class AuthController {
         checkCurrentUser(context);
         isRegister = false;
         isLogin = false;
-        showLoginContent = false;
+        showContent = false;
       } catch (e) {
         loader = false;
         Messenger.pop(msg: e.toString(), context: context);
