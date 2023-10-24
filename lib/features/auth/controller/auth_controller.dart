@@ -283,6 +283,11 @@ class AuthController {
             // .collection('auth')
             .set(data.toJson());
         await addUserProfileDetails(context);
+        profileverify = true;
+        registerFinished = false;
+        isRegister = false;
+        isLogin = false;
+        showContent = false;
 
         await pref.setString('email', userCredential.user?.email ?? '');
         await pref.setString('password', "123456");
