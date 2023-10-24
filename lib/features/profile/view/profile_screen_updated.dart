@@ -31,8 +31,9 @@ class ProfilePage extends ConsumerWidget {
     ref.watch(hasHeatPumpStateProvider);
     ref.watch(hasSensorStateProvider);
     ref.watch(wantPushWarning1StateProvider);
+    ref.watch(stateUpdateProvider);
     return SafeArea(
-      child: ref.watch(profileProvider).when(loading: () {
+      child: ref.watch(authCheackProvider).when(loading: () {
         return Center(
           child: CircularProgressIndicator(),
         );
@@ -41,6 +42,7 @@ class ProfilePage extends ConsumerWidget {
           child: Text("Something Wrong"),
         );
       }, data: (context) {
+        final controller = ref.watch(authControllerProvider);
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -70,7 +72,11 @@ class ProfilePage extends ConsumerWidget {
                     label: "Logg ut",
                     onPressed: () {
                       AuthController().clearLocalData();
-                      Routes.pushreplace(screen: NavBarWidget(profile: false));
+                      ref.read(stateUpdateProvider.notifier).state =
+                          controller.showContent;
+                      ref.read(stateUpdateProvider.notifier).state =
+                          controller.profileverify;
+                      Routes.pushreplace(screen: NavBarWidget());
                       // Replace the current content with the "hello" content
                     },
                     labelColor: Colors.black,

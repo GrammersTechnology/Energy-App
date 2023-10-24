@@ -1,10 +1,11 @@
+import 'dart:developer';
+
 import 'package:demo/features/auth/controller/auth_controller.dart';
 import 'package:demo/features/auth/screen/auth_contents.dart';
 import 'package:demo/features/auth/screen/auth_finish.dart';
 import 'package:demo/features/auth/screen/login.dart';
 import 'package:demo/features/auth/screen/register.dart';
-import 'package:demo/utils/const/widgets/internet_connection.dart';
-import 'package:demo/utils/controller/provider.dart';
+import 'package:demo/features/profile/view/profile_screen_updated.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -15,19 +16,20 @@ class ProfileAuthentication extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = ref.watch(authControllerProvider);
     ref.watch(stateUpdateProvider);
+    log(controller.showContent.toString() + '-----------------------');
     return Scaffold(
         appBar: (controller.isRegister == true || controller.isLogin == true) &&
-                controller.showLoginContent == false
+                controller.showContent == false
             ? AppBar(
                 backgroundColor: Colors.transparent,
                 elevation: 0,
                 leading: IconButton(
                     onPressed: () {
-                      controller.showLoginContent = true;
+                      controller.showContent = true;
                       controller.isRegister = false;
                       controller.isLogin = false;
                       ref.read(stateUpdateProvider.notifier).state =
-                          controller.showLoginContent;
+                          controller.showContent;
                       ref.read(stateUpdateProvider.notifier).state =
                           controller.isRegister;
                       ref.read(stateUpdateProvider.notifier).state =
@@ -48,38 +50,50 @@ class ProfileAuthentication extends ConsumerWidget {
                 backgroundColor: const Color.fromARGB(0, 253, 233, 233),
                 elevation: 0,
               ),
-        body: ref.watch(authenticationProvider).when(
-          data: (datas) {
-            return SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-                child: Column(
-                  children: [
-                    if (controller.showLoginContent) ...[
-                      const AuthContents(),
-                    ] else if (controller.showLoginContent == false &&
-                        controller.isLogin == true) ...[
-                      const LoginPage(),
-                    ] else if (controller.showLoginContent == false &&
-                        controller.isRegister == true) ...[
-                      const RegisterScreen(),
-                    ] else ...[
-                      const AuthenticationFinished()
-                    ],
-                  ],
-                ),
-              ),
-            );
-          },
-          error: (error, stackTrace) {
-            return const SafeArea(child: InternetChecking());
-          },
-          loading: () {
-            return const SafeArea(
-                child: Center(
-              child: CircularProgressIndicator(),
-            ));
-          },
-        ));
+        body: FutureBuilder(
+            future: controller.profileCheack(),
+            builder: (context, snapShot) {
+              log(controller.profileverify.toString() +
+                  "verifyyyy++++++++++++++++++");
+
+              if (snapShot.hasData) {
+                controller.profileverify = snapShot.data ?? false;
+              }
+              if (snapShot.connectionState == ConnectionState.waiting) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              return controller.profileverify == true
+                  ? SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Column(
+                          children: [
+                            ProfilePage(),
+                          ],
+                        ),
+                      ),
+                    )
+                  : SafeArea(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 20, right: 20, bottom: 20),
+                        child: Column(
+                          children: [
+                            if (controller.showContent) ...[
+                              const AuthContents(),
+                            ] else if (controller.isLogin) ...[
+                              const LoginPage(),
+                            ] else if (controller.isRegister) ...[
+                              const RegisterScreen(),
+                            ] else if (controller.registerFinished) ...[
+                              const AuthenticationFinished()
+                            ]
+                          ],
+                        ),
+                      ),
+                    );
+            }));
   }
 }

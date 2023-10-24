@@ -240,11 +240,7 @@ class ProfileController {
       await AuthController().updateZoneIdFromFirestore(
           userProfile!.pricezone, fb.currentUser!.email.toString());
       await AuthController().fetchZoneIdFromFirestore();
-      final bool = await AuthController().cheackProssCompleted();
-      Routes.pushreplace(
-          screen: NavBarWidget(
-        profile: bool,
-      ));
+      Routes.pushreplace(screen: NavBarWidget());
 
       clearController();
 
