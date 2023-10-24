@@ -29,6 +29,11 @@ class AuthContents extends ConsumerWidget {
           BygePrimaryButton(
             label: "Register deg med Goolge",
             onPressed: () {
+              controller.signInWithGoogle(context);
+              ref.read(stateUpdateProvider.notifier).state =
+                  controller.showContent;
+              ref.read(stateUpdateProvider.notifier).state =
+                  controller.profileverify;
               // Replace the current content with the "hello" content
             },
             color: const Color(0XFF404040),

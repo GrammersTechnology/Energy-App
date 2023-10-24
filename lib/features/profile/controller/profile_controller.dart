@@ -17,7 +17,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../utils/controller/local_notification.dart';
 
-ProfileModel? userProfile;
 final profileControllerProvider = Provider((ref) => ProfileController());
 final hasElCarStateProvider = StateProvider<bool>((ref) => false);
 final hasSolarPanelStateProvider = StateProvider<bool>((ref) => false);
@@ -40,6 +39,8 @@ final mememberDropdownListProvider = StateProvider<String>((ref) {
 });
 
 class ProfileController {
+  static ProfileModel? userProfile;
+
   List<SavingTips> savingTips = [];
   List<String> numberOfMembers = [
     'Under 50 kvm',
@@ -161,8 +162,8 @@ class ProfileController {
         content: Text(' Select your values'),
       );
     } else {
+      log(userProfile?.pricezone ?? "mmmmmmmmmmmmmmmmm");
       if (userProfile == null) {
-        log("nulll");
         log(dropDownValue.toString() + zoneDropdowmValue.toString());
       } else {
         final pref = await SharedPreferences.getInstance();
