@@ -40,11 +40,22 @@ class HvaKosterScreen extends ConsumerWidget {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       const Spacer(),
-                                      const Text("Na"),
+                                      const Text(
+                                        "Na",
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500),
+                                      ),
                                       Text(
-                                          "${datas[index]["cost"]['current']['cost']}kr")
+                                        "${datas[index]["cost"]['current']['cost']}kr",
+                                        style: const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600),
+                                      )
                                     ],
                                   ),
                                   const Spacer(),
@@ -54,21 +65,21 @@ class HvaKosterScreen extends ConsumerWidget {
                                       datas[index]["details"]["front_end"] ==
                                               "Dusj"
                                           ? Image.asset(
-                                              width: 70,
-                                              height: 60,
+                                              width: 60,
+                                              height: 55,
                                               fit: BoxFit.fill,
                                               "assets/images/showerpng.png")
                                           : datas[index]["details"]
                                                       ["front_end"] ==
                                                   "Elbil"
                                               ? Image.asset(
-                                                  width: 70,
-                                                  height: 60,
+                                                  width: 60,
+                                                  height: 55,
                                                   fit: BoxFit.fill,
                                                   "assets/images/Component 1.png")
                                               : Image.asset(
-                                                  width: 70,
-                                                  height: 60,
+                                                  width: 60,
+                                                  height: 55,
                                                   fit: BoxFit.fill,
                                                   "assets/images/washing_machine.png"),
                                     ],

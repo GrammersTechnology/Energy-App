@@ -24,6 +24,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
     return Scaffold(
       body: tabs[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Colors.black,
         currentIndex: _currentIndex,
         items: const [
           BottomNavigationBarItem(

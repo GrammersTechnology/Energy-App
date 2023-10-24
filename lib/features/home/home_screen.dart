@@ -41,9 +41,9 @@ class HomeScreen extends ConsumerWidget {
                   ref.read(showColumnBarBoolStateProvider.notifier).state =
                       !columnBarState;
                 },
-                details: "Hoy pris og mye variasjon gejennom dagen",
-                iconDetails: "Spotpris 1 dag ",
-                title: "Strømpris",
+                details: "",
+                iconDetails: "Estimert snittspris per kWh neste 7 dager",
+                title: "Strømprisvarrsel",
                 child: const ColumnGraphWidget())
           else if (stepperRepository.showStepparBool)
             DetailedGraph(
@@ -52,9 +52,9 @@ class HomeScreen extends ConsumerWidget {
                   ref.read(showStepperBarBoolStateProvider.notifier).state =
                       !stepperBarState;
                 },
-                iconDetails: "Estimert gj.snittspris neste 7 dager",
+                iconDetails: "Spotpris i dag",
                 details: "Høy pris, og mye variasjon\ngjennom dagen",
-                title: "Strømprisvarrsel",
+                title: "Strømpris",
                 child: const StepperGraphWidget())
           else
             SizedBox(
@@ -70,17 +70,23 @@ class HomeScreen extends ConsumerWidget {
                             radius: 5,
                             backgroundColor: Color.fromARGB(192, 246, 148, 2)),
                         hSpaceMin,
-                        Text("H0y pris na")
+                        Text(
+                          "H0y pris na",
+                          style: TextStyle(fontSize: 16),
+                        )
                       ],
                     ),
                     vSpaceMin,
                     Text(
                       '56 Ore',
                       style: GoogleFonts.montserrat(
-                          fontSize: 25, fontWeight: FontWeight.w500),
+                          fontSize: 48, fontWeight: FontWeight.bold),
                     ),
                     vSpaceMedium,
-                    const Text("Det er stor variasjon i dag"),
+                    const Text(
+                      "Det er stor variasjon i dag",
+                      style: TextStyle(fontSize: 24),
+                    ),
                     vSpaceMedium,
                     FutureBuilder(
                         future: stepperRepository.fecthData(),
@@ -114,7 +120,10 @@ class HomeScreen extends ConsumerWidget {
                                     ? SfCartesianChart(
                                         title: ChartTitle(
                                             text:
-                                                'Strømprisvarsel neste 7 dager         >'),
+                                                'Strømpris time for time                          >',
+                                            textStyle: const TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500)),
                                         plotAreaBorderWidth: 0,
                                         borderColor: Colors.transparent,
                                         primaryYAxis: NumericAxis(
@@ -183,7 +192,10 @@ class HomeScreen extends ConsumerWidget {
                                     ? SfCartesianChart(
                                         title: ChartTitle(
                                             text:
-                                                'Strømprisvarsel neste 7 dager         >'),
+                                                'Strømprisvarsel neste 7 dager           >',
+                                            textStyle: const TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500)),
                                         primaryYAxis: NumericAxis(
                                             isVisible: false,
                                             //Hide the gridlines of y-axis

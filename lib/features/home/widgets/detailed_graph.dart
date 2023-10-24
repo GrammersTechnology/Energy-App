@@ -21,17 +21,32 @@ class DetailedGraph extends StatelessWidget {
         Row(children: [
           IconButton(
               onPressed: onPress, icon: const Icon(Icons.arrow_back_ios)),
-          const Text('Tilbake'),
+          const Text(
+            'Tilbake',
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+          ),
           hSpaceMedium,
-          Text(title)
+          Text(
+            title,
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+          )
         ]),
         vSpaceLarge,
-        Text(details),
+        Text(
+          details,
+          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+        ),
         vSpaceLarge,
         Row(
           children: [
-            Text(iconDetails),
-            const Icon(Icons.question_mark_rounded)
+            Text(
+              iconDetails,
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+            ),
+            const Icon(
+              Icons.question_mark_rounded,
+              size: 15,
+            )
           ],
         ),
         vSpaceLarge,
