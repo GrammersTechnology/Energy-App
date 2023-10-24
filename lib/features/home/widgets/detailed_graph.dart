@@ -17,7 +17,7 @@ class DetailedGraph extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Column(children: [
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(children: [
           IconButton(
               onPressed: onPress, icon: const Icon(Icons.arrow_back_ios)),
@@ -37,12 +37,14 @@ class DetailedGraph extends StatelessWidget {
         vSpaceLarge,
         child,
         vSpaceLarge,
-        ToggleButtons(
-            borderColor: Colors.black,
-            selectedColor: Colors.black,
-            borderRadius: BorderRadius.circular(30),
-            isSelected: const [true, true, false],
-            children: const [Text("data"), Text("data"), Text("data")])
+        Center(
+          child: ToggleButtons(
+              borderColor: Colors.black,
+              selectedColor: Colors.black,
+              borderRadius: BorderRadius.circular(30),
+              isSelected: const [true, true, false],
+              children: const [Text("data"), Text("data"), Text("data")]),
+        )
       ]),
     );
   }

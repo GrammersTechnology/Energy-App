@@ -77,35 +77,25 @@ class AuthController {
 // onboard Cheaking
   checkOnboard() async {
     final pref = await SharedPreferences.getInstance();
-    final data = pref.getBool('Onboarding') ?? false;
     final zone = pref.getString('zone') ?? "null";
     print(zone);
-    if (data) {
-      print("object");
-      if (zone != "null") {
-        print("objecttttttttttt");
 
-        print(data);
-        final cheackData = await cheackProssCompleted();
-        Routes.pushreplace(
-            screen: NavBarWidget(
-          profile: cheackData,
-        ));
-        final email = pref.getString("email");
-        final password = pref.getString("password");
-        if (email != null && password != null) {
-          if (email.isNotEmpty && password.isNotEmpty) {
-            pref.setBool('authProcessCompleted', true);
-          }
-        }
+    final email = pref.getString("email");
+    final password = pref.getString("password");
+    if (email != null &&
+        email.isNotEmpty &&
+        password != null &&
+        password.isNotEmpty) {
+      Routes.pushreplace(screen: NavBarWidget(profile: true));
+    } else {
+      final data = pref.getBool('Onboarding') ?? false;
+      if (data && zone != "null") {
+        Routes.pushreplace(screen: NavBarWidget(profile: false));
+
+        print("objjjjjjjjjjjjject");
       } else {
-        print("oooooooooobject");
-
         Routes.pushreplace(screen: const OnboardingScreen());
       }
-      print("objjjjjjjjjjjjject");
-    } else {
-      Routes.pushreplace(screen: const OnboardingScreen());
     }
   }
 
@@ -179,7 +169,6 @@ class AuthController {
             // .collection('auth')
             .set(data.toJson());
         await addUserProfileDetails(context);
-        await saveAuthLocal();
 
         registerFinished = true;
         loader = false;
@@ -272,7 +261,7 @@ class AuthController {
 
         await pref.setString('email', userCredential.user?.email ?? '');
         await pref.setString('password', "123456");
-        cheackLocalData(context);
+        // cheackLocalData(context);
       }
       return userCredential;
     } catch (e) {
@@ -290,18 +279,18 @@ class AuthController {
     userPassword = pref.getString('password');
   }
 
-  cheackLocalData(context) async {
-    final pref = await SharedPreferences.getInstance();
-    userEmail = pref.getString('email');
-    userPassword = pref.getString('password');
-    log(userEmail.toString());
-    log(userPassword.toString());
-    if (userEmail == null || userPassword == null) {
-      Routes.pushreplace(screen: const LoginScreen());
-    } else {
-      checkCurrentUser(context);
-    }
-  }
+  // cheackLocalData(context) async {
+  //   final pref = await SharedPreferences.getInstance();
+  //   userEmail = pref.getString('email');
+  //   userPassword = pref.getString('password');
+  //   log(userEmail.toString());
+  //   log(userPassword.toString());
+  //   if (userEmail == null || userPassword == null) {
+  //     Routes.pushreplace(screen: const LoginScreen());
+  //   } else {
+  //     checkCurrentUser(context);
+  //   }
+  // }
 
   Future<void> checkCurrentUser(context) async {
     User? user = fb.currentUser;

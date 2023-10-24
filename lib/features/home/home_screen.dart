@@ -53,7 +53,7 @@ class HomeScreen extends ConsumerWidget {
                       !stepperBarState;
                 },
                 iconDetails: "Estimert gj.snittspris neste 7 dager",
-                details: "",
+                details: "Høy pris, og mye variasjon\ngjennom dagen",
                 title: "Strømprisvarrsel",
                 child: const StepperGraphWidget())
           else
