@@ -1,4 +1,5 @@
 import 'package:demo/features/auth/controller/auth_controller.dart';
+import 'package:demo/features/navbar_widget.dart';
 import 'package:demo/features/profile/controller/profile_controller.dart';
 import 'package:demo/utils/const/space_helper.dart';
 import 'package:demo/utils/const/widgets/byge-design-system/buttons/primary_button.dart';
@@ -7,6 +8,7 @@ import 'package:demo/utils/const/widgets/byge-design-system/cards/expandable_car
 import 'package:demo/utils/const/widgets/byge-design-system/checkbox/checkbox.dart';
 import 'package:demo/utils/const/widgets/byge-design-system/input_fields/byge_input_field.dart';
 import 'package:demo/utils/const/widgets/byge-design-system/theme/text_styles.dart';
+import 'package:demo/utils/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -53,8 +55,8 @@ class ProfilePage extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Magnus.mo@hkraft.com',
+                  Text(
+                    profileRepository.fb.currentUser?.email ?? "",
                     style: TextStyle(
                         fontSize: 14, color: Color.fromARGB(255, 73, 73, 73)),
                   ),
@@ -68,6 +70,7 @@ class ProfilePage extends ConsumerWidget {
                     label: "Logg ut",
                     onPressed: () {
                       AuthController().clearLocalData();
+                      Routes.pushreplace(screen: NavBarWidget(profile: false));
                       // Replace the current content with the "hello" content
                     },
                     labelColor: Colors.black,
@@ -119,6 +122,7 @@ class ProfilePage extends ConsumerWidget {
                           icon: const Icon(Icons.keyboard_arrow_down_rounded),
                           hint: Text(
                             profileRepository.membersDropdownValue ??
+                                userProfile?.storreise ??
                                 "Størrelse på boligen",
                             style: labelLarge,
                           ),
@@ -149,7 +153,7 @@ class ProfilePage extends ConsumerWidget {
                     width: 100,
                     child: BygeInputField(
                       controller: profileRepository.countController,
-                      placeholder: 'Count',
+                      placeholder: userProfile?.count.trim() ?? 'Count',
                       placeholderColor:
                           const Color.fromARGB(255, 124, 123, 123),
                     ),
@@ -267,6 +271,7 @@ class ProfilePage extends ConsumerWidget {
                             icon: const Icon(Icons.keyboard_arrow_down_rounded),
                             hint: Text(
                               profileRepository.zoneDropdowmValue ??
+                                  userProfile?.pricezone ??
                                   "Velg strømsone",
                               style: labelLarge,
                             ),
@@ -315,6 +320,7 @@ class ProfilePage extends ConsumerWidget {
                                       Icons.keyboard_arrow_down_rounded),
                                   hint: Text(
                                     profileRepository.dropDownValue ??
+                                        userProfile?.powerCompany ??
                                         "Din strømlevrandør",
                                     style: labelLarge,
                                   ),
@@ -379,6 +385,7 @@ class ProfilePage extends ConsumerWidget {
                     BygePrimaryButton(
                       label: "Lagre endringer",
                       onPressed: () {
+                        profileRepository.pushVars();
                         // Replace the current content with the "hello" content
                       },
                       color: const Color(0XFF404040),

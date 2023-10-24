@@ -1,4 +1,5 @@
 import 'package:demo/utils/const/space_helper.dart';
+import 'package:demo/utils/routes/routes.dart';
 import 'package:flutter/material.dart';
 
 class HvaKosterDetailedScreen extends StatelessWidget {
@@ -13,7 +14,9 @@ class HvaKosterDetailedScreen extends StatelessWidget {
         child: Column(children: [
           Row(children: [
             IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Routes.back();
+                },
                 icon: const Icon(Icons.arrow_back_ios_new_rounded)),
             Text(data[index]["details"]["front_end"])
           ]),

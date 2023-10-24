@@ -124,11 +124,6 @@ class ProfileController {
 
   wantPushWarning1ValueChange(value) async {
     wantPushWarning1Bool = value;
-    if (wantPushWarning1Bool) {
-      await NotificationService().initNotification();
-      NotificationService().morningNotification();
-      NotificationService().afterNoonNotification();
-    }
   }
 
   allValueChange(value) {
@@ -296,6 +291,9 @@ class ProfileController {
         await AuthController().updateZoneIdFromFirestore(
             data.pricezone, fb.currentUser!.email.toString());
         await AuthController().fetchZoneIdFromFirestore();
+        await NotificationService().initNotification();
+        NotificationService().morningNotification();
+        NotificationService().afterNoonNotification();
 
         clearController();
 
