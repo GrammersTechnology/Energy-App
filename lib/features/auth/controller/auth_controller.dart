@@ -13,7 +13,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../utils/routes/routes.dart';
-import '../screen/loginscreen.dart';
 
 final authControllerProvider = Provider((ref) => AuthController());
 final stateUpdateProvider = StateProvider<bool>((ref) => false);
@@ -86,13 +85,11 @@ class AuthController {
         email.isNotEmpty &&
         password != null &&
         password.isNotEmpty) {
-      Routes.pushreplace(screen: NavBarWidget(profile: true));
+      Routes.pushreplace(screen: const NavBarWidget(profile: true));
     } else {
       final data = pref.getBool('Onboarding') ?? false;
       if (data && zone != "null") {
-        Routes.pushreplace(screen: NavBarWidget(profile: false));
-
-        print("objjjjjjjjjjjjject");
+        Routes.pushreplace(screen: const NavBarWidget(profile: false));
       } else {
         Routes.pushreplace(screen: const OnboardingScreen());
       }
@@ -221,7 +218,8 @@ class AuthController {
 
     await pref.setString('email', email.toString());
     await pref.setString('password', password.toString());
-    pref.setBool("Onboarding", true);
+    // pref.setBool("Onboarding", true);
+    checkOnboard();
   }
 
   clearLocalData() async {
@@ -236,7 +234,7 @@ class AuthController {
 
   Future<UserCredential?> signInWithGoogle(context) async {
     final pref = await SharedPreferences.getInstance();
-    final zone = await pref.getString("zone");
+    final zone = pref.getString("zone");
     try {
       final GoogleSignInAccount? googleSignInAccount =
           await _googleSignIn.signIn();
@@ -300,7 +298,7 @@ class AuthController {
       Routes.pushreplace(screen: NavBarWidget(profile: cheackData));
       ProfileController().getUserProfileDetails();
     } else {
-      Routes.pushreplace(screen: const LoginScreen());
+      // Routes.pushreplace(screen:  NavBarWidget(profile: checkData,));
     }
   }
 

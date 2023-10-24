@@ -1,5 +1,5 @@
 import 'package:demo/features/Hva%20Koster/view/hva_koster_screen.dart';
-import 'package:demo/features/auth/screen/profile_auth.dart';
+import 'package:demo/features/auth/screen/auth_management.dart';
 import 'package:demo/features/home/home_screen.dart';
 import 'package:demo/features/profile/view/profile_screen_updated.dart';
 import 'package:flutter/material.dart';
