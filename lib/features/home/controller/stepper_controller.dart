@@ -22,8 +22,6 @@ class StepperController {
     final zone = perf.getString("zone");
     // const zone = "1";
 
-    log("--------------------$zone");
-
     final result = (await HomeScreenServicesScreen().dataDetailsApi(zone))!;
     if (result.isNotEmpty) {
       stepLineGraph.clear();

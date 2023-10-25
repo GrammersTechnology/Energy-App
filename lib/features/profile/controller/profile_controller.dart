@@ -56,7 +56,6 @@ class ProfileController {
   List<String> dropdwonList = [];
   String? dropDownValue;
   String? zoneDropdowmValue;
-  String? storreiseDropdownValue;
   List<String> zoneDropdwonList = [
     "NO1",
     "NO2",
@@ -97,6 +96,8 @@ class ProfileController {
 // check box list
   hasElCarValueChange(value) {
     hasElCarBool = value;
+    print(value);
+    log(hasElCarBool.toString() + "ddddddddd");
   }
 
   hasSolarPanelValueChange(value) {
@@ -171,7 +172,7 @@ class ProfileController {
         final zone = pref.getString('zone');
         ProfileModel data = ProfileModel(
             count: userProfile?.count ?? "",
-            storreise: storreiseDropdownValue ?? userProfile?.storreise ?? "",
+            storreise: membersDropdownValue ?? userProfile?.storreise ?? "",
             all: userProfile?.all ?? false,
             email: fb.currentUser!.email.toString(),
             powerCompany: dropDownValue ?? userProfile?.powerCompany ?? "",
@@ -209,24 +210,28 @@ class ProfileController {
 
   // Diit hjem saving
 
-  updateUserProfiledittHjemSaveDetails(context) async {
+  updateUserProfiledittHjemSaveDetails(
+      ProfileModel? userDetails, context) async {
     loader = true;
     final pref = await SharedPreferences.getInstance();
 
     final zone = pref.getString('zone');
+    print(hasElCarBool.toString() + "===================");
     ProfileModel data = ProfileModel(
-        count: countController.text,
-        storreise: storreiseDropdownValue ?? userProfile?.storreise ?? "",
+        count: countController.text.toString().isNotEmpty
+            ? countController.text
+            : userDetails?.count ?? "",
+        storreise: membersDropdownValue ?? userDetails?.storreise ?? "",
         all:
             hasElCarBool && hasSolarPanelBool && hasHeatPumpBool ? true : false,
         email: fb.currentUser!.email.toString(),
-        powerCompany: userProfile?.powerCompany ?? "",
-        pricezone: userProfile?.pricezone ?? zone ?? "NO1",
+        powerCompany: userDetails?.powerCompany ?? "",
+        pricezone: userDetails?.pricezone ?? zone ?? "NO1",
         hasSensor: hasSensorBool,
         hasElCar: hasElCarBool,
         hasHeatPump: hasHeatPumpBool,
         hasSolarPanel: hasSolarPanelBool,
-        wantPushWarning: userProfile?.wantPushWarning ?? false,
+        wantPushWarning: userDetails?.wantPushWarning ?? false,
         oppvaskmaskin: oppvaskmaskin,
         torketrommel: torketrommel,
         vaskemaskin: vaskemaskin);
@@ -239,7 +244,7 @@ class ProfileController {
           .doc(fb.currentUser!.uid)
           .update(data.toJson());
       await AuthController().updateZoneIdFromFirestore(
-          userProfile!.pricezone, fb.currentUser!.email.toString());
+          userDetails!.pricezone, fb.currentUser!.email.toString());
       await AuthController().fetchZoneIdFromFirestore();
       Routes.pushreplace(screen: NavBarWidget());
 
@@ -326,6 +331,7 @@ class ProfileController {
         vaskemaskin = userProfile?.vaskemaskin ?? false;
         oppvaskmaskin = userProfile?.oppvaskmaskin ?? false;
         torketrommel = userProfile?.torketrommel ?? false;
+        membersDropdownValue = userProfile?.storreise ?? "Select From List";
 
         loader = false;
       });
