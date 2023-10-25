@@ -52,11 +52,7 @@ class ColumnGraphController {
           }
         }
       }
-      for (var element in columnGraphData) {
-        // log(element.x.toString() + "__________________");
 
-        log("${element.y}__________________");
-      }
       return columnGraphData;
     } else {
       log("mot available now");
