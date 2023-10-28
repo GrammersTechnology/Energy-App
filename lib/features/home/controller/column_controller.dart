@@ -14,7 +14,6 @@ class ColumnGraphController {
   List result = [];
   bool showColumnBool = false;
   List<GraphData> columnGraphData = [];
-
   changeColumnBarBool() {
     showColumnBool = !showColumnBool;
   }

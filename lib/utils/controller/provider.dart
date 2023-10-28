@@ -23,7 +23,7 @@ final columnProvider = FutureProvider((ref) {
 // stepper controller
 final stepperProvider = FutureProvider((ref) {
   final stepperRepository = ref.watch(stepperGraphControllerProvider);
-  return stepperRepository.fecthData();
+  return stepperRepository.stepperGrahData();
 });
 final profileProvider = FutureProvider((ref) {
   final profileRepository = ref.watch(profileControllerProvider);
