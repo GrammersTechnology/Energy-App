@@ -48,7 +48,8 @@ class BygeNavCard extends StatelessWidget {
                     Expanded(
                       child: Text(
                         title,
-                        style: Theme.of(context).textTheme.labelMedium,
+                        style: const TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.w500),
                       ),
                     ),
                     const SizedBox(width: AppSpaces.s),

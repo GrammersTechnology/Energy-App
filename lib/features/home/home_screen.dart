@@ -42,9 +42,9 @@ class HomeScreen extends ConsumerWidget {
                   ref.read(showColumnBarBoolStateProvider.notifier).state =
                       !columnBarState;
                 },
-                details: "Hoy pris og mye variasjon gejennom dagen",
-                iconDetails: "Spotpris 1 dag ",
-                title: "Strømpris",
+                details: "",
+                iconDetails: "Estimert snittspris per kWh neste 7 dager",
+                title: "Strømprisvarrsel",
                 child: const ColumnGraphWidget())
           else if (stepperRepository.showStepparBool)
             DetailedGraph(
@@ -53,9 +53,9 @@ class HomeScreen extends ConsumerWidget {
                   ref.read(showStepperBarBoolStateProvider.notifier).state =
                       !stepperBarState;
                 },
-                iconDetails: "Estimert gj.snittspris neste 7 dager",
+                iconDetails: "Spotpris i dag",
                 details: "Høy pris, og mye variasjon\ngjennom dagen",
-                title: "Strømprisvarrsel",
+                title: "Strømpris",
                 child: const StepperGraphWidget())
           else
             SizedBox(
@@ -64,6 +64,7 @@ class HomeScreen extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const HomeScrnWidget(),
+
                     FutureBuilder(
                         future: stepperRepository.stepperGrahData(),
                         builder: (context, snapShot) {
@@ -96,7 +97,10 @@ class HomeScreen extends ConsumerWidget {
                                     ? SfCartesianChart(
                                         title: ChartTitle(
                                             text:
-                                                'Strømprisvarsel neste 7 dager         >'),
+                                                'Strømpris time for time                          >',
+                                            textStyle: const TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500)),
                                         plotAreaBorderWidth: 0,
                                         borderColor: Colors.transparent,
                                         primaryYAxis: NumericAxis(
@@ -165,7 +169,10 @@ class HomeScreen extends ConsumerWidget {
                                     ? SfCartesianChart(
                                         title: ChartTitle(
                                             text:
-                                                'Strømprisvarsel neste 7 dager         >'),
+                                                'Strømprisvarsel neste 7 dager           >',
+                                            textStyle: const TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500)),
                                         primaryYAxis: NumericAxis(
                                             isVisible: false,
                                             //Hide the gridlines of y-axis

@@ -16,7 +16,7 @@ class ProfileAuthentication extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = ref.watch(authControllerProvider);
     ref.watch(stateUpdateProvider);
-    log(controller.showContent.toString() + '-----------------------');
+    log('${controller.showContent}-----------------------');
     return Scaffold(
         appBar: (controller.isRegister == true || controller.isLogin == true) &&
                 controller.showContent == false
@@ -53,21 +53,20 @@ class ProfileAuthentication extends ConsumerWidget {
         body: FutureBuilder(
             future: controller.profileCheack(),
             builder: (context, snapShot) {
-              log(controller.profileverify.toString() +
-                  "verifyyyy++++++++++++++++++");
+              log("${controller.profileverify}verifyyyy++++++++++++++++++");
 
               if (snapShot.hasData) {
                 controller.profileverify = snapShot.data ?? false;
               }
               if (snapShot.connectionState == ConnectionState.waiting) {
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
               }
               return controller.profileverify == true
                   ? SingleChildScrollView(
                       child: Padding(
-                        padding: const EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(20),
                         child: Column(
                           children: [
                             ProfilePage(),
