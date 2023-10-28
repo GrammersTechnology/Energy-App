@@ -3,6 +3,7 @@
 import 'package:demo/features/home/controller/column_controller.dart';
 import 'package:demo/features/home/widgets/column_graphwidget.dart';
 import 'package:demo/features/home/widgets/detailed_graph.dart';
+import 'package:demo/features/home/widgets/home_screen_widget.dart';
 import 'package:demo/utils/const/space_helper.dart';
 
 import 'package:demo/features/home/widgets/stepper_graph.dart';
@@ -62,28 +63,9 @@ class HomeScreen extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    vSpaceLarge,
-                    const Row(
-                      children: [
-                        hSpaceMin,
-                        CircleAvatar(
-                            radius: 5,
-                            backgroundColor: Color.fromARGB(192, 246, 148, 2)),
-                        hSpaceMin,
-                        Text("H0y pris na")
-                      ],
-                    ),
-                    vSpaceMin,
-                    Text(
-                      '56 Ore',
-                      style: GoogleFonts.montserrat(
-                          fontSize: 25, fontWeight: FontWeight.w500),
-                    ),
-                    vSpaceMedium,
-                    const Text("Det er stor variasjon i dag"),
-                    vSpaceMedium,
+                    const HomeScrnWidget(),
                     FutureBuilder(
-                        future: stepperRepository.fecthData(),
+                        future: stepperRepository.stepperGrahData(),
                         builder: (context, snapShot) {
                           if (snapShot.hasData) {
                             stepprData = snapShot.data ?? [];

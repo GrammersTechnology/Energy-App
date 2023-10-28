@@ -16,7 +16,7 @@ class StepperGraphWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     Timer.periodic(const Duration(minutes: 30), (timer) {
       final stepperRepository = ref.watch(stepperGraphControllerProvider);
-      stepperRepository.fecthData();
+      stepperRepository.stepperGrahData();
     });
     return SizedBox(
       width: double.infinity,

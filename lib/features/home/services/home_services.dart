@@ -2,20 +2,22 @@
 
 import 'dart:developer';
 
+import 'package:demo/features/home/model/home_model.dart';
 import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../utils/const/api_error_helper.dart';
+import '../../../utils/const/api_urls.dart';
 
 class HomeScreenServicesScreen {
-  Future<List<dynamic>?> dataDetailsApi(zone) async {
-    String url = 'https://www.hvakosterstrommen.no/api/v1/prices/';
+  Future<List<dynamic>?> stepperGraphDetailsApi(zone) async {
     final date = DateTime.now();
     final currentDate =
         "${date.year}/${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}";
-    log('${"$url${currentDate}_" + zone}.json');
+    log('${"$stepperGraphUrl${currentDate}_" + zone}.json');
     try {
       Response response =
-          await Dio().get("${"$url${currentDate}_" + zone}.json");
+          await Dio().get("${"$stepperGraphUrl${currentDate}_" + zone}.json");
       print(response.data);
 
       if (response.statusCode == 200) {
@@ -35,11 +37,8 @@ class HomeScreenServicesScreen {
   }
 
   Future<dynamic> columnGraphDataApi(zone) async {
-    String url =
-        'https://predictor-tdg24xwvka-ew.a.run.app/predict_spotprice_seven_days?price_area=';
-
     try {
-      Response response = await Dio().get(url + zone);
+      Response response = await Dio().get(columnGraphUrl + zone);
       if (response.statusCode == 200) {
         final result = response.data;
 
@@ -48,6 +47,19 @@ class HomeScreenServicesScreen {
     } on DioException catch (e) {
       ErrorHandlerCode().status401(e);
       log("error" + e.toString());
+    }
+    return null;
+  }
+
+  Future<HomeScrnString?> getHomeString(zone) async {
+    try {
+      Response response = await Dio().get(homeScrString + zone);
+      if (response.statusCode == 200) {
+        final result = HomeScrnString.fromJson(response.data);
+        return result;
+      }
+    } catch (e) {
+      ErrorHandlerCode().status401(e);
     }
     return null;
   }

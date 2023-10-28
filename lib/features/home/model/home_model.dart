@@ -32,3 +32,27 @@ class GraphData {
   Color? color;
   GraphData({required this.x, required this.y, this.color});
 }
+
+class HomeScrnString {
+  double price;
+  int priceLevel;
+  int priceVariation;
+
+  HomeScrnString({
+    required this.price,
+    required this.priceLevel,
+    required this.priceVariation,
+  });
+
+  factory HomeScrnString.fromJson(Map<String, dynamic> json) => HomeScrnString(
+        price: json["price"].toDouble(),
+        priceLevel: json["price_level"],
+        priceVariation: json["price_variation"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "price": price,
+        "price_level": priceLevel,
+        "price_variation": priceVariation,
+      };
+}

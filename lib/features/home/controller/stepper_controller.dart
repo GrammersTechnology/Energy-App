@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:demo/features/home/model/home_model.dart';
 import 'package:demo/features/home/services/home_services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,18 +9,19 @@ final showStepperBarBoolStateProvider = StateProvider<bool>((ref) => false);
 class StepperController {
   bool showStepparBool = false;
 
+  List<GraphData> stepLineGraph = [];
   changeStepperBarBool() {
     showStepparBool = !showStepparBool;
   }
 
-  List<GraphData> stepLineGraph = [];
-  Future<List<GraphData>> fecthData() async {
+  Future<List<GraphData>> stepperGrahData() async {
     GraphData temp = GraphData(x: 0, y: 0);
     final perf = await SharedPreferences.getInstance();
     final zone = perf.getString("zone");
     // const zone = "1";
 
-    final result = (await HomeScreenServicesScreen().dataDetailsApi(zone))!;
+    final result =
+        (await HomeScreenServicesScreen().stepperGraphDetailsApi(zone))!;
     if (result.isNotEmpty) {
       stepLineGraph.clear();
       for (int i = 0; i < result.length; i++) {
@@ -60,5 +59,15 @@ class StepperController {
       return stepLineGraph;
     }
     return stepLineGraph;
+  }
+
+  Future<HomeScrnString?> homeStringGet() async {
+    final perf = await SharedPreferences.getInstance();
+    final zone = perf.getString("zone");
+    final result = await HomeScreenServicesScreen().getHomeString(zone);
+    if (result != null) {
+      return result;
+    }
+    return null;
   }
 }
