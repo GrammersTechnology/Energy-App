@@ -20,7 +20,7 @@ class HomeScrnWidget extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              vSpaceLarge,
+              vSpaceRegular,
               Row(
                 children: [
                   hSpaceMin,
@@ -39,45 +39,82 @@ class HomeScrnWidget extends ConsumerWidget {
                                           : Colors.white),
                   hSpaceMin,
                   response.priceLevel == 0
-                      ? Text("Veldig lav pris nå")
+                      ? const Text(
+                          "Veldig lav pris nå",
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w400),
+                        )
                       : response.priceLevel == 1
-                          ? Text("Lav pris nå")
+                          ? const Text(
+                              "Lav pris nå",
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.w400),
+                            )
                           : response.priceLevel == 2
-                              ? Text("Normal pris nå")
+                              ? const Text(
+                                  "Normal pris nå",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400),
+                                )
                               : response.priceLevel == 3
-                                  ? Text("H0y pris na")
+                                  ? const Text(
+                                      "H0y pris na",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w400),
+                                    )
                                   : response.priceLevel == 4
-                                      ? Text("Veldig høy pris nå")
-                                      : Text("")
+                                      ? const Text(
+                                          "Veldig høy pris nå",
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w400),
+                                        )
+                                      : const Text("")
                 ],
               ),
               vSpaceMin,
               Text(
                 '${response.price.round()} Ore',
                 style: GoogleFonts.montserrat(
-                    fontSize: 25, fontWeight: FontWeight.w500),
+                    fontSize: 48, fontWeight: FontWeight.bold),
               ),
-              vSpaceMedium,
+              vSpaceRegular,
               Row(
                 children: [
-                  const Text("Det er "),
+                  const Text(
+                    "Det er ",
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),
+                  ),
                   response.priceVariation == 0
-                      ? Text("Liten variasjon")
+                      ? const Text(
+                          "Liten variasjon",
+                          style: TextStyle(
+                              fontSize: 24, fontWeight: FontWeight.bold),
+                        )
                       : response.priceVariation == 1
-                          ? Text("Stor variasjon")
-                          : Text(""),
-                  const Text("i dag"),
+                          ? const Text(
+                              "Stor variasjon",
+                              style: TextStyle(
+                                  fontSize: 24, fontWeight: FontWeight.bold),
+                            )
+                          : const Text(""),
+                  const Text(
+                    "i dag",
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),
+                  ),
                 ],
               ),
               vSpaceMedium,
             ],
           );
         } else if (snapshot.hasError) {
-          return Center(
+          return const Center(
             child: Text("Data Not Available Now"),
           );
         } else if (snapshot.connectionState == ConnectionState.waiting) {
-          CircularProgressIndicator();
+          const CircularProgressIndicator();
         }
         return Container();
       },

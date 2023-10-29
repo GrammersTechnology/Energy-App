@@ -9,7 +9,6 @@ import 'package:demo/utils/const/space_helper.dart';
 import 'package:demo/features/home/widgets/stepper_graph.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../utils/const/widgets/new_box.dart';
@@ -64,7 +63,6 @@ class HomeScreen extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const HomeScrnWidget(),
-
                     FutureBuilder(
                         future: stepperRepository.stepperGrahData(),
                         builder: (context, snapShot) {
@@ -96,8 +94,9 @@ class HomeScreen extends ConsumerWidget {
                                 child: stepprData.isNotEmpty
                                     ? SfCartesianChart(
                                         title: ChartTitle(
+                                            alignment: ChartAlignment.near,
                                             text:
-                                                'Strømpris time for time                          >',
+                                                'Strømpris time for time      >',
                                             textStyle: const TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w500)),
@@ -168,8 +167,9 @@ class HomeScreen extends ConsumerWidget {
                                 child: columnData.isNotEmpty
                                     ? SfCartesianChart(
                                         title: ChartTitle(
+                                            alignment: ChartAlignment.near,
                                             text:
-                                                'Strømprisvarsel neste 7 dager           >',
+                                                'Strømprisvarsel neste 7 dager        >',
                                             textStyle: const TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w500)),
