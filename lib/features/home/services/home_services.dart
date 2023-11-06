@@ -4,21 +4,16 @@ import 'dart:developer';
 
 import 'package:demo/features/home/model/home_model.dart';
 import 'package:dio/dio.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../utils/const/api_error_helper.dart';
 import '../../../utils/const/api_urls.dart';
 
 class HomeScreenServicesScreen {
-  Future<List<dynamic>?> stepperGraphDetailsApi(zone) async {
-    final date = DateTime.now();
-    final currentDate =
-        "${date.year}/${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}";
+  Future<List<dynamic>?> stepperGraphDetailsApi(zone, currentDate) async {
     log('${"$stepperGraphUrl${currentDate}_" + zone}.json');
     try {
       Response response =
           await Dio().get("${"$stepperGraphUrl${currentDate}_" + zone}.json");
-      print(response.data);
 
       if (response.statusCode == 200) {
         // print(response.statusCode);

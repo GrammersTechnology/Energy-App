@@ -1,15 +1,14 @@
 // ignore_for_file: must_be_immutable
 
+import 'dart:developer';
+
 import 'package:demo/features/home/controller/column_controller.dart';
-import 'package:demo/features/home/widgets/column_graphwidget.dart';
 import 'package:demo/features/home/widgets/detailed_graph.dart';
 import 'package:demo/features/home/widgets/home_screen_widget.dart';
 import 'package:demo/utils/const/space_helper.dart';
 
-import 'package:demo/features/home/widgets/stepper_graph.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../utils/const/widgets/new_box.dart';
@@ -27,7 +26,7 @@ class HomeScreen extends ConsumerWidget {
 
     final bool columnBarState = ref.watch(showColumnBarBoolStateProvider);
     final bool stepperBarState = ref.watch(showStepperBarBoolStateProvider);
-
+    log("home screen");
     return Scaffold(
         body: SafeArea(
             child: SingleChildScrollView(
@@ -37,26 +36,28 @@ class HomeScreen extends ConsumerWidget {
         children: [
           if (colunRepository.showColumnBool)
             DetailedGraph(
-                onPress: () {
-                  colunRepository.changeColumnBarBool();
-                  ref.read(showColumnBarBoolStateProvider.notifier).state =
-                      !columnBarState;
-                },
-                details: "",
-                iconDetails: "Estimert snittspris per kWh neste 7 dager",
-                title: "Strømprisvarrsel",
-                child: const ColumnGraphWidget())
+              onPress: () {
+                colunRepository.changeColumnBarBool();
+                ref.read(showColumnBarBoolStateProvider.notifier).state =
+                    !columnBarState;
+              },
+              details: "",
+              iconDetails: "Estimert snittspris per kWh neste 7 dager",
+              title: "Strømprisvarrsel",
+              // child: const ColumnGraphWidget()
+            )
           else if (stepperRepository.showStepparBool)
             DetailedGraph(
-                onPress: () {
-                  stepperRepository.changeStepperBarBool();
-                  ref.read(showStepperBarBoolStateProvider.notifier).state =
-                      !stepperBarState;
-                },
-                iconDetails: "Spotpris i dag",
-                details: "Høy pris, og mye variasjon\ngjennom dagen",
-                title: "Strømpris",
-                child: const StepperGraphWidget())
+              onPress: () {
+                stepperRepository.changeStepperBarBool();
+                ref.read(showStepperBarBoolStateProvider.notifier).state =
+                    !stepperBarState;
+              },
+              iconDetails: "Spotpris i dag",
+              details: "Høy pris, og mye variasjon\ngjennom dagen",
+              title: "Strømpris",
+              // child: const StepperGraphWidget()
+            )
           else
             SizedBox(
               child: Column(
@@ -64,7 +65,6 @@ class HomeScreen extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const HomeScrnWidget(),
-
                     FutureBuilder(
                         future: stepperRepository.stepperGrahData(),
                         builder: (context, snapShot) {

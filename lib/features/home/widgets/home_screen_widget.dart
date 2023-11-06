@@ -39,21 +39,21 @@ class HomeScrnWidget extends ConsumerWidget {
                                           : Colors.white),
                   hSpaceMin,
                   response.priceLevel == 0
-                      ? Text("Veldig lav pris nå")
+                      ? const Text("Veldig lav pris nå")
                       : response.priceLevel == 1
-                          ? Text("Lav pris nå")
+                          ? const Text("Lav pris nå")
                           : response.priceLevel == 2
-                              ? Text("Normal pris nå")
+                              ? const Text("Normal pris nå")
                               : response.priceLevel == 3
-                                  ? Text("H0y pris na")
+                                  ? const Text("H0y pris na")
                                   : response.priceLevel == 4
-                                      ? Text("Veldig høy pris nå")
-                                      : Text("")
+                                      ? const Text("Veldig høy pris nå")
+                                      : const Text("")
                 ],
               ),
               vSpaceMin,
               Text(
-                '${response.price.round()} Ore',
+                '${response.price.round()} øre',
                 style: GoogleFonts.montserrat(
                     fontSize: 25, fontWeight: FontWeight.w500),
               ),
@@ -62,10 +62,10 @@ class HomeScrnWidget extends ConsumerWidget {
                 children: [
                   const Text("Det er "),
                   response.priceVariation == 0
-                      ? Text("Liten variasjon")
+                      ? const Text("Liten variasjon")
                       : response.priceVariation == 1
-                          ? Text("Stor variasjon")
-                          : Text(""),
+                          ? const Text("Stor variasjon ")
+                          : const Text(""),
                   const Text("i dag"),
                 ],
               ),
@@ -73,11 +73,11 @@ class HomeScrnWidget extends ConsumerWidget {
             ],
           );
         } else if (snapshot.hasError) {
-          return Center(
+          return const Center(
             child: Text("Data Not Available Now"),
           );
         } else if (snapshot.connectionState == ConnectionState.waiting) {
-          CircularProgressIndicator();
+          const CircularProgressIndicator();
         }
         return Container();
       },
