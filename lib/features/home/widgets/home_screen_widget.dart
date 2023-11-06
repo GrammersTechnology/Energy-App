@@ -1,3 +1,4 @@
+import 'package:demo/features/home/controller/home_controller.dart';
 import 'package:demo/features/home/model/home_model.dart';
 import 'package:demo/utils/const/space_helper.dart';
 import 'package:flutter/material.dart';
@@ -39,15 +40,38 @@ class HomeScrnWidget extends ConsumerWidget {
                                           : Colors.white),
                   hSpaceMin,
                   response.priceLevel == 0
-                      ? const Text("Veldig lav pris nå")
+                      ? const Text(
+                          "Veldig lav pris nå",
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w400),
+                        )
                       : response.priceLevel == 1
-                          ? const Text("Lav pris nå")
+                          ? const Text(
+                              "Lav pris nå",
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.w400),
+                            )
                           : response.priceLevel == 2
-                              ? const Text("Normal pris nå")
+                              ? const Text(
+                                  "Normal pris nå",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400),
+                                )
                               : response.priceLevel == 3
-                                  ? const Text("H0y pris na")
+                                  ? const Text(
+                                      "H0y pris na",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w400),
+                                    )
                                   : response.priceLevel == 4
-                                      ? const Text("Veldig høy pris nå")
+                                      ? const Text(
+                                          "Veldig høy pris nå",
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w400),
+                                        )
                                       : const Text("")
                 ],
               ),
@@ -65,11 +89,22 @@ class HomeScrnWidget extends ConsumerWidget {
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),
                   ),
                   response.priceVariation == 0
-                      ? const Text("Liten variasjon")
+                      ? const Text(
+                          "Liten variasjon",
+                          style: TextStyle(
+                              fontSize: 24, fontWeight: FontWeight.w700),
+                        )
                       : response.priceVariation == 1
-                          ? const Text("Stor variasjon ")
+                          ? const Text(
+                              "Stor variasjon ",
+                              style: TextStyle(
+                                  fontSize: 24, fontWeight: FontWeight.w700),
+                            )
                           : const Text(""),
-                  const Text("i dag"),
+                  const Text(
+                    "i dag",
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),
+                  ),
                 ],
               ),
               vSpaceMedium,

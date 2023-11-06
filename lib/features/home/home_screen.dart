@@ -41,9 +41,9 @@ class HomeScreen extends ConsumerWidget {
                 ref.read(showColumnBarBoolStateProvider.notifier).state =
                     !columnBarState;
               },
-              details: "",
-              iconDetails: "Estimert snittspris per kWh neste 7 dager",
-              title: "Strømprisvarrsel",
+              iconDetails: "Spotpris i dag",
+              details: "Høy pris, og mye variasjon\ngjennom dagen",
+              title: "Strømpris",
               // child: const ColumnGraphWidget()
             )
           else if (stepperRepository.showStepparBool)

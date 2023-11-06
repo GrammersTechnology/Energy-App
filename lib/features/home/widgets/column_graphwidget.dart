@@ -3,12 +3,14 @@ import 'package:demo/utils/controller/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'dart:developer';
 
 class ColumnGraphWidget extends ConsumerWidget {
   const ColumnGraphWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // print('building inside ColumnGraphWidget');
     return SizedBox(
         height: 250,
         child: ref.watch(columnProvider).when(

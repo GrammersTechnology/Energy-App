@@ -1,6 +1,7 @@
 import 'package:demo/features/home/widgets/column_graphwidget.dart';
 import 'package:demo/features/home/widgets/stepper_graph.dart';
 import 'package:demo/utils/const/space_helper.dart';
+import 'package:demo/utils/const/widgets/byge-design-system/theme/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -22,8 +23,7 @@ class DetailedGraph extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final homeRepository = ref.watch(homeControllerProvider);
-    final columnBarState = ref.watch(showHomeControllerBoolStateProvider);
-
+    ref.watch(showHomeControllerBoolStateProvider);
     return SafeArea(
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Row(children: [
@@ -34,25 +34,39 @@ class DetailedGraph extends ConsumerWidget {
         ),
         hSpaceMedium,
         Text(
-          title,
+          homeRepository.toggelBool.first
+              ? title
+              : homeRepository.toggelBool.last
+                  ? 'Strømprisvarrsel'
+                  : title,
           style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
         )
       ]),
       vSpaceLarge,
       Text(
-        details,
+        homeRepository.toggelBool.first
+            ? details
+            : homeRepository.toggelBool.last
+                ? ''
+                : details,
         style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
       ),
       vSpaceLarge,
       Row(
         children: [
           Text(
-            iconDetails,
-            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+            homeRepository.toggelBool.first
+                ? iconDetails
+                : homeRepository.toggelBool.last
+                    ? 'Estimert snittspris per kWh neste 7 dager'
+                    : iconDetails,
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
           ),
+          hSpaceSmall,
           const Icon(
-            Icons.question_mark_rounded,
-            size: 15,
+            Icons.help_outline_sharp,
+            size: 30,
+            color: Color.fromARGB(157, 37, 37, 37),
           )
         ],
       ),
@@ -60,8 +74,8 @@ class DetailedGraph extends ConsumerWidget {
       homeRepository.toggelBool.first
           ? StepperGraphWidget()
           : homeRepository.toggelBool.last
-              ? ColumnGraphWidget()
-              : StepperGraphWidget(),
+              ? const ColumnGraphWidget()
+              : StepperGrapNextDayhWidget(),
       vSpaceLarge,
       Container(
           width: 600,
@@ -89,13 +103,15 @@ class DetailedGraph extends ConsumerWidget {
             isSelected: homeRepository.toggelBool,
             children: <Widget>[
               SizedBox(
-                  width: (MediaQuery.of(context).size.width - 38) / 4.5,
+                  width: (MediaQuery.of(context).size.width - 38) / 3.7,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        "HOT",
+                        "I dag",
                         style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
                             color: homeRepository.toggelBool.first == true
                                 ? Colors.white
                                 : Colors.black),
@@ -103,12 +119,14 @@ class DetailedGraph extends ConsumerWidget {
                     ],
                   )),
               SizedBox(
-                  width: (MediaQuery.of(context).size.width - 36) / 4.5,
+                  width: (MediaQuery.of(context).size.width - 36) / 3.7,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text("WARM",
+                      Text("I morgen",
                           style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
                               color: homeRepository.toggelBool.first ||
                                       homeRepository.toggelBool.last
                                   ? Colors.black
@@ -116,12 +134,14 @@ class DetailedGraph extends ConsumerWidget {
                     ],
                   )),
               SizedBox(
-                  width: (MediaQuery.of(context).size.width - 36) / 4.5,
+                  width: (MediaQuery.of(context).size.width - 36) / 3.7,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text("COLD",
+                      Text("Neste 7 dager",
                           style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
                               color: homeRepository.toggelBool.last == true
                                   ? Colors.white
                                   : Colors.black))
@@ -129,6 +149,32 @@ class DetailedGraph extends ConsumerWidget {
                   )),
             ],
           )),
+      Padding(
+        padding: const EdgeInsets.only(left: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              homeRepository.toggelBool.first == true
+                  ? 'Hva er spotprisen?'
+                  : homeRepository.toggelBool.last == true
+                      ? 'Hvordan estimerer vi gjennomsnittspris?'
+                      : 'Hva er spotprisen?',
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+            ),
+            vSpaceSmall,
+            Text(
+              homeRepository.toggelBool.first == true
+                  ? 'Strømprisen blir satt av Nord Pool, den nordiske\nkraftbørsen. Alle strømleverandører kjøper\nstrømmen til samme pris og selger den videre til\ndeg med et påslag.'
+                  : homeRepository.toggelBool.last == true
+                      ? 'Prisen som presenteres i prisvarselet er\nprognoser for gjennomsnittspris per kWh per\ndag de neste 7 dagene.\n \nStrømprisene våre bestemmes av tilbud og\netterspørsel, og prisen påvirkes av mange\nfaktorer, blant annet været her hjemme og i\nEuropa'
+                      : 'Strømprisen blir satt av Nord Pool, den nordiske\nkraftbørsen. Alle strømleverandører kjøper\nstrømmen til samme pris og selger den videre til\ndeg med et påslag.',
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+            )
+          ],
+        ),
+      ),
+      vSpaceLarge,
     ]));
   }
 }

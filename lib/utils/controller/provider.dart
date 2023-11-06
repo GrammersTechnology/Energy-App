@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:demo/features/auth/controller/auth_controller.dart';
 import 'package:demo/features/home/controller/column_controller.dart';
+import 'package:demo/features/home/controller/home_controller.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -37,10 +38,10 @@ final profileEditProvider = FutureProvider((ref) {
   return profileEditRepository.fetchCSVData();
 });
 //
-// final savingTipsProvider = FutureProvider((ref) {
-//   final savingTipsRepositary = ref.watch(savingTipsRepositeryProvider);
-//   return savingTipsRepositary.getTips();
-// });
+final homeProvider = FutureProvider((ref) {
+  final homeRepositary = ref.watch(homeControllerProvider);
+  return homeRepositary;
+});
 
 final authenticationProvider = FutureProvider((ref) {
   final authRepository = ref.watch(authControllerProvider);

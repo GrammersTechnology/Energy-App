@@ -18,7 +18,7 @@ class StepperGraphWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final stepperRepository = ref.watch(stepperGraphControllerProvider);
 
-    log("message");
+    // print("Inside of StepperGraphWidget");
     return SizedBox(
         width: double.infinity,
         height: 250,
@@ -26,9 +26,9 @@ class StepperGraphWidget extends ConsumerWidget {
           future: stepperRepository.stepperGrahData(),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
-              Text("error");
+              const Text("error");
             } else if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             } else if (snapshot.hasData) {
               return SfCartesianChart(
                 primaryXAxis: CategoryAxis(title: AxisTitle(text: "")),
@@ -46,32 +46,53 @@ class StepperGraphWidget extends ConsumerWidget {
               // log(snapshot.data.toString() + "FFFFFFFFFFFFFFf");
               // log(datadds.toString());
             }
-            return SizedBox();
+            return const SizedBox();
           },
-        )
+        ));
+  }
+}
 
-        // ref.read(stepperProvider).when(
-        //       data: (data) {
-        //         log("hhhhhhhhhhhhhhh");
-        //         return SfCartesianChart(
-        //           primaryXAxis: CategoryAxis(title: AxisTitle(text: "")),
-        //           series: <ChartSeries>[
-        //             StepLineSeries<GraphData, String>(
-        //               dataSource: data,
-        //               xValueMapper: (GraphData sales, _) => sales.x.toString(),
-        //               yValueMapper: (GraphData sales, _) => sales.y,
-        //               // dataLabelSettings: DataLabelSettings(isVisible: true)
-        //             )
-        //           ],
-        //         );
-        //       },
-        //       error: (error, stackTrace) => const SafeArea(
-        //           child: Center(child: Text("Something went wrong"))),
-        //       loading: () {
-        //         return const SafeArea(
-        //             child: Center(child: CircularProgressIndicator()));
-        //       },
-        //     ),
-        );
+class StepperGrapNextDayhWidget extends ConsumerWidget {
+  StepperGrapNextDayhWidget({
+    Key? key,
+  }) : super(key: key);
+  List<GraphData> data = [];
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final stepperRepository = ref.watch(stepperGraphControllerProvider);
+
+    // print("Inside of StepperGraphWidget");
+    return SizedBox(
+        width: double.infinity,
+        height: 250,
+        child: FutureBuilder(
+          future: stepperRepository.stepperGrahNextDayData(),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return const Center(
+                child: Text(
+                  "The prices for tomorrow is\n        not available yet...",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                ),
+              );
+            } else if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasData) {
+              return SfCartesianChart(
+                primaryXAxis: CategoryAxis(title: AxisTitle(text: "")),
+                series: <ChartSeries>[
+                  StepLineSeries<GraphData, String>(
+                    dataSource: snapshot.data ?? [],
+                    xValueMapper: (GraphData sales, _) => sales.x.toString(),
+                    yValueMapper: (GraphData sales, _) => sales.y,
+                    // dataLabelSettings: DataLabelSettings(isVisible: true)
+                  )
+                ],
+              );
+            } else {}
+            return const SizedBox();
+          },
+        ));
   }
 }

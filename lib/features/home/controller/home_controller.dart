@@ -6,6 +6,10 @@ final homeControllerProvider = Provider((ref) => HomeController());
 final showHomeControllerBoolStateProvider =
     StateProvider<List<bool>>((ref) => []);
 
+//     final homeControllerProvider = Provider<HomeController>((ref) {
+//   return HomeController();
+// });
+
 class HomeController {
   List<bool> toggelBool = [true, false, false];
 
