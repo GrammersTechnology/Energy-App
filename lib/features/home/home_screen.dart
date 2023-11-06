@@ -96,8 +96,9 @@ class HomeScreen extends ConsumerWidget {
                                 child: stepprData.isNotEmpty
                                     ? SfCartesianChart(
                                         title: ChartTitle(
+                                            alignment: ChartAlignment.near,
                                             text:
-                                                'Strømpris time for time                          >',
+                                                'Strømpris time for time      >',
                                             textStyle: const TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w500)),
@@ -168,8 +169,9 @@ class HomeScreen extends ConsumerWidget {
                                 child: columnData.isNotEmpty
                                     ? SfCartesianChart(
                                         title: ChartTitle(
+                                            alignment: ChartAlignment.near,
                                             text:
-                                                'Strømprisvarsel neste 7 dager           >',
+                                                'Strømprisvarsel neste 7 dager        >',
                                             textStyle: const TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w500)),

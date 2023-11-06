@@ -20,7 +20,7 @@ class HomeScrnWidget extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              vSpaceLarge,
+              vSpaceRegular,
               Row(
                 children: [
                   hSpaceMin,
@@ -55,12 +55,15 @@ class HomeScrnWidget extends ConsumerWidget {
               Text(
                 '${response.price.round()} øre',
                 style: GoogleFonts.montserrat(
-                    fontSize: 25, fontWeight: FontWeight.w500),
+                    fontSize: 48, fontWeight: FontWeight.bold),
               ),
-              vSpaceMedium,
+              vSpaceRegular,
               Row(
                 children: [
-                  const Text("Det er "),
+                  const Text(
+                    "Det er ",
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),
+                  ),
                   response.priceVariation == 0
                       ? const Text("Liten variasjon")
                       : response.priceVariation == 1
