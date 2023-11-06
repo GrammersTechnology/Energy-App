@@ -8,6 +8,8 @@ class NewBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
+      height: 240,
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: Colors.white,

@@ -39,44 +39,21 @@ class HomeScrnWidget extends ConsumerWidget {
                                           : Colors.white),
                   hSpaceMin,
                   response.priceLevel == 0
-                      ? const Text(
-                          "Veldig lav pris nå",
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w400),
-                        )
+                      ? const Text("Veldig lav pris nå")
                       : response.priceLevel == 1
-                          ? const Text(
-                              "Lav pris nå",
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.w400),
-                            )
+                          ? const Text("Lav pris nå")
                           : response.priceLevel == 2
-                              ? const Text(
-                                  "Normal pris nå",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w400),
-                                )
+                              ? const Text("Normal pris nå")
                               : response.priceLevel == 3
-                                  ? const Text(
-                                      "H0y pris na",
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w400),
-                                    )
+                                  ? const Text("H0y pris na")
                                   : response.priceLevel == 4
-                                      ? const Text(
-                                          "Veldig høy pris nå",
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w400),
-                                        )
+                                      ? const Text("Veldig høy pris nå")
                                       : const Text("")
                 ],
               ),
               vSpaceMin,
               Text(
-                '${response.price.round()} Ore',
+                '${response.price.round()} øre',
                 style: GoogleFonts.montserrat(
                     fontSize: 48, fontWeight: FontWeight.bold),
               ),
@@ -88,22 +65,11 @@ class HomeScrnWidget extends ConsumerWidget {
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),
                   ),
                   response.priceVariation == 0
-                      ? const Text(
-                          "Liten variasjon",
-                          style: TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.bold),
-                        )
+                      ? const Text("Liten variasjon")
                       : response.priceVariation == 1
-                          ? const Text(
-                              "Stor variasjon",
-                              style: TextStyle(
-                                  fontSize: 24, fontWeight: FontWeight.bold),
-                            )
+                          ? const Text("Stor variasjon ")
                           : const Text(""),
-                  const Text(
-                    "i dag",
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),
-                  ),
+                  const Text("i dag"),
                 ],
               ),
               vSpaceMedium,

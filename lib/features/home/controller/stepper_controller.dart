@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:demo/features/home/controller/home_controller.dart';
 import 'package:demo/features/home/model/home_model.dart';
 import 'package:demo/features/home/services/home_services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,13 +18,25 @@ class StepperController {
   }
 
   Future<List<GraphData>> stepperGrahData() async {
+    log("stepperrrrrrr");
     GraphData temp = GraphData(x: 0, y: 0);
     final perf = await SharedPreferences.getInstance();
     final zone = perf.getString("zone");
     // const zone = "1";
-
-    final result =
-        (await HomeScreenServicesScreen().stepperGraphDetailsApi(zone))!;
+    String? currentDate;
+    final date = DateTime.now();
+    log(HomeController().toggelBool.toString());
+    if (HomeController().toggelBool.first == true) {
+      currentDate =
+          "${date.year}/${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}";
+    } else {
+      final nextDay = date.add(Duration(days: 1));
+      currentDate =
+          "${nextDay.year}/${nextDay.month.toString().padLeft(2, '0')}-${nextDay.day.toString().padLeft(2, '0')}";
+      log("next date$currentDate");
+    }
+    final result = (await HomeScreenServicesScreen()
+        .stepperGraphDetailsApi(zone, currentDate))!;
     if (result.isNotEmpty) {
       stepLineGraph.clear();
       for (int i = 0; i < result.length; i++) {
