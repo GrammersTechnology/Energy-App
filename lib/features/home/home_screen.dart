@@ -63,7 +63,7 @@ class HomeScreen extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const HomeScrnWidget(),
+                    HomeScrnWidget(boolean: true),
                     FutureBuilder(
                         future: stepperRepository.stepperGrahData(),
                         builder: (context, snapShot) {
