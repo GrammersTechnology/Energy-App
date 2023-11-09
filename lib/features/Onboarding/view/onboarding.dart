@@ -68,68 +68,65 @@ class OnboardZone extends ConsumerWidget {
       body: SafeArea(
           child: Padding(
         padding: const EdgeInsets.only(left: 20, right: 20),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              vSpaceMedium,
-              Center(
-                child: Image.asset('assets/images/Zone-Map.png'),
-              ),
-              vSpaceXl,
-              const Text(
-                'Første må vi få vite hvilken strømsone du hører til, for å vise deg riktig strømpris.',
-                style: TextStyle(
-                    fontSize: 14, fontWeight: FontWeight.w400, height: 1.3),
-              ),
-              vSpaceLarge,
-              const Text(
-                'Hvor i Norge bor du?',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-              vSpaceMedium,
-              Container(
-                padding: const EdgeInsets.only(left: 15, right: 15),
-                decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    border: Border.all(color: Colors.black)),
-                child: SizedBox(
-                  height: 80,
-                  child: Center(
-                    child: DropdownButton(
-                      icon: const Icon(Icons.keyboard_arrow_down_rounded),
-                      hint: Text(
-                        authRepository.dropdowmValue ?? "Velg strømsone",
-                        style: labelLarge,
-                      ),
-                      underline: const SizedBox(),
-                      isExpanded: true,
-                      items: authRepository.dropdwonList
-                          .map(
-                              (e) => DropdownMenuItem(value: e, child: Text(e)))
-                          .toList(),
-                      onChanged: (value) {
-                        authRepository.changeDropDownValue(value);
-                        ref.read(zoneDropdownListProvider.notifier).state =
-                            value.toString();
-                      },
-                      onTap: () {},
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            vSpaceMedium,
+            Center(
+              child: Image.asset('assets/images/Zone-Map.png'),
+            ),
+            vSpaceXl,
+            const Text(
+              'Første må vi få vite hvilken strømsone du hører til, for å vise deg riktig strømpris.',
+              style: TextStyle(
+                  fontSize: 14, fontWeight: FontWeight.w400, height: 1.3),
+            ),
+            const Spacer(),
+            const Text(
+              'Hvor i Norge bor du?',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            vSpaceMedium,
+            Container(
+              padding: const EdgeInsets.only(left: 15, right: 15),
+              decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  border: Border.all(color: Colors.black)),
+              child: SizedBox(
+                height: 80,
+                child: Center(
+                  child: DropdownButton(
+                    icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                    hint: Text(
+                      authRepository.dropdowmValue ?? "Velg strømsone",
+                      style: labelLarge,
                     ),
+                    underline: const SizedBox(),
+                    isExpanded: true,
+                    items: authRepository.dropdwonList
+                        .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+                        .toList(),
+                    onChanged: (value) {
+                      authRepository.changeDropDownValue(value);
+                      ref.read(zoneDropdownListProvider.notifier).state =
+                          value.toString();
+                    },
+                    onTap: () {},
                   ),
                 ),
               ),
-              vSpaceMedium,
-              BygePrimaryButton(
-                label: "Lagre og gå videre",
-                onPressed: () {
-                  authRepository.saveOnboarding(context);
-                },
-                color: const Color(0XFF404040),
-              ),
-              vSpaceSmall,
-            ],
-          ),
+            ),
+            vSpaceMedium,
+            BygePrimaryButton(
+              label: "Lagre og gå videre",
+              onPressed: () {
+                authRepository.saveOnboarding(context);
+              },
+              color: const Color(0XFF404040),
+            ),
+            vSpaceSmall,
+          ],
         ),
       )),
     );

@@ -28,17 +28,20 @@ class StepperGraphWidget extends ConsumerWidget {
             if (snapshot.hasError) {
               const Text("error");
             } else if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
+              return const Center(
+                  child: CircularProgressIndicator(
+                color: Colors.black,
+              ));
             } else if (snapshot.hasData) {
               return SfCartesianChart(
                 primaryXAxis: CategoryAxis(title: AxisTitle(text: "")),
                 series: <ChartSeries>[
                   StepLineSeries<GraphData, String>(
-                    dataSource: snapshot.data ?? [],
-                    xValueMapper: (GraphData sales, _) => sales.x.toString(),
-                    yValueMapper: (GraphData sales, _) => sales.y,
-                    // dataLabelSettings: DataLabelSettings(isVisible: true)
-                  )
+                      dataSource: snapshot.data ?? [],
+                      xValueMapper: (GraphData sales, _) => sales.x.toString(),
+                      yValueMapper: (GraphData sales, _) => sales.y,
+                      // dataLabelSettings: DataLabelSettings(isVisible: true)
+                      color: Colors.black)
                 ],
               );
               // List<GraphData> datadds = [];
@@ -77,17 +80,20 @@ class StepperGrapNextDayhWidget extends ConsumerWidget {
                 ),
               );
             } else if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
+              return const Center(
+                  child: CircularProgressIndicator(
+                color: Colors.black,
+              ));
             } else if (snapshot.hasData) {
               return SfCartesianChart(
                 primaryXAxis: CategoryAxis(title: AxisTitle(text: "")),
                 series: <ChartSeries>[
                   StepLineSeries<GraphData, String>(
-                    dataSource: snapshot.data ?? [],
-                    xValueMapper: (GraphData sales, _) => sales.x.toString(),
-                    yValueMapper: (GraphData sales, _) => sales.y,
-                    // dataLabelSettings: DataLabelSettings(isVisible: true)
-                  )
+                      dataSource: snapshot.data ?? [],
+                      xValueMapper: (GraphData sales, _) => sales.x.toString(),
+                      yValueMapper: (GraphData sales, _) => sales.y,
+                      // dataLabelSettings: DataLabelSettings(isVisible: true)
+                      color: Colors.black)
                 ],
               );
             } else {}

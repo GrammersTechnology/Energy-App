@@ -26,7 +26,6 @@ class HomeScreen extends ConsumerWidget {
 
     final bool columnBarState = ref.watch(showColumnBarBoolStateProvider);
     final bool stepperBarState = ref.watch(showStepperBarBoolStateProvider);
-    log("home screen");
     return Scaffold(
         body: SafeArea(
             child: SingleChildScrollView(
@@ -80,7 +79,12 @@ class HomeScreen extends ConsumerWidget {
                           } else if (snapShot.connectionState ==
                               ConnectionState.waiting) {
                             return const Center(
-                              child: CircularProgressIndicator(),
+                              child: Padding(
+                                padding: EdgeInsets.only(top: 200),
+                                child: CircularProgressIndicator(
+                                  color: Colors.black,
+                                ),
+                              ),
                             );
                           }
 
@@ -97,8 +101,7 @@ class HomeScreen extends ConsumerWidget {
                                     ? SfCartesianChart(
                                         title: ChartTitle(
                                             alignment: ChartAlignment.near,
-                                            text:
-                                                'Strømpris time for time      >',
+                                            text: 'Strømpris time for time',
                                             textStyle: const TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w500)),
@@ -120,14 +123,15 @@ class HomeScreen extends ConsumerWidget {
                                             axisLine: const AxisLine(width: 0)),
                                         series: <ChartSeries>[
                                           StepLineSeries<GraphData, String>(
-                                            dataSource: stepprData,
-                                            xValueMapper:
-                                                (GraphData sales, _) =>
-                                                    sales.x.toString(),
-                                            yValueMapper:
-                                                (GraphData sales, _) => sales.y,
-                                            // dataLabelSettings: DataLabelSettings(isVisible: true)
-                                          )
+                                              dataSource: stepprData,
+                                              xValueMapper:
+                                                  (GraphData sales, _) =>
+                                                      sales.x.toString(),
+                                              yValueMapper:
+                                                  (GraphData sales, _) =>
+                                                      sales.y,
+                                              // dataLabelSettings: DataLabelSettings(isVisible: true)
+                                              color: Colors.black)
                                         ],
                                       )
                                     : const Center(
@@ -155,7 +159,12 @@ class HomeScreen extends ConsumerWidget {
                           } else if (snapShot.connectionState ==
                               ConnectionState.waiting) {
                             return const Center(
-                              child: CircularProgressIndicator(),
+                              child: Padding(
+                                padding: EdgeInsets.only(top: 200),
+                                child: CircularProgressIndicator(
+                                  color: Colors.black,
+                                ),
+                              ),
                             );
                           }
                           return GestureDetector(
@@ -171,7 +180,7 @@ class HomeScreen extends ConsumerWidget {
                                         title: ChartTitle(
                                             alignment: ChartAlignment.near,
                                             text:
-                                                'Strømprisvarsel neste 7 dager        >',
+                                                'Strømprisvarsel neste 7 dager',
                                             textStyle: const TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w500)),

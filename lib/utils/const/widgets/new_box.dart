@@ -7,32 +7,44 @@ class NewBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: 240,
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          // darker shadow on the bottom right
-          BoxShadow(
-            color: Colors.grey.shade600,
-            blurRadius: 15,
-            offset: const Offset(5, 5),
-          ),
-
-          //lighter shadow on the top left
-          const BoxShadow(
+    return Stack(
+      alignment: AlignmentDirectional.topEnd,
+      children: [
+        Container(
+          width: double.infinity,
+          height: 240,
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
             color: Colors.white,
-            blurRadius: 15,
-            offset: Offset(5, 5),
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              // darker shadow on the bottom right
+              BoxShadow(
+                color: Colors.grey.shade600,
+                blurRadius: 15,
+                offset: const Offset(5, 5),
+              ),
+
+              //lighter shadow on the top left
+              const BoxShadow(
+                color: Colors.white,
+                blurRadius: 15,
+                offset: Offset(5, 5),
+              ),
+            ],
           ),
-        ],
-      ),
-      child: Center(
-        child: child,
-      ),
+          child: Center(
+            child: child,
+          ),
+        ),
+        const Padding(
+          padding: EdgeInsets.only(top: 20, right: 20),
+          child: Icon(
+            Icons.arrow_forward_ios_rounded,
+            size: 18,
+          ),
+        )
+      ],
     );
   }
 }

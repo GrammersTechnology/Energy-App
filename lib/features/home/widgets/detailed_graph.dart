@@ -27,12 +27,17 @@ class DetailedGraph extends ConsumerWidget {
     return SafeArea(
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Row(children: [
-        IconButton(onPressed: onPress, icon: const Icon(Icons.arrow_back_ios)),
+        IconButton(
+            onPressed: onPress,
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              size: 18,
+            )),
         const Text(
           'Tilbake',
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
         ),
-        hSpaceMedium,
+        hSpaceLarge,
         Text(
           homeRepository.toggelBool.first
               ? title
