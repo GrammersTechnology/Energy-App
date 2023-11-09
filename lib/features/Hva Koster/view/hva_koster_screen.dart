@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:demo/features/Hva%20Koster/view/detailed_hva_koster.dart';
+import 'package:demo/features/home/widgets/home_screen_widget.dart';
 import 'package:demo/utils/const/space_helper.dart';
 import 'package:demo/utils/controller/provider.dart';
 import 'package:demo/utils/const/widgets/internet_connection.dart';
@@ -21,20 +22,24 @@ class HvaKosterScreen extends ConsumerWidget {
 
         return SafeArea(
             child: Padding(
-                padding: const EdgeInsets.all(15),
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            children: [
+              HomeScrnWidget(boolean: false),
+              Expanded(
                 child: ListView.separated(
                     separatorBuilder: (context, index) => vSpaceRegular,
                     itemCount: datas.length,
                     itemBuilder: (context, index) {
                       return BygeNavCard(
                           title: datas[index]["details"]["front_end"],
-                          destination: HvaKosterDetailedScreen(
+                          destination: HvaDetailedWidget(
                             data: datas,
                             index: index,
                           ),
                           child: Container(
                             padding: const EdgeInsets.all(10),
-                            height: 110,
+                            height: 70,
                             width: double.infinity,
                             child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -48,8 +53,9 @@ class HvaKosterScreen extends ConsumerWidget {
                                         "Na",
                                         style: TextStyle(
                                             fontSize: 14,
-                                            fontWeight: FontWeight.w500),
+                                            fontWeight: FontWeight.w400),
                                       ),
+                                      vSpaceMin,
                                       Text(
                                         "${datas[index]["cost"]['current']['cost']}kr",
                                         style: const TextStyle(
@@ -62,31 +68,40 @@ class HvaKosterScreen extends ConsumerWidget {
                                   Column(
                                     children: [
                                       const Spacer(),
-                                      datas[index]["details"]["front_end"] ==
+                                      datas[index]["details"]["front_end"]
+                                                  .toString()
+                                                  .split(" ")
+                                                  .first ==
                                               "Dusj"
                                           ? Image.asset(
-                                              width: 60,
-                                              height: 55,
+                                              width: 40,
+                                              height: 45,
                                               fit: BoxFit.fill,
                                               "assets/images/showerpng.png")
-                                          : datas[index]["details"]
-                                                      ["front_end"] ==
+                                          : datas[index]["details"]["front_end"]
+                                                      .toString()
+                                                      .split("-")
+                                                      .first ==
                                                   "Elbil"
                                               ? Image.asset(
-                                                  width: 60,
-                                                  height: 55,
+                                                  width: 55,
+                                                  height: 35,
                                                   fit: BoxFit.fill,
                                                   "assets/images/Component 1.png")
                                               : Image.asset(
-                                                  width: 60,
-                                                  height: 55,
+                                                  width: 40,
+                                                  height: 45,
                                                   fit: BoxFit.fill,
-                                                  "assets/images/washing_machine.png"),
+                                                  "assets/images/washingmachin.png"),
                                     ],
                                   )
                                 ]),
                           ));
-                    })));
+                    }),
+              ),
+            ],
+          ),
+        ));
       },
       error: (error, stackTrace) {
         return const SafeArea(child: InternetChecking());

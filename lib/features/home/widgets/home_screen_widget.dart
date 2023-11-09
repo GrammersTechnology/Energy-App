@@ -8,8 +8,8 @@ import 'package:google_fonts/google_fonts.dart';
 import '../controller/stepper_controller.dart';
 
 class HomeScrnWidget extends ConsumerWidget {
-  const HomeScrnWidget({super.key});
-
+  HomeScrnWidget({super.key, required this.boolean});
+  bool boolean;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return FutureBuilder(
@@ -75,13 +75,21 @@ class HomeScrnWidget extends ConsumerWidget {
                                       : const Text("")
                 ],
               ),
-              vSpaceMin,
-              Text(
-                '${response.price.round()} øre',
-                style: GoogleFonts.montserrat(
-                    fontSize: 48, fontWeight: FontWeight.bold),
-              ),
-              vSpaceRegular,
+              boolean
+                  ? Column(
+                      children: [
+                        vSpaceMin,
+                        Text(
+                          '${response.price.round()} øre',
+                          style: GoogleFonts.montserrat(
+                              fontSize: 48, fontWeight: FontWeight.bold),
+                        ),
+                        vSpaceRegular,
+                      ],
+                    )
+                  : SizedBox(
+                      height: 10,
+                    ),
               Row(
                 children: [
                   const Text(
