@@ -87,8 +87,8 @@ class HomeScrnWidget extends ConsumerWidget {
                         vSpaceRegular,
                       ],
                     )
-                  : SizedBox(
-                      height: 10,
+                  : const SizedBox(
+                      height: 15,
                     ),
               Row(
                 children: [

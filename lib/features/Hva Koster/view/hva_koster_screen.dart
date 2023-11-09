@@ -18,16 +18,20 @@ class HvaKosterScreen extends ConsumerWidget {
         body: ref.watch(hvaProvider).when(
       data: (datas) {
         // userRepositeryProvider
-        log("message");
-
         return SafeArea(
             child: Padding(
           padding: const EdgeInsets.all(10),
-          child: Column(
-            children: [
-              HomeScrnWidget(boolean: false),
-              Expanded(
-                child: ListView.separated(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: HomeScrnWidget(boolean: false),
+                ),
+                vSpaceMedium,
+                ListView.separated(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
                     separatorBuilder: (context, index) => vSpaceRegular,
                     itemCount: datas.length,
                     itemBuilder: (context, index) {
@@ -98,8 +102,8 @@ class HvaKosterScreen extends ConsumerWidget {
                                 ]),
                           ));
                     }),
-              ),
-            ],
+              ],
+            ),
           ),
         ));
       },
